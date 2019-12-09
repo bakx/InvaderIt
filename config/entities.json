@@ -1,0 +1,10 @@
+{
+    "data": [
+        {
+            "id": "projectile",
+            "filename": "gfx/Entities/Projectiles/01.png",
+            "width": null,
+            "height": null
+        }
+    ]
+}

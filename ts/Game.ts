@@ -1,11 +1,12 @@
-import { loadAnimationSprites, loadBackgrounds, loadCharacters, loadLevels } from "./Functions";
+import { loadAnimationSprites, loadBackgrounds, loadCharacters, loadLevels, loadEntities } from "./Functions";
 import { AnimationSprites } from "./Models/AnimatedSprite";
 import { Backgrounds } from "./Models/Background";
 import { Characters, Character } from "./Models/Character";
 import { DrawText } from "./Models/DrawText";
 import { LevelData, Levels } from "./Models/Level";
-import { Player } from "./Players";
+import { Player } from "./Player";
 import { Point } from "pixi.js";
+import { Entities } from "./Models/Entities";
 
 export class Game {
 
@@ -23,6 +24,7 @@ export class Game {
   backgrounds: Backgrounds;
   levels: Levels;
   animationSprites: AnimationSprites;
+  entities: Entities;
   characters: Characters;
   player: Player;
 
@@ -74,33 +76,39 @@ export class Game {
       .then(backgrounds => {
         this.backgrounds = backgrounds;
 
-        // Load the animation sprites
-        loadAnimationSprites(this)
-          .then(animationSprites => {
-            this.animationSprites = animationSprites;
+        // Load entities
+        loadEntities(this)
+          .then(entities => {
+            this.entities = entities
 
-            // Load the characters
-            loadCharacters(this)
-              .then(characters => {
-                this.characters = characters
+            // Load the animation sprites
+            loadAnimationSprites(this)
+              .then(animationSprites => {
+                this.animationSprites = animationSprites;
+
+                // Load the characters
+                loadCharacters(this)
+                  .then(characters => {
+                    this.characters = characters
+                  })
+                  .then(_ => {
+                    // Load all levels
+                    this.levels = loadLevels(this.app, this);
+
+                    // Create FPS counter
+                    this.fpsCounter = new DrawText(this.app.stage, '', 10, 10);
+
+                    // Create Debug text
+                    this.debugHelper = new DrawText(this.app.stage, '', 10, 30);
+
+                    // Load level
+                    this.loadLevel();
+
+                    // Start game engine
+                    this.start();
+                  })
               })
-              .then(_ => {
-                // Load all levels
-                this.levels = loadLevels(this.app, this);
-
-                // Create FPS counter
-                this.fpsCounter = new DrawText(this.app.stage, '', 10, 10);
-
-                // Create Debug text
-                this.debugHelper = new DrawText(this.app.stage, '', 10, 30);
-
-                // Load level
-                this.loadLevel();
-
-                // Start game engine
-                this.start();
-              })
-          })
+          });
       });
   }
 
@@ -204,11 +212,6 @@ export class Game {
         this.player.update();
       }
 
-      // Temporary debugging code. If a character walks out of the screen, move to next level.
-      if (this.level.characters.some(x => x.position.x > this.app.view.width)) {
-        this.levelIndex++;
-        this.loadLevel();
-      }
 
       // Update game frame
       this.gameFrame++;
@@ -241,19 +244,18 @@ export class Game {
     this.app.renderer.resize(newWidth, this.designHeight);
   }
 
-
   onStageClick(event: any) {
+    // Get a reference to the positioning data
+    let x = Math.floor(event.data.global.x);
+    let y = Math.floor(event.data.global.y);
 
-    let x = event.data.global.x;
-    let y = event.data.global.y;
-
-    // Determine where was clicked/touched
+    // Determine if the click was outside the screen bounds
     if (x < 0 || y < 0 || x > this.app.screen.width || y > this.app.screen.height) {
       console.debug('Click registered outside screen bounds. Ignoring...');
       return;
     }
 
-    // Determine where was clicked
+    // Determine on which half of the screen was clicked
     if (x < this.app.screen.width / 2) {
       // Left half of the screen.
 
@@ -261,13 +263,12 @@ export class Game {
       if (this.player) {
         this.player.gotoPosition = new Point(x, y);
       }
-
-    } else {
+    }
+    else {
       // Right half of the screen.
-      console.log('pew pew pew');
+      this.player.action("fire", new Point(x, y));
     }
   }
-
 }
 
 export enum GameLoadingState {

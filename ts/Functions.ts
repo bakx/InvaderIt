@@ -2,12 +2,15 @@ import { MultipackLoader } from "./Extensions/MultipackLoader";
 import { Game } from "./Game";
 import { AnimationDetails, AnimationSprite, AnimationSprites } from "./Models/AnimatedSprite";
 import { Background, Backgrounds } from "./Models/Background";
-import { Character, Characters } from "./Models/Character";
+import { Character, Characters, CharacterAction } from "./Models/Character";
 import { AnimationSpriteConfig, AnimationSpritesConfig } from "./Models/Configuration/AnimationSpritesConfig";
 import { BackgroundConfig, BackgroundsConfig, BackgroundSpritesConfig } from "./Models/Configuration/BackgroundsConfig";
 import { CharacterAnimationDetailsConfig, CharacterConfig, CharactersConfig } from "./Models/Configuration/CharactersConfig";
 import { LevelCharacterConfig, LevelConfig, LevelsConfig } from "./Models/Configuration/LevelsConfig";
 import { LevelData, Levels } from "./Models/Level";
+import { Entities } from "./Models/Entities";
+import { EntitiesConfig, EntityConfig } from "./Models/Configuration/EntitiesConfig";
+import { SpriteLoader } from "./Extensions/SpriteLoader";
 
 /** Loads the textures configuration file and parses it to a PIXI.Texture[] object */
 export function loadTextures(sourceTemplateStart: number, sourceTemplateEnd: number, padding: number, start: number, end: number): PIXI.Texture[] {
@@ -21,6 +24,7 @@ export function loadTextures(sourceTemplateStart: number, sourceTemplateEnd: num
 
   return textures;
 }
+
 /**
  * Loads a local .json file and returns the contents of the file
  * to the callback function.
@@ -123,6 +127,39 @@ export async function loadAnimationSprites(game: Game): Promise<AnimationSprites
   });
 }
 
+/** Loads the entities sprites configuration file and parses it to a Entities object */
+export async function loadEntities(game: Game): Promise<Entities> {
+
+  return new Promise(async (resolve) => {
+    let entityData: EntitiesConfig;
+
+    loadJSON('config/entities.json', function (data: string) {
+      entityData = JSON.parse(data) as EntitiesConfig;
+    });
+
+    if (entityData == null) {
+      throw new Error('Unable to load entities data.');
+    }
+    // Load file
+    let loader: SpriteLoader = new SpriteLoader();
+
+    // Get all config items
+    for (let i = 0; i < entityData.data.length; i++) {
+      let config: EntityConfig = entityData.data[i];
+
+      // Diagnostics
+      console.info(`Adding ${config.id} ${config.filename}`);
+
+      loader.addFile(config.id, config.filename);
+    }
+
+    // Load files
+    loader.loadFiles(function (cb: Entities) {
+      resolve(cb);
+    });
+  });
+}
+
 /** Loads the characters */
 export function loadCharacters(game: Game): Promise<Characters> {
 
@@ -171,6 +208,19 @@ export function loadCharacters(game: Game): Promise<Characters> {
         details.loop = animationDetailsData.overrides.loop;
 
         character.animationDetails.set(animationDetailsData.key, details);
+      }
+
+      // Create the character actions
+      for (let j = 0; j < config.actions.length; j++) {
+        let actionData = config.actions[j];
+
+        let action = new CharacterAction();
+        action.id = actionData.id;
+        action.entity = game.entities.data.get(actionData.entity);
+        action.velocity = actionData.velocity;
+        action.offset = actionData.offset;
+
+        character.actions.set(actionData.id, action);
       }
 
       // Add to collection
@@ -227,6 +277,7 @@ export function loadLevels(app: PIXI.Application, game: Game): Levels {
 
         // Set level character properties 
         character.isPlayer = levelCharacterConfig.isPlayer;
+        character.actions = characterSource.actions;
         character.animationSource = characterSource.animationSource;
         character.animationDetails = characterSource.animationDetails;
         character.animationKey = levelCharacterConfig.animationKey;
@@ -252,4 +303,36 @@ export function loadLevels(app: PIXI.Application, game: Game): Levels {
   }
 
   return levels;
+}
+
+/** Calculate the new position of a moving element */
+export function calculateMovement(currentPosition: number, moveTo: number, speed: number): number {
+  // Determine if movement is required
+  if (moveTo == currentPosition) {
+    return currentPosition;
+  }
+
+  if (currentPosition < moveTo) {
+    currentPosition += speed;
+
+    // It's possible speed is not set to 1 and overshooting its position
+    if (currentPosition > moveTo) {
+      currentPosition = moveTo;
+    }
+
+    return currentPosition;
+  }
+
+  if (currentPosition > moveTo) {
+    currentPosition -= speed;
+
+    // It's possible speed is not set to 1 and overshooting its position
+    if (currentPosition < moveTo) {
+      currentPosition = moveTo;
+    }
+
+    return currentPosition;
+  }
+
+  throw new Error(`Unexpected condition in calculateMovement`);
 }

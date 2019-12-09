@@ -17,6 +17,20 @@
                         "loop": false
                     }
                 }
+            ],
+            "actions": [
+                {
+                    "id": "fire",
+                    "entity": "projectile",
+                    "velocity" : {
+                        "x" : 20,
+                        "y" : 1
+                    },
+                    "offset" :{
+                        "x" : 100,
+                        "y" : 100
+                    }
+                }
             ]
         }
     ]

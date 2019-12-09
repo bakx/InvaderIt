@@ -1,5 +1,6 @@
 import { Point } from "pixi.js";
 import { AnimationDetails, AnimationSprite } from "./AnimatedSprite";
+import { Entity } from "./Entities";
 
 export class Characters {
     data: Map<string, Character> = new Map<string, Character>();
@@ -9,6 +10,7 @@ export class Character {
     /** Constructor of the Character class (thanks captain obvious comment - TODO) */
     constructor(id: string) {
         this._id = id;
+        this._actions = new Map<string, CharacterAction>();
         this._position = new Point();
     }
 
@@ -19,6 +21,7 @@ export class Character {
     private _defaultAnimationKey: string;
     private _defaultAnimationSpeed: number;
     private _animationDetails: Map<string, AnimationDetails>;
+    private _actions: Map<string, CharacterAction>;
 
     // Stage settings
 
@@ -65,6 +68,12 @@ export class Character {
 
     /** Set the animation details of character */
     set animationDetails(animationDetails: Map<string, AnimationDetails>) { this._animationDetails = animationDetails }
+
+    /** Get the actions of character */
+    get actions(): Map<string, CharacterAction> { return this._actions }
+
+    /** Set the actions of character */
+    set actions(actions: Map<string, CharacterAction>) { this._actions = actions }
 
     /** Get the stage of character */
     get stage(): PIXI.Container { return this._stage }
@@ -150,7 +159,7 @@ export class Character {
     }
 
     /** Set the animation for the character */
-    createAnimation(key: string, autoPlay: boolean = true, loop: boolean = true, interactive: boolean = true) {
+    createAnimation(key: string, autoPlay: boolean = true, loop: boolean = true, interactive: boolean = false) {
         // Update local variables
         this.autoPlay = autoPlay;
         this.loop = loop;
@@ -236,11 +245,18 @@ export class Character {
         char.createAnimation(key, true, true);
     }
 
-    /** */
+    /** Update all events related to the character */
     update() {
         this.animation.x = this.position.x;
         this.animation.y = this.position.y;
     }
+}
+
+export class CharacterAction {
+    id: string;
+    entity: Entity;
+    velocity: Point;
+    offset: Point;
 }
 
 export enum CharacterPlayState {

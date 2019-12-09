@@ -4,6 +4,9 @@ import { AnimationSprite } from "../Models/AnimatedSprite";
  * Notes:
  * This loader expects that sprite names are in format ending with _NNN (e.g., sprite_name_015 or sprite_name_1). 
  * It will consider sprite_name the animation key and 015 the index of the animation.
+ * 
+ * Work in progress.
+ * Created by Gideon Bakx
  */
 
 export class MultipackLoader {
@@ -27,7 +30,7 @@ export class MultipackLoader {
     /** Get all animation keys */
     animationKeys(): string[] { return this._animationKeys }
 
-    /** Constructor of the MultipackLoader class  
+    /**
     * @param file filename pattern of the animated sprite (e.g., /gfx/character/anubis/anubis-)
     * @param startAt start position of the file (e.g., 0 to start with /gfx/character/anubis/anubis-0)
     * @param endAt end position of the file (e.g., 1 to end with /gfx/character/anubis/anubis-1)

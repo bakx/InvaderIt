@@ -1,3 +1,6 @@
+import { Point } from "pixi.js"
+import { Entity } from "../Entities";
+
 export interface CharactersConfig {
     data: CharacterConfig[];
 }
@@ -7,6 +10,7 @@ export interface CharacterConfig {
     defaultAnimationKey: string;
     defaultAnimationSpeed: number;
     animationDetails: CharacterAnimationDetailsConfig[];
+    actions: CharacterActionConfig[];
 }
 
 export interface CharacterAnimationDetailsConfig {
@@ -17,4 +21,11 @@ export interface CharacterAnimationDetailsConfig {
 export interface CharacterAnimationDetailsDataConfig {
     animationSpeed: number;
     loop: boolean;
+}
+
+export interface CharacterActionConfig {
+    id: string;
+    entity: string;
+    velocity: Point;
+    offset: Point;
 }
