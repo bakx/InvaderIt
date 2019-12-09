@@ -1,0 +1,139 @@
+{
+    "data": [
+        {
+            "name": "Space1",
+            "sprites": [
+                {
+                    "file": "gfx/Backgrounds/Space1/light_stream.png",
+                    "index": 0,
+                    "width": null,
+                    "height": null,
+                    "update": {
+                        "x": 0.15,
+                        "y": 0
+                    }
+                },
+                {
+                    "file": "gfx/Backgrounds/Space1/planets1.png",
+                    "index": 1,
+                    "width": null,
+                    "height": null,
+                    "update": {
+                        "x": -0.05,
+                        "y": 0
+                    }
+                },
+                {
+                    "file": "gfx/Backgrounds/Space1/planets2.png",
+                    "index": 2,
+                    "width": null,
+                    "height": null,
+                    "update": {
+                        "x": 0.25,
+                        "y": 0.05
+                    }
+                },
+                {
+                    "file": "gfx/Backgrounds/Space1/stars.png",
+                    "index": 3,
+                    "width": null,
+                    "height": null,
+                    "update": {
+                        "x": 0.10,
+                        "y": -0.01
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Space2",
+            "sprites": [
+                {
+                    "file": "gfx/Backgrounds/Space2/background.png",
+                    "index": 0,
+                    "width": null,
+                    "height": null,
+                    "update": {
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                {
+                    "file": "gfx/Backgrounds/Space2/star.png",
+                    "index": 1,
+                    "width": null,
+                    "height": null,
+                    "update": {
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                {
+                    "file": "gfx/Backgrounds/Space2/stars.png",
+                    "index": 2,
+                    "width": null,
+                    "height": null,
+                    "update": {
+                        "x": 1,
+                        "y": 0
+                    }
+                },
+                {
+                    "file": "gfx/Backgrounds/Space2/stones1.png",
+                    "index": 3,
+                    "width": null,
+                    "height": null,
+                    "update": {
+                        "x": 0.5,
+                        "y": 0
+                    }
+                },
+                {
+                    "file": "gfx/Backgrounds/Space2/stones2.png",
+                    "index": 4,
+                    "width": null,
+                    "height": null,
+                    "update": {
+                        "x": 0.75,
+                        "y": 0
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Space3",
+            "sprites": [
+                {
+                    "file": "gfx/Backgrounds/Space3/sky.png",
+                    "index": 0,
+                    "width": null,
+                    "height": null,
+                    "update": {
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                {
+                    "file": "gfx/Backgrounds/Space3/moon.png",
+                    "index": 1,
+                    "width": null,
+                    "height": null,
+                    "update": {
+                        "x": 0.25,
+                        "y": 0
+                    }
+                },
+                {
+                    "file": "gfx/Backgrounds/Space3/earth.png",
+                    "index": 2,
+                    "width": null,
+                    "height": null,
+                    "update": {
+                        "x": 0.5,
+                        "y": 0
+                    }
+                }
+            ]
+        }
+    ]
+}

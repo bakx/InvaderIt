@@ -1,0 +1,23 @@
+{
+    "data": [
+        {
+            "id": "player",
+            "defaultAnimationKey": "Player/Default/skeleton-MovingNIdle",
+            "defaultAnimationSpeed": 0.10,
+            "animationDetails": [
+                {
+                    "key": "5_JUMP",
+                    "overrides": {
+                        "loop": false
+                    }
+                },
+                {
+                    "key": "7_DIE",
+                    "overrides": {
+                        "loop": false
+                    }
+                }
+            ]
+        }
+    ]
+}

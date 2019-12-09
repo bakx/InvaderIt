@@ -1,0 +1,24 @@
+{
+    "data": [
+        {
+            "name": "Level 1",
+            "background": "Space1",
+            "characters": [
+                {
+                    "id": "b58db7a6-f8fc-4f31-9162-86fae6282303",
+                    "sprite": "player",
+                    "animationKey": "Player/Default/skeleton-MovingNIdle",
+                    "animationSpeed": 0.14,
+                    "isPlayer": true,
+                    "position": {
+                        "x": 100,
+                        "y": 525
+                    }
+                }
+            ],
+            "entities": [
+                {}
+            ]
+        }
+    ]
+}

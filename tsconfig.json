@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "sourceMap": true,
+        "outDir": "src",
+        "alwaysStrict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitAny": true,
+        "incremental": true
+    },
+    "include": [
+        "ts/*",
+        "ts/**/*"
+    ],
+    "exclude": [
+        "node_modules/*",
+        "node_modules/**/*"
+    ]
+}

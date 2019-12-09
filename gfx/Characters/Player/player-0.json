@@ -1,0 +1,831 @@
+{
+  "frames": {
+    "Player/Destroyed/skeleton-Destroy_20": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 434
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 14,
+        "y": 32,
+        "w": 552,
+        "h": 434
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_19": {
+      "frame": {
+        "x": 552,
+        "y": 0,
+        "w": 538,
+        "h": 411
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 28,
+        "y": 41,
+        "w": 538,
+        "h": 411
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_18": {
+      "frame": {
+        "x": 1090,
+        "y": 0,
+        "w": 529,
+        "h": 397
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 37,
+        "y": 40,
+        "w": 529,
+        "h": 397
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_11": {
+      "frame": {
+        "x": 1619,
+        "y": 0,
+        "w": 415,
+        "h": 345
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 111,
+        "y": 31,
+        "w": 415,
+        "h": 345
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_8": {
+      "frame": {
+        "x": 1619,
+        "y": 345,
+        "w": 406,
+        "h": 333
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 129,
+        "y": 61,
+        "w": 406,
+        "h": 333
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_17": {
+      "frame": {
+        "x": 1090,
+        "y": 397,
+        "w": 519,
+        "h": 382
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 47,
+        "y": 40,
+        "w": 519,
+        "h": 382
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_12": {
+      "frame": {
+        "x": 1609,
+        "y": 678,
+        "w": 439,
+        "h": 373
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 98,
+        "y": 18,
+        "w": 439,
+        "h": 373
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_16": {
+      "frame": {
+        "x": 552,
+        "y": 411,
+        "w": 507,
+        "h": 368
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 59,
+        "y": 42,
+        "w": 507,
+        "h": 368
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_15": {
+      "frame": {
+        "x": 0,
+        "y": 434,
+        "w": 494,
+        "h": 366
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 72,
+        "y": 44,
+        "w": 494,
+        "h": 366
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_14": {
+      "frame": {
+        "x": 0,
+        "y": 1051,
+        "w": 481,
+        "h": 364
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 85,
+        "y": 47,
+        "w": 481,
+        "h": 364
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_4": {
+      "frame": {
+        "x": 0,
+        "y": 800,
+        "w": 310,
+        "h": 249
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 164,
+        "y": 85,
+        "w": 310,
+        "h": 249
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_3": {
+      "frame": {
+        "x": 310,
+        "y": 800,
+        "w": 315,
+        "h": 234
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 153,
+        "y": 91,
+        "w": 315,
+        "h": 234
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_13": {
+      "frame": {
+        "x": 0,
+        "y": 1532,
+        "w": 468,
+        "h": 401
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 86,
+        "y": 5,
+        "w": 468,
+        "h": 401
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_10": {
+      "frame": {
+        "x": 364,
+        "y": 1051,
+        "w": 390,
+        "h": 318
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 124,
+        "y": 44,
+        "w": 390,
+        "h": 318
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_5": {
+      "frame": {
+        "x": 625,
+        "y": 779,
+        "w": 328,
+        "h": 271
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 156,
+        "y": 72,
+        "w": 328,
+        "h": 271
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_21": {
+      "frame": {
+        "x": 364,
+        "y": 1441,
+        "w": 72,
+        "h": 96
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 494,
+        "y": 191,
+        "w": 72,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_7": {
+      "frame": {
+        "x": 401,
+        "y": 1513,
+        "w": 381,
+        "h": 304
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 137,
+        "y": 73,
+        "w": 381,
+        "h": 304
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_9": {
+      "frame": {
+        "x": 682,
+        "y": 1051,
+        "w": 370,
+        "h": 288
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 131,
+        "y": 60,
+        "w": 370,
+        "h": 288
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_2": {
+      "frame": {
+        "x": 953,
+        "y": 779,
+        "w": 312,
+        "h": 221
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 147,
+        "y": 91,
+        "w": 312,
+        "h": 221
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_1": {
+      "frame": {
+        "x": 1265,
+        "y": 779,
+        "w": 302,
+        "h": 205
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 149,
+        "y": 91,
+        "w": 302,
+        "h": 205
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/GetHit/skeleton-GetHit_1": {
+      "frame": {
+        "x": 1265,
+        "y": 984,
+        "w": 294,
+        "h": 211
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 3,
+        "y": 12,
+        "w": 294,
+        "h": 211
+      },
+      "sourceSize": {
+        "w": 303,
+        "h": 232
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/GetHit/skeleton-GetHit_0": {
+      "frame": {
+        "x": 970,
+        "y": 1000,
+        "w": 294,
+        "h": 210
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 3,
+        "y": 13,
+        "w": 294,
+        "h": 210
+      },
+      "sourceSize": {
+        "w": 303,
+        "h": 232
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_6": {
+      "frame": {
+        "x": 970,
+        "y": 1210,
+        "w": 353,
+        "h": 293
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 148,
+        "y": 67,
+        "w": 353,
+        "h": 293
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Default/skeleton-MovingNIdle_5": {
+      "frame": {
+        "x": 705,
+        "y": 1421,
+        "w": 287,
+        "h": 217
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 2,
+        "w": 287,
+        "h": 217
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 222
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/GetHit/skeleton-GetHit_3": {
+      "frame": {
+        "x": 705,
+        "y": 1708,
+        "w": 293,
+        "h": 212
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 10,
+        "w": 293,
+        "h": 212
+      },
+      "sourceSize": {
+        "w": 303,
+        "h": 232
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/GetHit/skeleton-GetHit_4": {
+      "frame": {
+        "x": 917,
+        "y": 1708,
+        "w": 293,
+        "h": 212
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 9,
+        "w": 293,
+        "h": 212
+      },
+      "sourceSize": {
+        "w": 303,
+        "h": 232
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/GetHit/skeleton-GetHit_2": {
+      "frame": {
+        "x": 1129,
+        "y": 1563,
+        "w": 293,
+        "h": 211
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 11,
+        "w": 293,
+        "h": 211
+      },
+      "sourceSize": {
+        "w": 303,
+        "h": 232
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/GetHit/skeleton-GetHit_5": {
+      "frame": {
+        "x": 1263,
+        "y": 1210,
+        "w": 292,
+        "h": 212
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 5,
+        "y": 9,
+        "w": 292,
+        "h": 212
+      },
+      "sourceSize": {
+        "w": 303,
+        "h": 232
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/GetHit/skeleton-GetHit_6": {
+      "frame": {
+        "x": 1559,
+        "y": 1051,
+        "w": 292,
+        "h": 212
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 5,
+        "y": 8,
+        "w": 292,
+        "h": 212
+      },
+      "sourceSize": {
+        "w": 303,
+        "h": 232
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/GetHit/skeleton-GetHit_7": {
+      "frame": {
+        "x": 1559,
+        "y": 1263,
+        "w": 291,
+        "h": 212
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 6,
+        "y": 8,
+        "w": 291,
+        "h": 212
+      },
+      "sourceSize": {
+        "w": 303,
+        "h": 232
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/GetHit/skeleton-GetHit_8": {
+      "frame": {
+        "x": 1340,
+        "y": 1502,
+        "w": 290,
+        "h": 214
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 6,
+        "y": 8,
+        "w": 290,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 303,
+        "h": 232
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Destroyed/skeleton-Destroy_0": {
+      "frame": {
+        "x": 1475,
+        "y": 1792,
+        "w": 288,
+        "h": 216
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 162,
+        "y": 90,
+        "w": 288,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 580,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/GetHit/skeleton-GetHit_11": {
+      "frame": {
+        "x": 1554,
+        "y": 1475,
+        "w": 289,
+        "h": 215
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 7,
+        "y": 11,
+        "w": 289,
+        "h": 215
+      },
+      "sourceSize": {
+        "w": 303,
+        "h": 232
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/GetHit/skeleton-GetHit_12": {
+      "frame": {
+        "x": 1769,
+        "y": 1475,
+        "w": 288,
+        "h": 216
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 8,
+        "y": 11,
+        "w": 288,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 303,
+        "h": 232
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.0",
+    "image": "player-0.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 2048,
+      "h": 2008
+    },
+    "scale": 1
+  }
+}

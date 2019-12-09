@@ -1,0 +1,11 @@
+{
+    "data": [
+        {
+            "id": "player",
+            "filename": "gfx/Characters/Player/player-",
+            "startAt": 0,
+            "endAt": 1,
+            "animationSpeed": 0.2
+        }
+    ]
+}

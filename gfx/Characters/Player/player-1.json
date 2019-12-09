@@ -1,0 +1,399 @@
+{
+  "frames": {
+    "Player/GetHit/skeleton-GetHit_10": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 289,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 7,
+        "y": 10,
+        "w": 289,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 303,
+        "h": 232
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/GetHit/skeleton-GetHit_9": {
+      "frame": {
+        "x": 289,
+        "y": 0,
+        "w": 289,
+        "h": 214
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 7,
+        "y": 9,
+        "w": 289,
+        "h": 214
+      },
+      "sourceSize": {
+        "w": 303,
+        "h": 232
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/GetHit/skeleton-GetHit_13": {
+      "frame": {
+        "x": 578,
+        "y": 0,
+        "w": 288,
+        "h": 216
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 8,
+        "y": 12,
+        "w": 288,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 303,
+        "h": 232
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Default/skeleton-MovingNIdle_1": {
+      "frame": {
+        "x": 0,
+        "y": 214,
+        "w": 287,
+        "h": 216
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 6,
+        "w": 287,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 222
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Default/skeleton-MovingNIdle_10": {
+      "frame": {
+        "x": 287,
+        "y": 214,
+        "w": 287,
+        "h": 216
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 4,
+        "w": 287,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 222
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Default/skeleton-MovingNIdle_11": {
+      "frame": {
+        "x": 866,
+        "y": 0,
+        "w": 287,
+        "h": 216
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 5,
+        "w": 287,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 222
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Default/skeleton-MovingNIdle_12": {
+      "frame": {
+        "x": 1153,
+        "y": 0,
+        "w": 287,
+        "h": 216
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 6,
+        "w": 287,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 222
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Default/skeleton-MovingNIdle_2": {
+      "frame": {
+        "x": 1440,
+        "y": 0,
+        "w": 287,
+        "h": 216
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 5,
+        "w": 287,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 222
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Default/skeleton-MovingNIdle_3": {
+      "frame": {
+        "x": 1727,
+        "y": 0,
+        "w": 287,
+        "h": 216
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 4,
+        "w": 287,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 222
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Default/skeleton-MovingNIdle_4": {
+      "frame": {
+        "x": 574,
+        "y": 216,
+        "w": 287,
+        "h": 216
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 3,
+        "w": 287,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 222
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Default/skeleton-MovingNIdle_6": {
+      "frame": {
+        "x": 0,
+        "y": 430,
+        "w": 287,
+        "h": 216
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 2,
+        "w": 287,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 222
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Default/skeleton-MovingNIdle_7": {
+      "frame": {
+        "x": 287,
+        "y": 430,
+        "w": 287,
+        "h": 216
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 1,
+        "w": 287,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 222
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Default/skeleton-MovingNIdle_8": {
+      "frame": {
+        "x": 861,
+        "y": 216,
+        "w": 287,
+        "h": 216
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 2,
+        "w": 287,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 222
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Default/skeleton-MovingNIdle_0": {
+      "frame": {
+        "x": 1148,
+        "y": 216,
+        "w": 287,
+        "h": 215
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 7,
+        "w": 287,
+        "h": 215
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 222
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Default/skeleton-MovingNIdle_13": {
+      "frame": {
+        "x": 1148,
+        "y": 216,
+        "w": 287,
+        "h": 215
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 7,
+        "w": 287,
+        "h": 215
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 222
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Player/Default/skeleton-MovingNIdle_9": {
+      "frame": {
+        "x": 574,
+        "y": 216,
+        "w": 287,
+        "h": 216
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 3,
+        "w": 287,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 222
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.0",
+    "image": "player-1.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 2014,
+      "h": 646
+    },
+    "scale": 1
+  }
+}
