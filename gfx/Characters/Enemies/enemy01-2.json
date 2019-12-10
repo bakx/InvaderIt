@@ -1,0 +1,639 @@
+{
+  "frames": {
+    "Enemy01/GetHit/skeleton-GetHit_25": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 491,
+        "h": 336
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 8,
+        "y": 7,
+        "w": 491,
+        "h": 336
+      },
+      "sourceSize": {
+        "w": 503,
+        "h": 371
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Shoot/skeleton-Shoot_25": {
+      "frame": {
+        "x": 491,
+        "y": 0,
+        "w": 491,
+        "h": 336
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 34,
+        "y": 7,
+        "w": 491,
+        "h": 336
+      },
+      "sourceSize": {
+        "w": 530,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Shoot/skeleton-Shoot_3": {
+      "frame": {
+        "x": 982,
+        "y": 0,
+        "w": 491,
+        "h": 322
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 17,
+        "w": 491,
+        "h": 322
+      },
+      "sourceSize": {
+        "w": 530,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Shoot/skeleton-Shoot_2": {
+      "frame": {
+        "x": 1473,
+        "y": 0,
+        "w": 491,
+        "h": 321
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 12,
+        "y": 19,
+        "w": 491,
+        "h": 321
+      },
+      "sourceSize": {
+        "w": 530,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Moving/skeleton-Moving_0": {
+      "frame": {
+        "x": 1473,
+        "y": 321,
+        "w": 490,
+        "h": 336
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 7,
+        "w": 490,
+        "h": 336
+      },
+      "sourceSize": {
+        "w": 495,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Idle/skeleton-Idle_0": {
+      "frame": {
+        "x": 982,
+        "y": 322,
+        "w": 490,
+        "h": 335
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 10,
+        "w": 490,
+        "h": 335
+      },
+      "sourceSize": {
+        "w": 495,
+        "h": 347
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Idle/skeleton-Idle_25": {
+      "frame": {
+        "x": 0,
+        "y": 336,
+        "w": 490,
+        "h": 335
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 10,
+        "w": 490,
+        "h": 335
+      },
+      "sourceSize": {
+        "w": 495,
+        "h": 347
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Shoot/skeleton-Shoot_4": {
+      "frame": {
+        "x": 490,
+        "y": 336,
+        "w": 489,
+        "h": 321
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 16,
+        "w": 489,
+        "h": 321
+      },
+      "sourceSize": {
+        "w": 530,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/GetHit/skeleton-GetHit_0": {
+      "frame": {
+        "x": 0,
+        "y": 671,
+        "w": 485,
+        "h": 323
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 7,
+        "y": 46,
+        "w": 485,
+        "h": 323
+      },
+      "sourceSize": {
+        "w": 503,
+        "h": 371
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Shoot/skeleton-Shoot_1": {
+      "frame": {
+        "x": 0,
+        "y": 1156,
+        "w": 483,
+        "h": 330
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 24,
+        "y": 11,
+        "w": 483,
+        "h": 330
+      },
+      "sourceSize": {
+        "w": 530,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/GetHit/skeleton-GetHit_16": {
+      "frame": {
+        "x": 0,
+        "y": 1639,
+        "w": 400,
+        "h": 323
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 8,
+        "y": 9,
+        "w": 400,
+        "h": 323
+      },
+      "sourceSize": {
+        "w": 503,
+        "h": 371
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Shoot/skeleton-Shoot_16": {
+      "frame": {
+        "x": 323,
+        "y": 1639,
+        "w": 400,
+        "h": 323
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 34,
+        "y": 9,
+        "w": 400,
+        "h": 323
+      },
+      "sourceSize": {
+        "w": 530,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Shoot/skeleton-Shoot_9": {
+      "frame": {
+        "x": 646,
+        "y": 1639,
+        "w": 400,
+        "h": 323
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 34,
+        "y": 9,
+        "w": 400,
+        "h": 323
+      },
+      "sourceSize": {
+        "w": 530,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Shoot/skeleton-Shoot_24": {
+      "frame": {
+        "x": 323,
+        "y": 671,
+        "w": 473,
+        "h": 330
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 34,
+        "y": 11,
+        "w": 473,
+        "h": 330
+      },
+      "sourceSize": {
+        "w": 530,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Moving/skeleton-Moving_1": {
+      "frame": {
+        "x": 330,
+        "y": 1144,
+        "w": 472,
+        "h": 330
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 11,
+        "w": 472,
+        "h": 330
+      },
+      "sourceSize": {
+        "w": 495,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Moving/skeleton-Moving_24": {
+      "frame": {
+        "x": 653,
+        "y": 671,
+        "w": 472,
+        "h": 330
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 11,
+        "w": 472,
+        "h": 330
+      },
+      "sourceSize": {
+        "w": 495,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Idle/skeleton-Idle_1": {
+      "frame": {
+        "x": 660,
+        "y": 1143,
+        "w": 472,
+        "h": 326
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 17,
+        "w": 472,
+        "h": 326
+      },
+      "sourceSize": {
+        "w": 495,
+        "h": 347
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/GetHit/skeleton-GetHit_18": {
+      "frame": {
+        "x": 969,
+        "y": 1615,
+        "w": 427,
+        "h": 321
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 8,
+        "y": 12,
+        "w": 427,
+        "h": 321
+      },
+      "sourceSize": {
+        "w": 503,
+        "h": 371
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Shoot/skeleton-Shoot_18": {
+      "frame": {
+        "x": 1290,
+        "y": 1615,
+        "w": 427,
+        "h": 321
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 34,
+        "y": 12,
+        "w": 427,
+        "h": 321
+      },
+      "sourceSize": {
+        "w": 530,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Shoot/skeleton-Shoot_7": {
+      "frame": {
+        "x": 1611,
+        "y": 657,
+        "w": 427,
+        "h": 321
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 34,
+        "y": 12,
+        "w": 427,
+        "h": 321
+      },
+      "sourceSize": {
+        "w": 530,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Idle/skeleton-Idle_18": {
+      "frame": {
+        "x": 1611,
+        "y": 978,
+        "w": 426,
+        "h": 323
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 12,
+        "w": 426,
+        "h": 323
+      },
+      "sourceSize": {
+        "w": 495,
+        "h": 347
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Idle/skeleton-Idle_7": {
+      "frame": {
+        "x": 1611,
+        "y": 1301,
+        "w": 426,
+        "h": 323
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 12,
+        "w": 426,
+        "h": 323
+      },
+      "sourceSize": {
+        "w": 495,
+        "h": 347
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/GetHit/skeleton-GetHit_7": {
+      "frame": {
+        "x": 1611,
+        "y": 1624,
+        "w": 424,
+        "h": 323
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 7,
+        "y": 22,
+        "w": 424,
+        "h": 323
+      },
+      "sourceSize": {
+        "w": 503,
+        "h": 371
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Idle/skeleton-Idle_24": {
+      "frame": {
+        "x": 983,
+        "y": 657,
+        "w": 472,
+        "h": 326
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 17,
+        "w": 472,
+        "h": 326
+      },
+      "sourceSize": {
+        "w": 495,
+        "h": 347
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Shoot/skeleton-Shoot_23": {
+      "frame": {
+        "x": 986,
+        "y": 1129,
+        "w": 469,
+        "h": 321
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 34,
+        "y": 19,
+        "w": 469,
+        "h": 321
+      },
+      "sourceSize": {
+        "w": 530,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy01/Moving/skeleton-Moving_25": {
+      "frame": {
+        "x": 1473,
+        "y": 321,
+        "w": 490,
+        "h": 336
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 7,
+        "w": 490,
+        "h": 336
+      },
+      "sourceSize": {
+        "w": 495,
+        "h": 345
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.0",
+    "image": "enemy01-2.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 2038,
+      "h": 2048
+    },
+    "scale": 1
+  }
+}

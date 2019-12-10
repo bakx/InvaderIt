@@ -1,0 +1,231 @@
+{
+  "frames": {
+    "Enemy10/Idle/skeleton-Idle_13": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 304,
+        "h": 324
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 9,
+        "w": 304,
+        "h": 324
+      },
+      "sourceSize": {
+        "w": 306,
+        "h": 340
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy10/Idle/skeleton-Idle_2": {
+      "frame": {
+        "x": 0,
+        "y": 324,
+        "w": 304,
+        "h": 324
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 12,
+        "w": 304,
+        "h": 324
+      },
+      "sourceSize": {
+        "w": 306,
+        "h": 340
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy10/Shoot/skeleton-Shoot_12": {
+      "frame": {
+        "x": 0,
+        "y": 648,
+        "w": 304,
+        "h": 324
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 71,
+        "w": 304,
+        "h": 324
+      },
+      "sourceSize": {
+        "w": 306,
+        "h": 404
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy10/Shoot/skeleton-Shoot_13": {
+      "frame": {
+        "x": 0,
+        "y": 972,
+        "w": 304,
+        "h": 324
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 73,
+        "w": 304,
+        "h": 324
+      },
+      "sourceSize": {
+        "w": 306,
+        "h": 404
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy10/Idle/skeleton-Idle_3": {
+      "frame": {
+        "x": 0,
+        "y": 1296,
+        "w": 303,
+        "h": 324
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 10,
+        "w": 303,
+        "h": 324
+      },
+      "sourceSize": {
+        "w": 306,
+        "h": 340
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy10/Destroyed/skeleton-Destroyed_1": {
+      "frame": {
+        "x": 0,
+        "y": 1620,
+        "w": 311,
+        "h": 322
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 70,
+        "y": 55,
+        "w": 311,
+        "h": 322
+      },
+      "sourceSize": {
+        "w": 444,
+        "h": 440
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy10/Moving/skeleton-Moving_13": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 304,
+        "h": 324
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 9,
+        "w": 304,
+        "h": 324
+      },
+      "sourceSize": {
+        "w": 306,
+        "h": 340
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy10/Moving/skeleton-Moving_2": {
+      "frame": {
+        "x": 0,
+        "y": 324,
+        "w": 304,
+        "h": 324
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 12,
+        "w": 304,
+        "h": 324
+      },
+      "sourceSize": {
+        "w": 306,
+        "h": 340
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy10/Moving/skeleton-Moving_3": {
+      "frame": {
+        "x": 0,
+        "y": 1296,
+        "w": 303,
+        "h": 324
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 10,
+        "w": 303,
+        "h": 324
+      },
+      "sourceSize": {
+        "w": 306,
+        "h": 340
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.0",
+    "image": "enemy10-2.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 311,
+      "h": 1942
+    },
+    "scale": 1
+  }
+}

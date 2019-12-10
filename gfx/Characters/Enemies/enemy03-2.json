@@ -1,0 +1,567 @@
+{
+  "frames": {
+    "Enemy03/Idle/skeleton-Idle_5": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 354,
+        "h": 264
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 11,
+        "w": 354,
+        "h": 264
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 287
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Idle/skeleton-Idle_6": {
+      "frame": {
+        "x": 354,
+        "y": 0,
+        "w": 354,
+        "h": 264
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 8,
+        "w": 354,
+        "h": 264
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 287
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_16": {
+      "frame": {
+        "x": 708,
+        "y": 0,
+        "w": 354,
+        "h": 264
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 22,
+        "w": 354,
+        "h": 264
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Shoot/skeleton-Shoot_9": {
+      "frame": {
+        "x": 1062,
+        "y": 0,
+        "w": 354,
+        "h": 264
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 47,
+        "w": 354,
+        "h": 264
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 376
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Idle/skeleton-Idle_12": {
+      "frame": {
+        "x": 1416,
+        "y": 0,
+        "w": 354,
+        "h": 263
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 12,
+        "w": 354,
+        "h": 263
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 287
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Idle/skeleton-Idle_13": {
+      "frame": {
+        "x": 1770,
+        "y": 0,
+        "w": 354,
+        "h": 263
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 15,
+        "w": 354,
+        "h": 263
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 287
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Idle/skeleton-Idle_14": {
+      "frame": {
+        "x": 1416,
+        "y": 263,
+        "w": 354,
+        "h": 263
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 17,
+        "w": 354,
+        "h": 263
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 287
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_1": {
+      "frame": {
+        "x": 1770,
+        "y": 354,
+        "w": 354,
+        "h": 263
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 21,
+        "w": 354,
+        "h": 263
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Idle/skeleton-Idle_4": {
+      "frame": {
+        "x": 0,
+        "y": 708,
+        "w": 354,
+        "h": 262
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 15,
+        "w": 354,
+        "h": 262
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 287
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_15": {
+      "frame": {
+        "x": 0,
+        "y": 264,
+        "w": 354,
+        "h": 262
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 20,
+        "w": 354,
+        "h": 262
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_2": {
+      "frame": {
+        "x": 0,
+        "y": 1062,
+        "w": 354,
+        "h": 262
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 19,
+        "w": 354,
+        "h": 262
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_14": {
+      "frame": {
+        "x": 0,
+        "y": 1416,
+        "w": 354,
+        "h": 260
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 18,
+        "w": 354,
+        "h": 260
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_3": {
+      "frame": {
+        "x": 0,
+        "y": 1770,
+        "w": 354,
+        "h": 260
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 17,
+        "w": 354,
+        "h": 260
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_13": {
+      "frame": {
+        "x": 260,
+        "y": 1416,
+        "w": 354,
+        "h": 259
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 16,
+        "w": 354,
+        "h": 259
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_8": {
+      "frame": {
+        "x": 354,
+        "y": 1770,
+        "w": 354,
+        "h": 259
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 354,
+        "h": 259
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_10": {
+      "frame": {
+        "x": 708,
+        "y": 1770,
+        "w": 354,
+        "h": 258
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 5,
+        "w": 354,
+        "h": 258
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_11": {
+      "frame": {
+        "x": 1062,
+        "y": 1770,
+        "w": 354,
+        "h": 258
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 9,
+        "w": 354,
+        "h": 258
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_12": {
+      "frame": {
+        "x": 1416,
+        "y": 526,
+        "w": 354,
+        "h": 258
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 13,
+        "w": 354,
+        "h": 258
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_4": {
+      "frame": {
+        "x": 1770,
+        "y": 708,
+        "w": 354,
+        "h": 258
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 15,
+        "w": 354,
+        "h": 258
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_5": {
+      "frame": {
+        "x": 1416,
+        "y": 784,
+        "w": 354,
+        "h": 258
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 12,
+        "w": 354,
+        "h": 258
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_6": {
+      "frame": {
+        "x": 1416,
+        "y": 1042,
+        "w": 354,
+        "h": 258
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 8,
+        "w": 354,
+        "h": 258
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_7": {
+      "frame": {
+        "x": 1416,
+        "y": 1300,
+        "w": 354,
+        "h": 258
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 4,
+        "w": 354,
+        "h": 258
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy03/Moving/skeleton-Moving_9": {
+      "frame": {
+        "x": 1770,
+        "y": 1062,
+        "w": 354,
+        "h": 258
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 2,
+        "w": 354,
+        "h": 258
+      },
+      "sourceSize": {
+        "w": 355,
+        "h": 288
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.0",
+    "image": "enemy03-2.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 2033,
+      "h": 2030
+    },
+    "scale": 1
+  }
+}

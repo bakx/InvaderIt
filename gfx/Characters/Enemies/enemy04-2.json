@@ -1,0 +1,327 @@
+{
+  "frames": {
+    "Enemy04/GetHit/skeleton-GetHit_7": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 348,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 3,
+        "w": 348,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 351,
+        "h": 276
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy04/GetHit/skeleton-GetHit_8": {
+      "frame": {
+        "x": 348,
+        "y": 0,
+        "w": 348,
+        "h": 252
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 2,
+        "w": 348,
+        "h": 252
+      },
+      "sourceSize": {
+        "w": 351,
+        "h": 276
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy04/GetHit/skeleton-GetHit_0": {
+      "frame": {
+        "x": 696,
+        "y": 0,
+        "w": 348,
+        "h": 246
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 17,
+        "w": 348,
+        "h": 246
+      },
+      "sourceSize": {
+        "w": 351,
+        "h": 276
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy04/GetHit/skeleton-GetHit_1": {
+      "frame": {
+        "x": 1044,
+        "y": 0,
+        "w": 348,
+        "h": 246
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 15,
+        "w": 348,
+        "h": 246
+      },
+      "sourceSize": {
+        "w": 351,
+        "h": 276
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy04/GetHit/skeleton-GetHit_2": {
+      "frame": {
+        "x": 1392,
+        "y": 0,
+        "w": 348,
+        "h": 245
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 13,
+        "w": 348,
+        "h": 245
+      },
+      "sourceSize": {
+        "w": 351,
+        "h": 276
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy04/Idle/skeleton-Idle_5": {
+      "frame": {
+        "x": 1740,
+        "y": 0,
+        "w": 347,
+        "h": 253
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 6,
+        "w": 347,
+        "h": 253
+      },
+      "sourceSize": {
+        "w": 351,
+        "h": 269
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy04/Shoot/skeleton-Shoot_5": {
+      "frame": {
+        "x": 1392,
+        "y": 245,
+        "w": 347,
+        "h": 253
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 6,
+        "w": 347,
+        "h": 253
+      },
+      "sourceSize": {
+        "w": 351,
+        "h": 322
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy04/Idle/skeleton-Idle_4": {
+      "frame": {
+        "x": 1739,
+        "y": 347,
+        "w": 346,
+        "h": 253
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 8,
+        "w": 346,
+        "h": 253
+      },
+      "sourceSize": {
+        "w": 351,
+        "h": 269
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy04/GetHit/skeleton-GetHit_5": {
+      "frame": {
+        "x": 696,
+        "y": 246,
+        "w": 347,
+        "h": 248
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 7,
+        "w": 347,
+        "h": 248
+      },
+      "sourceSize": {
+        "w": 351,
+        "h": 276
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy04/GetHit/skeleton-GetHit_3": {
+      "frame": {
+        "x": 1043,
+        "y": 246,
+        "w": 347,
+        "h": 245
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 11,
+        "w": 347,
+        "h": 245
+      },
+      "sourceSize": {
+        "w": 351,
+        "h": 276
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy04/Shoot/skeleton-Shoot_4": {
+      "frame": {
+        "x": 1043,
+        "y": 491,
+        "w": 346,
+        "h": 314
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 8,
+        "w": 346,
+        "h": 314
+      },
+      "sourceSize": {
+        "w": 351,
+        "h": 322
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy04/GetHit/skeleton-GetHit_4": {
+      "frame": {
+        "x": 1389,
+        "y": 498,
+        "w": 346,
+        "h": 247
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 9,
+        "w": 346,
+        "h": 247
+      },
+      "sourceSize": {
+        "w": 351,
+        "h": 276
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Enemy04/Destroyed/skeleton-Destroyed_5": {
+      "frame": {
+        "x": 1389,
+        "y": 745,
+        "w": 327,
+        "h": 330
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 37,
+        "y": 108,
+        "w": 327,
+        "h": 330
+      },
+      "sourceSize": {
+        "w": 422,
+        "h": 500
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.0",
+    "image": "enemy04-2.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1993,
+      "h": 1072
+    },
+    "scale": 1
+  }
+}
