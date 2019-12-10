@@ -79,7 +79,7 @@ export class Game {
         // Load entities
         loadEntities(this)
           .then(entities => {
-            this.entities = entities
+            this.entities = entities;
 
             // Load the animation sprites
             loadAnimationSprites(this)
