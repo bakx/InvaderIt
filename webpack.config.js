@@ -1,17 +1,21 @@
-const webpack = require('webpack');
+'use strict';
 const path = require('path');
 
-const config = {
-  entry: './src/index.js',
+module.exports = {
+  entry: './ts/Main.ts',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist')
   },
   module: {
     rules: [
-      { test: /\.ts$/, use: 'ts-loader' }
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader'
+      }
     ]
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js']
   }
 };
-
-module.exports = config;

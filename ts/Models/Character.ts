@@ -211,7 +211,7 @@ export class Character {
             this.animation.on("click", function () { e.playAnimation(e) });
         }
 
-        // Overrides? TODO does this belong here?
+        // Overrides animation details for this specific character.
         if (this._animationDetails && this._animationDetails.has(key)) {
             let details = this._animationDetails.get(key);
 

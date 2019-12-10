@@ -1,1 +1,2 @@
-npm run-script dev
+npx webpack --watch --mode="development"
+# npm run-script dev
