@@ -1,16 +1,16 @@
 import { MultipackLoader } from "./Extensions/MultipackLoader";
+import { SpriteLoader } from "./Extensions/SpriteLoader";
 import { Game } from "./Game";
 import { AnimationDetails, AnimationSprite, AnimationSprites } from "./Models/AnimatedSprite";
 import { Background, Backgrounds } from "./Models/Background";
-import { Character, Characters, CharacterAction } from "./Models/Character";
+import { Character, CharacterAction, Characters } from "./Models/Character";
 import { AnimationSpriteConfig, AnimationSpritesConfig } from "./Models/Configuration/AnimationSpritesConfig";
 import { BackgroundConfig, BackgroundsConfig, BackgroundSpritesConfig } from "./Models/Configuration/BackgroundsConfig";
 import { CharacterAnimationDetailsConfig, CharacterConfig, CharactersConfig } from "./Models/Configuration/CharactersConfig";
-import { LevelCharacterConfig, LevelConfig, LevelsConfig } from "./Models/Configuration/LevelsConfig";
-import { LevelData, Levels } from "./Models/Level";
-import { Entities } from "./Models/Entities";
 import { EntitiesConfig, EntityConfig } from "./Models/Configuration/EntitiesConfig";
-import { SpriteLoader } from "./Extensions/SpriteLoader";
+import { LevelCharacterConfig, LevelConfig, LevelsConfig } from "./Models/Configuration/LevelsConfig";
+import { Entities } from "./Models/Entities";
+import { LevelData, Levels } from "./Models/Level";
 
 /** Loads the textures configuration file and parses it to a PIXI.Texture[] object */
 export function loadTextures(sourceTemplateStart: number, sourceTemplateEnd: number, padding: number, start: number, end: number): PIXI.Texture[] {
@@ -32,16 +32,20 @@ export function loadTextures(sourceTemplateStart: number, sourceTemplateEnd: num
  * @param {string} file Name of the file
  * @param {CallableFunction} callback Name of callback function
  */
-export function loadJSON(file: string, callback: CallableFunction) {
-  var xobj = new XMLHttpRequest();
-  xobj.overrideMimeType("application/json");
-  xobj.open("GET", file, false);
-  xobj.onreadystatechange = function () {
-    if (xobj.readyState == 4 && xobj.status == 200) {
-      callback(xobj.responseText);
-    }
-  };
-  xobj.send(null);
+export function loadJSON(file: string): Promise<string> {
+
+  return new Promise(async (resolve) => {
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open("GET", file, true);
+    xobj.onreadystatechange = function () {
+      if (xobj.readyState == 4 && xobj.status == 200) {
+        resolve(xobj.responseText);
+      }
+    };
+
+    xobj.send(null);
+  })
 }
 
 /** Loads the backgrounds configuration file and parses it to a Backgrounds object */
@@ -51,113 +55,116 @@ export function loadBackgrounds(app: PIXI.Application): Promise<Backgrounds> {
     let backgrounds: Backgrounds = new Backgrounds();
     let backgroundData: BackgroundsConfig;
 
-    loadJSON('config/backgrounds.json', function (data: string) {
-      backgroundData = JSON.parse(data);
-    });
+    loadJSON('config/backgrounds.json')
+      .then(data => {
+        backgroundData = JSON.parse(data) as BackgroundsConfig;
 
-    if (backgroundData == null) {
-      throw new Error('Unable to load backgrounds');
-    }
+        if (backgroundData == null) {
+          throw new Error('Unable to load backgrounds');
+        }
 
-    for (let i = 0; i < backgroundData.data.length; i++) {
-      let config: BackgroundConfig = backgroundData.data[i];
+        for (let i = 0; i < backgroundData.data.length; i++) {
+          let config: BackgroundConfig = backgroundData.data[i];
 
-      // Prepare background
-      let background: Background = new Background(config.name);
+          // Prepare background
+          let background: Background = new Background(config.name);
 
-      for (let j = 0; j < config.sprites.length; j++) {
-        let sprite = config.sprites[j] as BackgroundSpritesConfig;
+          for (let j = 0; j < config.sprites.length; j++) {
+            let sprite = config.sprites[j] as BackgroundSpritesConfig;
 
-        // Add sprite
-        background.add(
-          app.stage,
-          sprite.file,
-          sprite.width == null ? app.screen.width : app.screen.width,
-          sprite.height == null ? app.screen.height : app.screen.height
-        );
+            // Add sprite
+            background.add(
+              app.stage,
+              sprite.file,
+              sprite.width == null ? app.screen.width : app.screen.width,
+              sprite.height == null ? app.screen.height : app.screen.height
+            );
 
-        // Set update parameters
-        background.addUpdate(
-          sprite.index, sprite.update.x, sprite.update.y);
-      }
+            // Set update parameters
+            background.addUpdate(
+              sprite.index, sprite.update.x, sprite.update.y);
+          }
 
-      // Initialize
-      background.init();
+          // Initialize
+          background.init();
 
-      // Add to collection
-      backgrounds.data.set(config.name, background);
+          // Add to collection
+          backgrounds.data.set(config.name, background);
 
-      // Resolve promise
-      resolve(backgrounds);
-    }
+          // Resolve promise
+          resolve(backgrounds);
+        }
+      });
   })
 }
 
 /** Loads the animated sprites configuration file and parses it to a AnimationSprites object */
-export async function loadAnimationSprites(game: Game): Promise<AnimationSprites> {
+export async function loadAnimationSprites(): Promise<AnimationSprites> {
 
   return new Promise(async (resolve) => {
     let animationData: AnimationSpritesConfig;
     let animationSprites: AnimationSprites = new AnimationSprites();
 
-    loadJSON('config/animation_sprites.json', function (data: string) {
-      animationData = JSON.parse(data) as AnimationSpritesConfig;
-    });
+    loadJSON('config/animation_sprites.json')
+      .then(data => {
+        animationData = JSON.parse(data) as AnimationSpritesConfig;
 
-    if (animationData == null) {
-      throw new Error('Unable to load animation data.');
-    }
-
-    for (let i = 0; i < animationData.data.length; i++) {
-      let config: AnimationSpriteConfig = animationData.data[i];
-
-      // Diagnostics
-      console.info(`Loading ${config.id} ${config.filename}`);
-
-      // Load file
-      let packLoader: MultipackLoader = new MultipackLoader(config.id);
-      packLoader.loadFile(config.filename, config.startAt, config.endAt, (id: string, message: string, sprites: AnimationSprite) => {
-        animationSprites.data.set(config.id, sprites);
-
-        if (animationData.data.length == animationSprites.data.size) {
-          resolve(animationSprites);
+        if (animationData == null) {
+          throw new Error('Unable to load animation data.');
         }
-      });
-    }
-  });
+
+        for (let i = 0; i < animationData.data.length; i++) {
+          let config: AnimationSpriteConfig = animationData.data[i];
+
+          // Diagnostics
+          console.info(`Loading ${config.id} ${config.filename}`);
+
+          // Load file
+          let packLoader: MultipackLoader = new MultipackLoader(config.id);
+          packLoader.loadFile(config.filename, config.startAt, config.endAt, (id: string, message: string, sprites: AnimationSprite) => {
+            animationSprites.data.set(config.id, sprites);
+
+            if (animationData.data.length == animationSprites.data.size) {
+              resolve(animationSprites);
+            }
+          });
+        }
+      })
+  })
 }
 
 /** Loads the entities sprites configuration file and parses it to a Entities object */
-export async function loadEntities(game: Game): Promise<Entities> {
+export async function loadEntities(): Promise<Entities> {
 
   return new Promise(async (resolve) => {
     let entityData: EntitiesConfig;
 
-    loadJSON('config/entities.json', function (data: string) {
-      entityData = JSON.parse(data) as EntitiesConfig;
-    });
+    loadJSON('config/entities.json')
+      .then(data => {
+        entityData = JSON.parse(data) as EntitiesConfig;
 
-    if (entityData == null) {
-      throw new Error('Unable to load entities data.');
-    }
-    // Load file
-    let loader: SpriteLoader = new SpriteLoader();
+        if (entityData == null) {
+          throw new Error('Unable to load entities data.');
+        }
+        // Load file
+        let loader: SpriteLoader = new SpriteLoader();
 
-    // Get all config items
-    for (let i = 0; i < entityData.data.length; i++) {
-      let config: EntityConfig = entityData.data[i];
+        // Get all config items
+        for (let i = 0; i < entityData.data.length; i++) {
+          let config: EntityConfig = entityData.data[i];
 
-      // Diagnostics
-      console.info(`Adding ${config.id} ${config.filename}`);
+          // Diagnostics
+          console.info(`Adding ${config.id} ${config.filename}`);
 
-      loader.addFile(config.id, config.filename);
-    }
+          loader.addFile(config.id, config.filename);
+        }
 
-    // Load files
-    loader.loadFiles(function (cb: Entities) {
-      resolve(cb);
-    });
-  });
+        // Load files
+        loader.loadFiles(function (cb: Entities) {
+          resolve(cb);
+        });
+      })
+  })
 }
 
 /** Loads the characters */
@@ -168,141 +175,147 @@ export function loadCharacters(game: Game): Promise<Characters> {
     let characters: Characters = new Characters();
     let characterData: CharactersConfig;
 
-    loadJSON('config/characters.json', function (data: string) {
-      characterData = JSON.parse(data) as CharactersConfig;
-    });
+    loadJSON('config/characters.json')
+      .then(data => {
+        characterData = JSON.parse(data) as CharactersConfig;
 
-    if (characterData == null) {
-      throw new Error('Unable to load character data');
-    }
+        if (characterData == null) {
+          throw new Error('Unable to load character data');
+        }
 
-    for (let i = 0; i < characterData.data.length; i++) {
-      let config: CharacterConfig = characterData.data[i];
-      let animationSource: AnimationSprite;
+        for (let i = 0; i < characterData.data.length; i++) {
+          let config: CharacterConfig = characterData.data[i];
+          let animationSource: AnimationSprite;
 
-      // Set animation source
-      if (game.animationSprites.data.has(config.id)) {
-        animationSource = game.animationSprites.data.get(config.id);
-      }
-      else {
-        throw new Error(`Unable to load animation source ${config.id}`);
-      }
+          // Set animation source
+          if (game.animationSprites.data.has(config.id)) {
+            animationSource = game.animationSprites.data.get(config.id);
+          }
+          else {
+            throw new Error(`Unable to load animation source ${config.id}`);
+          }
 
-      // Create the character data
-      let character = new Character(config.id);
+          // Create the character data
+          let character = new Character(config.id);
 
-      // Set animation data
-      character.animationSource = animationSource;
-      character.defaultAnimationKey = config.defaultAnimationKey;
-      character.defaultAnimationSpeed = config.defaultAnimationSpeed;
+          // Set animation data
+          character.animationSource = animationSource;
+          character.defaultAnimationKey = config.defaultAnimationKey;
+          character.defaultAnimationSpeed = config.defaultAnimationSpeed;
 
-      // Create animation details
-      character.animationDetails = new Map<string, AnimationDetails>();
+          // Create animation details
+          character.animationDetails = new Map<string, AnimationDetails>();
 
-      // Prepare animation details
-      for (let j = 0; j < config.animationDetails.length; j++) {
-        let animationDetailsData: CharacterAnimationDetailsConfig = config.animationDetails[j];
-        let details: AnimationDetails = new AnimationDetails();
+          // Prepare animation details
+          for (let j = 0; j < config.animationDetails.length; j++) {
+            let animationDetailsData: CharacterAnimationDetailsConfig = config.animationDetails[j];
+            let details: AnimationDetails = new AnimationDetails();
 
-        details.animationSpeed = animationDetailsData.overrides.animationSpeed;
-        details.loop = animationDetailsData.overrides.loop;
+            details.animationSpeed = animationDetailsData.overrides.animationSpeed;
+            details.loop = animationDetailsData.overrides.loop;
 
-        character.animationDetails.set(animationDetailsData.key, details);
-      }
+            character.animationDetails.set(animationDetailsData.key, details);
+          }
 
-      // Create the character actions
-      for (let j = 0; j < config.actions.length; j++) {
-        let actionData = config.actions[j];
+          // Create the character actions
+          for (let j = 0; j < config.actions.length; j++) {
+            let actionData = config.actions[j];
 
-        let action = new CharacterAction();
-        action.id = actionData.id;
-        action.entity = game.entities.data.get(actionData.entity);
-        action.velocity = actionData.velocity;
-        action.offset = actionData.offset;
+            let action = new CharacterAction();
+            action.id = actionData.id;
+            action.entity = game.entities.data.get(actionData.entity);
+            action.velocity = actionData.velocity;
+            action.offset = actionData.offset;
 
-        character.actions.set(actionData.id, action);
-      }
+            character.actions.set(actionData.id, action);
+          }
 
-      // Add to collection
-      characters.data.set(config.id, character);
-    }
+          // Add to collection
+          characters.data.set(config.id, character);
+        }
 
-    resolve(characters);
-  });
+        resolve(characters);
+      })
+  })
 }
 
 /** Loads the levels configuration file and parses it to a Levels object */
-export function loadLevels(app: PIXI.Application, game: Game): Levels {
-  let levels: Levels = new Levels();
-  let levelData: LevelsConfig;
+export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
 
-  loadJSON('config/levels.json', function (data: string) {
-    levelData = JSON.parse(data);
-  });
+  return new Promise(async (resolve) => {
+    let levels: Levels = new Levels();
+    let levelData: LevelsConfig;
 
-  if (levelData == null) {
-    throw new Error('Unable to load levels');
+    loadJSON('config/levels.json')
+      .then(data => {
+        levelData = JSON.parse(data) as LevelsConfig;
+
+        if (levelData == null) {
+          throw new Error('Unable to load levels');
+        }
+
+        for (let i = 0; i < levelData.data.length; i++) {
+          let config: LevelConfig = levelData.data[i];
+
+          // Create level object
+
+          let level = new LevelData();
+          level.config = config;
+
+          // Set background
+          if (game.backgrounds.data.has(config.background)) {
+            level.background = game.backgrounds.data.get(config.background);
+            level.background.init();
+          }
+          else {
+            throw new Error(`Unable to load background ${config.background} for level ${config.name}`);
+          }
+
+          // Load Characters
+
+          level.characters = [];
+
+          for (let j = 0; j < config.characters.length; j++) {
+            let levelCharacterConfig: LevelCharacterConfig = config.characters[j];
+            let character: Character;
+
+            if (game.characters.data.has(levelCharacterConfig.sprite)) {
+              let characterSource: Character = game.characters.data.get(levelCharacterConfig.sprite);
+
+              // Clone the original character
+              character = new Character(levelCharacterConfig.id);
+
+              // Set level character properties 
+              character.isPlayer = levelCharacterConfig.isPlayer;
+              character.actions = characterSource.actions;
+              character.animationSource = characterSource.animationSource;
+              character.animationDetails = characterSource.animationDetails;
+              character.animationKey = levelCharacterConfig.animationKey;
+              character.animationSpeed = levelCharacterConfig.animationSpeed;
+              character.position.x = levelCharacterConfig.position.x;
+              character.position.y = levelCharacterConfig.position.y;
+
+              // Set stage
+              character.stage = app.stage;
+
+              // Create the animation
+              character.createAnimation(character.animationKey);
+            }
+            else {
+              throw new Error(`Unable to load character ${levelCharacterConfig.id} for level ${config.name}`);
+            }
+
+            level.characters.push(character);
+          }
+
+          // Add to collection
+          levels.data.push(level);
+        }
+
+        resolve(levels);
+      })
   }
-
-  for (let i = 0; i < levelData.data.length; i++) {
-    let config: LevelConfig = levelData.data[i];
-
-    // Create level object
-
-    let level = new LevelData();
-    level.config = config;
-
-    // Set background
-    if (game.backgrounds.data.has(config.background)) {
-      level.background = game.backgrounds.data.get(config.background);
-      level.background.init();
-    }
-    else {
-      throw new Error(`Unable to load background ${config.background} for level ${config.name}`);
-    }
-
-    // Load Characters
-
-    level.characters = [];
-
-    for (let j = 0; j < config.characters.length; j++) {
-      let levelCharacterConfig: LevelCharacterConfig = config.characters[j];
-      let character: Character;
-
-      if (game.characters.data.has(levelCharacterConfig.sprite)) {
-        let characterSource: Character = game.characters.data.get(levelCharacterConfig.sprite);
-
-        // Clone the original character
-        character = new Character(levelCharacterConfig.id);
-
-        // Set level character properties 
-        character.isPlayer = levelCharacterConfig.isPlayer;
-        character.actions = characterSource.actions;
-        character.animationSource = characterSource.animationSource;
-        character.animationDetails = characterSource.animationDetails;
-        character.animationKey = levelCharacterConfig.animationKey;
-        character.animationSpeed = levelCharacterConfig.animationSpeed;
-        character.position.x = levelCharacterConfig.position.x;
-        character.position.y = levelCharacterConfig.position.y;
-
-        // Set stage
-        character.stage = app.stage;
-
-        // Create the animation
-        character.createAnimation(character.animationKey);
-      }
-      else {
-        throw new Error(`Unable to load character ${levelCharacterConfig.id} for level ${config.name}`);
-      }
-
-      level.characters.push(character);
-    }
-
-    // Add to collection
-    levels.data.push(level);
-  }
-
-  return levels;
+  )
 }
 
 /** Calculate the new position of a moving element */

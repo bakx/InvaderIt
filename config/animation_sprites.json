@@ -6,6 +6,76 @@
             "startAt": 0,
             "endAt": 1,
             "animationSpeed": 0.2
+        },
+        {
+            "id": "enemy01",
+            "filename": "gfx/Characters/Enemies/enemy01-",
+            "startAt": 0,
+            "endAt": 5,
+            "animationSpeed": 0.2
+        },
+        {
+            "id": "enemy02",
+            "filename": "gfx/Characters/Enemies/enemy02-",
+            "startAt": 0,
+            "endAt": 1,
+            "animationSpeed": 0.2
+        },
+        {
+            "id": "enemy03",
+            "filename": "gfx/Characters/Enemies/enemy03-",
+            "startAt": 0,
+            "endAt": 2,
+            "animationSpeed": 0.2
+        },
+        {
+            "id": "enemy04",
+            "filename": "gfx/Characters/Enemies/enemy04-",
+            "startAt": 0,
+            "endAt": 2,
+            "animationSpeed": 0.2
+        },
+        {
+            "id": "enemy05",
+            "filename": "gfx/Characters/Enemies/enemy05-",
+            "startAt": 0,
+            "endAt": 2,
+            "animationSpeed": 0.2
+        },
+        {
+            "id": "enemy06",
+            "filename": "gfx/Characters/Enemies/enemy06-",
+            "startAt": 0,
+            "endAt": 2,
+            "animationSpeed": 0.2
+        },
+        {
+            "id": "enemy07",
+            "filename": "gfx/Characters/Enemies/enemy07-",
+            "startAt": 0,
+            "endAt": 1,
+            "animationSpeed": 0.2
+        },
+        {
+            "id": "enemy08",
+            "filename": "gfx/Characters/Enemies/enemy08-",
+            "startAt": 0,
+            "endAt": 3,
+            "animationSpeed": 0.2
+        },
+        {
+            "id": "enemy09",
+            "filename": "gfx/Characters/Enemies/enemy09-",
+            "startAt": 0,
+            "endAt": 1,
+            "animationSpeed": 0.2
+        },
+        {
+            "id": "enemy10",
+            "filename": "gfx/Characters/Enemies/enemy10-",
+            "startAt": 0,
+            "endAt": 2,
+            "animationSpeed": 0.2
         }
     ]
 }

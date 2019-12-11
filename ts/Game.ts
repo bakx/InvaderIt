@@ -77,12 +77,12 @@ export class Game {
         this.backgrounds = backgrounds;
 
         // Load entities
-        loadEntities(this)
+        loadEntities()
           .then(entities => {
             this.entities = entities;
 
             // Load the animation sprites
-            loadAnimationSprites(this)
+            loadAnimationSprites()
               .then(animationSprites => {
                 this.animationSprites = animationSprites;
 
@@ -92,20 +92,23 @@ export class Game {
                     this.characters = characters
                   })
                   .then(_ => {
-                    // Load all levels
-                    this.levels = loadLevels(this.app, this);
 
-                    // Create FPS counter
-                    this.fpsCounter = new DrawText(this.app.stage, '', 10, 10);
+                    loadLevels(this.app, this)
+                      .then(levels => {
+                        this.levels = levels;
 
-                    // Create Debug text
-                    this.debugHelper = new DrawText(this.app.stage, '', 10, 30);
+                        // Create FPS counter
+                        this.fpsCounter = new DrawText(this.app.stage, '', 10, 10);
 
-                    // Load level
-                    this.loadLevel();
+                        // Create Debug text
+                        this.debugHelper = new DrawText(this.app.stage, '', 10, 30);
 
-                    // Start game engine
-                    this.start();
+                        // Load level
+                        this.loadLevel();
+
+                        // Start game engine
+                        this.start();
+                      });
                   })
               })
           });
@@ -242,6 +245,11 @@ export class Game {
 
     // Resize renderer
     this.app.renderer.resize(newWidth, this.designHeight);
+
+    // Update background
+    if (this.level && this.level.background) {
+      this.level.background.redraw(newWidth, height);
+    }
   }
 
   onStageClick(event: any) {

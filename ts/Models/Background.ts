@@ -62,6 +62,14 @@ export class Background {
             item.visible = true;
         }
     }
+
+    redraw(width: number, height: number) {
+        for (let i = 0; i < this.backgroundUpdates.length; i++) {
+            let item = this.backgroundUpdates[i];
+            this.backgroundArray[item.index].width = width;
+            this.backgroundArray[item.index].height = height;
+        }
+    }
 }
 
 export class BackgroundUpdate {
