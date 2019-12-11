@@ -21,7 +21,7 @@ export class Main {
 
     // Basic ticker to update game variables
     this.mainTicker.add(() => {
-      if (this.game.gameState === GameState.RUNNING) {
+      if (this.game.gameState === GameState.Running) {
 
         // Update FPS counter
         this.game.fpsCounter.Text = `FPS: ${Math.round(this.mainTicker.FPS)}`;

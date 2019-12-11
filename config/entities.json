@@ -1,8 +1,92 @@
 {
     "data": [
         {
-            "id": "projectile",
+            "id": "projectile1",
             "filename": "gfx/Entities/Projectiles/01.png",
+            "width": null,
+            "height": null
+        },
+        {
+            "id": "projectile2",
+            "filename": "gfx/Entities/Projectiles/02.png",
+            "width": null,
+            "height": null
+        },
+        {
+            "id": "projectile3",
+            "filename": "gfx/Entities/Projectiles/03.png",
+            "width": null,
+            "height": null
+        },
+        {
+            "id": "projectile4",
+            "filename": "gfx/Entities/Projectiles/04.png",
+            "width": null,
+            "height": null
+        },
+        {
+            "id": "projectile5",
+            "filename": "gfx/Entities/Projectiles/05.png",
+            "width": null,
+            "height": null
+        },
+        {
+            "id": "projectile6",
+            "filename": "gfx/Entities/Projectiles/06.png",
+            "width": null,
+            "height": null
+        },
+        {
+            "id": "projectile7",
+            "filename": "gfx/Entities/Projectiles/07.png",
+            "width": null,
+            "height": null
+        },
+        {
+            "id": "projectile8",
+            "filename": "gfx/Entities/Projectiles/08.png",
+            "width": null,
+            "height": null
+        },
+        {
+            "id": "projectile9",
+            "filename": "gfx/Entities/Projectiles/09.png",
+            "width": null,
+            "height": null
+        },
+        {
+            "id": "projectile10",
+            "filename": "gfx/Entities/Projectiles/10.png",
+            "width": null,
+            "height": null
+        },
+        {
+            "id": "projectile11",
+            "filename": "gfx/Entities/Projectiles/11.png",
+            "width": null,
+            "height": null
+        },
+        {
+            "id": "projectile12",
+            "filename": "gfx/Entities/Projectiles/12.png",
+            "width": null,
+            "height": null
+        },
+        {
+            "id": "projectile13",
+            "filename": "gfx/Entities/Projectiles/13.png",
+            "width": null,
+            "height": null
+        },
+        {
+            "id": "projectile14",
+            "filename": "gfx/Entities/Projectiles/14.png",
+            "width": null,
+            "height": null
+        },
+        {
+            "id": "projectile15",
+            "filename": "gfx/Entities/Projectiles/15.png",
             "width": null,
             "height": null
         }

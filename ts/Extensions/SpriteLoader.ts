@@ -43,7 +43,7 @@ export class SpriteLoader {
             keys.forEach(key => {
                 // Create the sprite
                 let sprite = PIXI.Sprite.from(resources[key].texture);
-                
+
                 // Create the entity
                 let entity: Entity = new Entity(key, sprite);
 

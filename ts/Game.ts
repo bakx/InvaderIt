@@ -9,15 +9,13 @@ import { Point } from "pixi.js";
 import { Entities } from "./Models/Entities";
 
 export class Game {
-
   /** Application specific variables */
   app: PIXI.Application;
   designWidth: number;
   designHeight: number;
 
   /** State related variables */
-  gameLoadState: GameLoadingState = GameLoadingState.INIT;
-  gameState: GameState = GameState.LOADING;
+  gameState: GameState = GameState.Loading;
   gameFrame: number = 0;
 
   /** Resources */
@@ -62,11 +60,27 @@ export class Game {
     // Adapt to current view
     this.resizeView();
 
-    // Initialize the AnimationSprites object
-    this.animationSprites = new AnimationSprites();
-
     // Start loading resources
     this.loadGame();
+  }
+
+  /** Handles keyboard events */
+  keyboardHandler() {
+
+    if (pkeys[37] || pkeys[65] || pkeys[38] || pkeys[87] || pkeys[39] || pkeys[68] || pkeys[38] || pkeys[83]) {
+      let position: Point = this.player.position;
+
+      if (pkeys[37] || pkeys[65]) position.x -= 5;
+      if (pkeys[38] || pkeys[87]) position.y -= 5;
+      if (pkeys[39] || pkeys[68]) position.x += 5;
+      if (pkeys[40] || pkeys[83]) position.y += 5;
+
+      this.handleInteraction(Actions.Move, position);
+    }
+
+    if (pkeys[32]) {
+      this.handleInteraction(Actions.Fire, this.player.position);
+    }
   }
 
   /** Sets up the game  the default game parameters */
@@ -91,8 +105,9 @@ export class Game {
                   .then(characters => {
                     this.characters = characters
                   })
-                  .then(_ => {
 
+                  .then(_ => {
+                    // Load levels
                     loadLevels(this.app, this)
                       .then(levels => {
                         this.levels = levels;
@@ -178,30 +193,28 @@ export class Game {
 
   /** Starts the game loop */
   start() {
-    this.gameState = GameState.RUNNING;
+    this.gameState = GameState.Running;
     this.app.start();
   }
 
   /** Pauses the game loop */
   pause() {
-    this.gameState = GameState.PAUSED;
+    this.gameState = GameState.Paused;
     this.app.stop();
   }
 
   /** Stops the game loop */
   stop() {
-    this.gameState = GameState.STOPPED;
+    this.gameState = GameState.Stopped;
     this.app.stop();
   }
 
   /** Main game loop that updates all entities */
   update() {
-    // obtain the position of the mouse on the stage
-    let mousePosition = this.app.renderer.plugins.interaction.mouse.global;
-    //    this.debugHelper.Text = `${mousePosition.x} | ${mousePosition.y}`;
+    // Handle keyboard events
+    this.keyboardHandler();
 
-
-    if (this.gameState === GameState.RUNNING) {
+    if (this.gameState === GameState.Running) {
       // Update the background
       this.level.background.update();
 
@@ -214,7 +227,6 @@ export class Game {
       if (this.player) {
         this.player.update();
       }
-
 
       // Update game frame
       this.gameFrame++;
@@ -263,38 +275,53 @@ export class Game {
       return;
     }
 
-    // Determine on which half of the screen was clicked
+    // Determine on which half of the screen was clicked (left or right)
     if (x < this.app.screen.width / 2) {
-      // Left half of the screen.
-
-      // Update player (if any)
+      // Update player position
       if (this.player) {
-        this.player.gotoPosition = new Point(x, y);
+        this.handleInteraction(Actions.Move, new Point(x, y));
       }
     }
     else {
-      // Right half of the screen.
-      this.player.action("fire", new Point(x, y));
+      this.handleInteraction(Actions.Fire, new Point(x, y));
+    }
+  }
+
+  /** */
+  handleInteraction(action: Actions, position: Point) {
+    switch (action) {
+      case Actions.Move:
+        this.player.gotoPosition = position;
+        break;
+      case Actions.Fire:
+        this.player.action("fire", position);
+        break;
     }
   }
 }
 
-export enum GameLoadingState {
-  INIT,
-  BACKGROUNDS,
-  ANIMATIONSPRITES,
-  CHARACTERS,
-  LEVELS,
-  LOADLEVEL,
-  OVERLAY,
-  DONE
+let pkeys: any = [];
+
+window.onkeydown = function (e: any) {
+  var code = e.keyCode ? e.keyCode : e.which;
+  pkeys[code] = true;
+}
+window.onkeyup = function (e: any) {
+  var code = e.keyCode ? e.keyCode : e.which;
+  pkeys[code] = false;
+};
+
+
+export enum Actions {
+  Move,
+  Fire
 }
 
 export enum GameState {
-  LOADING,
-  MENU,
-  PAUSED,
-  STOPPED,
-  RUNNING
+  Loading,
+  Menu,
+  Paused,
+  Stopped,
+  Running
 }
 
