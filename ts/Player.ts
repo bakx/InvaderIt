@@ -3,6 +3,7 @@ import { Character, CharacterAction } from "./Models/Character";
 import { calculateMovement } from "./Functions";
 
 export class Player {
+
     /** Constructor of the Player class */
     constructor(character: Character) {
         this._character = character;
@@ -44,11 +45,13 @@ export class Player {
     set character(character: Character) { this._character = character }
 
     action(actionKey: string, position: Point) {
+
         // Get action from character
         let characterAction: CharacterAction = this.character.actions.get(actionKey);
 
         switch (actionKey) {
             case "fire":
+
                 // Create sprite
                 let sprite = PIXI.Sprite.from(characterAction.entity.sprite().texture);
 
@@ -79,6 +82,7 @@ export class Player {
         let movementSpeed = 5;
 
         if (this._canMove && this._gotoPosition) {
+
             // Determine if position X needs to be updated
             this.position.x = calculateMovement(this.position.x, this._gotoPosition.x, movementSpeed);
 
@@ -108,6 +112,7 @@ export class Player {
 
 /** Internal class to support action elements */
 class ActiveActionSprite {
+    
     /** Constructor of the ActiveActionSprite class */
     constructor(id: string, key: string, sprite: PIXI.Sprite) {
         this._key = key;

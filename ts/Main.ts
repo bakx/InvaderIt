@@ -10,6 +10,7 @@ export class Main {
 
   /** Initializes the game and starts the loop */
   async startGame() {
+    
     // Initialize game settings
     await this.game.initialize();
 

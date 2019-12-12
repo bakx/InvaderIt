@@ -24,6 +24,7 @@ export class SpriteLoader {
     }
 
     loadFiles(callback: CallableFunction) {
+
         // Prepare return data
         let entities: Entities = new Entities();
 
@@ -41,6 +42,7 @@ export class SpriteLoader {
         /** Callback that processes the loaded resources and adds them to the animatedSprites object */
         loader.load((loader: any, resources: any) => {
             keys.forEach(key => {
+                
                 // Create the sprite
                 let sprite = PIXI.Sprite.from(resources[key].texture);
 

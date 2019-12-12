@@ -146,6 +146,7 @@ export async function loadEntities(): Promise<Entities> {
         if (entityData == null) {
           throw new Error('Unable to load entities data.');
         }
+
         // Load file
         let loader: SpriteLoader = new SpriteLoader();
 
@@ -320,6 +321,7 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
 
 /** Calculate the new position of a moving element */
 export function calculateMovement(currentPosition: number, moveTo: number, speed: number): number {
+  
   // Determine if movement is required
   if (moveTo == currentPosition) {
     return currentPosition;

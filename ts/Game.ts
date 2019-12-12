@@ -9,6 +9,7 @@ import { Point } from "pixi.js";
 import { Entities } from "./Models/Entities";
 
 export class Game {
+
   /** Application specific variables */
   app: PIXI.Application;
   designWidth: number;
@@ -42,10 +43,12 @@ export class Game {
 
   /** Initialize the default game parameters */
   async initialize() {
+
+    // Set up game resolution
     this.designWidth = this.designWidth || 1920;
     this.designHeight = this.designHeight || 1080;
-    this.levelIndex = 0;
 
+    // Create Pixi application
     this.app = new PIXI.Application({
       width: this.designWidth,
       height: this.designHeight,
@@ -54,6 +57,7 @@ export class Game {
 
   /** Sets up the game  the default game parameters */
   async setup() {
+
     // Add the view to the body
     document.body.appendChild(this.app.view);
 
@@ -67,24 +71,46 @@ export class Game {
   /** Handles keyboard events */
   keyboardHandler() {
 
-    if (pkeys[37] || pkeys[65] || pkeys[38] || pkeys[87] || pkeys[39] || pkeys[68] || pkeys[38] || pkeys[83]) {
-      let position: Point = this.player.position;
+    // 
+    if (this.gameState === GameState.Running) {
 
-      if (pkeys[37] || pkeys[65]) position.x -= 5;
-      if (pkeys[38] || pkeys[87]) position.y -= 5;
-      if (pkeys[39] || pkeys[68]) position.x += 5;
-      if (pkeys[40] || pkeys[83]) position.y += 5;
+      // Determine if the WSAD or Arrow keys are current pressed
+      if (kp[37] || kp[65] || kp[38] || kp[87] || kp[39] || kp[68] || kp[40] || kp[83]) {
+        let position: Point = this.player.position;
 
-      this.handleInteraction(Actions.Move, position);
+        if (kp[37] || kp[65]) position.x -= 5;
+        if (kp[38] || kp[87]) position.y -= 5;
+        if (kp[39] || kp[68]) position.x += 5;
+        if (kp[40] || kp[83]) position.y += 5;
+
+        this.handleInteraction(Actions.Move, position);
+      }
+
+      // Spacebar will fire
+      if (kp[32]) {
+        this.handleInteraction(Actions.Fire, this.player.position);
+      }
+
+      // Escape will bring up the menu
+      if (kp[27]) {
+        this.menu();
+      }
     }
 
-    if (pkeys[32]) {
-      this.handleInteraction(Actions.Fire, this.player.position);
+    // 
+    if (this.gameState === GameState.Menu) {
+
+      // Escape will bring up the menu
+      if (kp[27]) {
+        this.start();
+      }
     }
+
   }
 
   /** Sets up the game  the default game parameters */
   loadGame() {
+
     // Load backgrounds
     loadBackgrounds(this.app)
       .then(backgrounds => {
@@ -107,6 +133,7 @@ export class Game {
                   })
 
                   .then(_ => {
+
                     // Load levels
                     loadLevels(this.app, this)
                       .then(levels => {
@@ -117,6 +144,9 @@ export class Game {
 
                         // Create Debug text
                         this.debugHelper = new DrawText(this.app.stage, '', 10, 30);
+
+                        // Set level to starting point.
+                        this.levelIndex = 0;
 
                         // Load level
                         this.loadLevel();
@@ -132,6 +162,8 @@ export class Game {
 
   /** Loads all resources that are defined for the specific level */
   loadLevel() {
+
+    // If a level is already loaded, remove all items from the stage
     if (this.level) {
       // Remove all characters from the stage
       this.level.characters.forEach(char => {
@@ -179,11 +211,11 @@ export class Game {
 
       // Pointers normalize touch and mouse
       this.app.renderer.plugins.interaction.on('pointerup', (event: any) => {
-        this.onStageClick(event);
+        this.onclick(event);
       });
 
       this.app.renderer.plugins.interaction.on('touchend', (event: any) => {
-        this.onStageClick(event);
+        this.onclick(event);
       });
     }
 
@@ -209,12 +241,20 @@ export class Game {
     this.app.stop();
   }
 
+  menu() {
+    this.gameState = GameState.Menu;
+    this.app.stop();
+  }
+
   /** Main game loop that updates all entities */
   update() {
+
     // Handle keyboard events
     this.keyboardHandler();
 
+    // Handle the events from the main game loop 
     if (this.gameState === GameState.Running) {
+
       // Update the background
       this.level.background.update();
 
@@ -264,7 +304,9 @@ export class Game {
     }
   }
 
-  onStageClick(event: any) {
+  /** */
+  onclick(event: any) {
+
     // Get a reference to the positioning data
     let x = Math.floor(event.data.global.x);
     let y = Math.floor(event.data.global.y);
@@ -300,15 +342,15 @@ export class Game {
   }
 }
 
-let pkeys: any = [];
+let kp: any = [];
 
 window.onkeydown = function (e: any) {
-  var code = e.keyCode ? e.keyCode : e.which;
-  pkeys[code] = true;
+  let code = e.keyCode ? e.keyCode : e.which;
+  kp[code] = true;
 }
 window.onkeyup = function (e: any) {
-  var code = e.keyCode ? e.keyCode : e.which;
-  pkeys[code] = false;
+  let code = e.keyCode ? e.keyCode : e.which;
+  kp[code] = false;
 };
 
 

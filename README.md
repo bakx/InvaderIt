@@ -20,3 +20,5 @@ The goal of this project is not to build a game engine. If you are searching for
 
 # Developer Internal notes
 Should https://hjson.org/ be used to generate JSON in order to keep the files nicely formatted and easier to maintain?
+Command to resize gfx | `pngquant *.png --ext=.png --force`
+
