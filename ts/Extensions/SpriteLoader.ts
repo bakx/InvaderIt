@@ -1,4 +1,6 @@
-import { Entities, Entity } from "../Models/Entities";
+import { Entities, Entity, EntitySound } from "../Models/Entities";
+import { SoundConfig } from "../Models/Configuration/SoundsConfig";
+import { EntitySoundConfig } from "../Models/Configuration/EntitiesConfig";
 
 /**
  * 
@@ -23,6 +25,17 @@ export class SpriteLoader {
         this._files.set(id, filename);
     }
 
+    /** Mapping for all entities  */
+    private _sounds: Map<string, EntitySound> = new Map<string, EntitySound>();
+
+    /**
+    * @param id ID of the sound config
+    * @param file sound configuration
+    */
+    addSound(id: string, config: EntitySound) {
+        this._sounds.set(id, config);
+    }
+
     loadFiles(callback: CallableFunction) {
 
         // Prepare return data
@@ -42,12 +55,15 @@ export class SpriteLoader {
         /** Callback that processes the loaded resources and adds them to the animatedSprites object */
         loader.load((loader: any, resources: any) => {
             keys.forEach(key => {
-                
+
                 // Create the sprite
                 let sprite = PIXI.Sprite.from(resources[key].texture);
 
                 // Create the entity
                 let entity: Entity = new Entity(key, sprite);
+
+                // Add sounds
+                entity.sound = this._sounds.get(key);
 
                 // Update the return object
                 entities.data.set(key, entity);

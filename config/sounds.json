@@ -1,0 +1,84 @@
+{
+    "data": [
+        {
+            "id": "sci-fi_power_up_01",
+            "filename": "sfx/sci-fi_power_up_01.mp3",
+            "loop": false
+        },
+        {
+            "id": "sci-fi_power_up_02",
+            "filename": "sfx/sci-fi_power_up_02.mp3",
+            "loop": false
+        },
+        {
+            "id": "sci-fi_power_up_03",
+            "filename": "sfx/sci-fi_power_up_03.mp3",
+            "loop": false
+        },
+        {
+            "id": "sci-fi_small_spaceship_jet_blast_01",
+            "filename": "sfx/sci-fi_small_spaceship_jet_blast_01",
+            "loop": false
+        },
+        {
+            "id": "sci-fi_small_spaceship_jet_blast_02",
+            "filename": "sfx/sci-fi_small_spaceship_jet_blast_02.mp3",
+            "loop": false
+        },
+        {
+            "id": "sci-fi_weapon_blaster_laser_boom_heavy_01",
+            "filename": "sfx/sci-fi_weapon_blaster_laser_boom_heavy_01.mp3",
+            "loop": false
+        },
+        {
+            "id": "sci-fi_weapon_blaster_laser_boom_heavy_02",
+            "filename": "sfx/sci-fi_weapon_blaster_laser_boom_heavy_02.mp3",
+            "loop": false
+        },
+        {
+            "id": "sci-fi_weapon_blaster_laser_boom_heavy_03",
+            "filename": "sfx/sci-fi_weapon_blaster_laser_boom_heavy_03.mp3",
+            "loop": false
+        },
+        {
+            "id": "sci-fi_weapon_blaster_laser_boom_heavy_04",
+            "filename": "sfx/sci-fi_weapon_blaster_laser_boom_heavy_04.mp3",
+            "loop": false
+        },
+        {
+            "id": "sci-fi_weapon_blaster_laser_boom_heavy_05",
+            "filename": "sfx/sci-fi_weapon_blaster_laser_boom_heavy_05.mp3",
+            "loop": false
+        },
+        {
+            "id": "sci-fi_weapon_blaster_laser_boom_zap_01",
+            "filename": "sfx/sci-fi_weapon_blaster_laser_boom_zap_01.mp3",
+            "loop": false
+        },
+        {
+            "id": "sci-fi_weapon_blaster_laser_boom_zap_02",
+            "filename": "sfx/sci-fi_weapon_blaster_laser_boom_zap_02.mp3",
+            "loop": false
+        },
+        {
+            "id": "sci-fi_weapon_blaster_laser_boom_zap_03",
+            "filename": "sfx/sci-fi_weapon_blaster_laser_boom_zap_03.mp3",
+            "loop": false
+        },
+        {
+            "id": "sci-fi_weapon_blaster_laser_boom_zap_04",
+            "filename": "sfx/sci-fi_weapon_blaster_laser_boom_zap_04.mp3",
+            "loop": false
+        },
+        {
+            "id": "sci-fi_weapon_blaster_laser_boom_zap_05",
+            "filename": "sfx/sci-fi_weapon_blaster_laser_boom_zap_05.mp3",
+            "loop": false
+        },
+        {
+            "id": "music_8bit_jammer",
+            "filename": "sfx/music_8bit_jammer.mp3",
+            "loop": true
+        }
+    ]
+}

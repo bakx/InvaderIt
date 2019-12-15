@@ -9,21 +9,10 @@ import { BackgroundConfig, BackgroundsConfig, BackgroundSpritesConfig } from "./
 import { CharacterAnimationDetailsConfig, CharacterConfig, CharactersConfig } from "./Models/Configuration/CharactersConfig";
 import { EntitiesConfig, EntityConfig } from "./Models/Configuration/EntitiesConfig";
 import { LevelCharacterConfig, LevelConfig, LevelsConfig } from "./Models/Configuration/LevelsConfig";
-import { Entities } from "./Models/Entities";
+import { Entities, EntitySound } from "./Models/Entities";
 import { LevelData, Levels } from "./Models/Level";
-
-/** Loads the textures configuration file and parses it to a PIXI.Texture[] object */
-export function loadTextures(sourceTemplateStart: number, sourceTemplateEnd: number, padding: number, start: number, end: number): PIXI.Texture[] {
-  let textures: PIXI.Texture[] = [];
-  for (let i = start; i < end; i++) {
-    let texture = PIXI.Texture.from(
-      `${sourceTemplateStart}${i.toString().padStart(padding, "0")}${sourceTemplateEnd}`
-    );
-    textures.push(texture);
-  }
-
-  return textures;
-}
+import { Sounds, Sound } from "./Models/Sound";
+import { SoundsConfig, SoundConfig } from "./Models/Configuration/SoundsConfig";
 
 /**
  * Loads a local .json file and returns the contents of the file
@@ -45,6 +34,37 @@ export function loadJSON(file: string): Promise<string> {
     };
 
     xobj.send(null);
+  })
+}
+
+/** Loads the sound effects into the pixi library */
+export function loadSounds(app: PIXI.Application): Promise<Sounds> {
+
+  return new Promise(async (resolve) => {
+    let sounds: Sounds = new Sounds();
+    let soundDataData: SoundsConfig;
+
+    loadJSON('config/sounds.json')
+      .then(data => {
+        soundDataData = JSON.parse(data) as SoundsConfig;
+
+        if (soundDataData == null) {
+          throw new Error('Unable to load sounds');
+        }
+
+        for (let i = 0; i < soundDataData.data.length; i++) {
+          let config: SoundConfig = soundDataData.data[i];
+
+          // Prepare sound effect
+          let sound: Sound = new Sound(config.id, config.filename);
+
+          PIXI.sound.add(config.id, config.filename);
+          sounds.data.set(config.id, sound);
+        }
+
+        // Resolve promise
+        resolve(sounds);
+      });
   })
 }
 
@@ -158,6 +178,11 @@ export async function loadEntities(): Promise<Entities> {
           console.info(`Adding ${config.id} ${config.filename}`);
 
           loader.addFile(config.id, config.filename);
+
+          // Create entity sound object
+          let entitySound: EntitySound = new EntitySound(config.sound.id, config.sound.volume);
+
+          loader.addSound(config.id, entitySound);
         }
 
         // Load files
@@ -321,7 +346,7 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
 
 /** Calculate the new position of a moving element */
 export function calculateMovement(currentPosition: number, moveTo: number, speed: number): number {
-  
+
   // Determine if movement is required
   if (moveTo == currentPosition) {
     return currentPosition;

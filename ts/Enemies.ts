@@ -1,8 +1,14 @@
 import { Point } from "pixi.js";
 import { Character, CharacterAction } from "./Models/Character";
 import { calculateMovement } from "./Functions";
+import { Player } from "./Player";
+import sound from "pixi-sound"
 
-export class Player {
+export class Enemies {
+    data: Map<string, Enemy> = new Map<string, Enemy>();
+}
+
+export class Enemy {
 
     /** Constructor of the Player class */
     constructor(character: Character) {
@@ -19,6 +25,8 @@ export class Player {
     private _canMove: boolean = true;
     private _position: Point;
     private _gotoPosition: Point;
+
+    private _lastAction: number = Date.now();
 
     // Action configuration
     private _activeActionSprites: ActiveActionSprite[];
@@ -52,6 +60,10 @@ export class Player {
         switch (actionKey) {
             case "fire":
 
+                if (characterAction.entity == null) {
+                    console.warn(`${this.character.id} has an invalid action. Action ${characterAction.id} has an invalid or missing sprite.`);
+                }
+
                 // Create sprite
                 let sprite = PIXI.Sprite.from(characterAction.entity.sprite.texture);
 
@@ -72,10 +84,16 @@ export class Player {
                 this._activeActionSprites.push(activeActionSprite);
 
                 // Play sound effect
-                if (characterAction.entity.sound) {
-                    PIXI.sound.play(characterAction.entity.sound.id, {
-                        volume: characterAction.entity.sound.volume
-                    });
+                if (characterAction.entity.sound.id) {
+
+                    if (PIXI.sound.exists(characterAction.entity.sound.id)) {
+                        PIXI.sound.play(characterAction.entity.sound.id, {
+                            volume: characterAction.entity.sound.volume
+                        });
+                    }
+                    else {
+                        console.error(`Missing sound effect: ${characterAction.entity.sound.id}`);
+                    }
                 }
 
                 break;
@@ -85,9 +103,29 @@ export class Player {
         }
     }
 
-    /** Update all events related to the player */
-    update() {
-        let movementSpeed = 5;
+    /** Update all events related to the enemy */
+    update(player: Player) {
+
+        if (Date.now() - this._lastAction < 750) {
+        } else {
+
+            let actionTriggerOdds = Math.floor(Math.random() * 100);
+            if (actionTriggerOdds > 95) {
+                this._lastAction = Date.now();
+                this.action("fire", player.position);
+            }
+        }
+
+        if (!this._gotoPosition) this._gotoPosition = new Point();
+        this._gotoPosition.x = player.position.x;
+        this._gotoPosition.y = player.position.y;
+
+
+        if (this.position.x - player.position.x < 800) {
+            this._gotoPosition.x += 800;
+        }
+
+        let movementSpeed = 3;
 
         if (this._canMove && this._gotoPosition) {
 
@@ -120,7 +158,7 @@ export class Player {
 
 /** Internal class to support action elements */
 class ActiveActionSprite {
-    
+
     /** Constructor of the ActiveActionSprite class */
     constructor(key: string, sprite: PIXI.Sprite) {
         this._key = key;

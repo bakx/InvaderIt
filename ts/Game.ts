@@ -1,12 +1,13 @@
-import { loadAnimationSprites, loadBackgrounds, loadCharacters, loadLevels, loadEntities } from "./Functions";
+import { Point } from "pixi.js";
+import { Enemies, Enemy } from "./Enemies";
+import { loadAnimationSprites, loadBackgrounds, loadCharacters, loadEntities, loadLevels, loadSounds } from "./Functions";
 import { AnimationSprites } from "./Models/AnimatedSprite";
 import { Backgrounds } from "./Models/Background";
-import { Characters, Character } from "./Models/Character";
+import { Character, Characters } from "./Models/Character";
 import { DrawText } from "./Models/DrawText";
+import { Entities, EntitySound } from "./Models/Entities";
 import { LevelData, Levels } from "./Models/Level";
 import { Player } from "./Player";
-import { Point } from "pixi.js";
-import { Entities } from "./Models/Entities";
 
 export class Game {
 
@@ -26,6 +27,7 @@ export class Game {
   entities: Entities;
   characters: Characters;
   player: Player;
+  enemies: Enemies;
 
   /** Level data */
   level: LevelData;
@@ -111,53 +113,60 @@ export class Game {
   /** Sets up the game  the default game parameters */
   loadGame() {
 
-    // Load backgrounds
-    loadBackgrounds(this.app)
-      .then(backgrounds => {
-        this.backgrounds = backgrounds;
+    // Load sounds
+    loadSounds(this.app)
+      .then(sounds => {
 
-        // Load entities
-        loadEntities()
-          .then(entities => {
-            this.entities = entities;
+        // Load backgrounds
+        loadBackgrounds(this.app)
+          .then(backgrounds => {
+            this.backgrounds = backgrounds;
 
-            // Load the animation sprites
-            loadAnimationSprites()
-              .then(animationSprites => {
-                this.animationSprites = animationSprites;
+            // Load entities
+            loadEntities()
+              .then(entities => {
+                this.entities = entities;
 
-                // Load the characters
-                loadCharacters(this)
-                  .then(characters => {
-                    this.characters = characters
+                // Load the animation sprites
+                loadAnimationSprites()
+                  .then(animationSprites => {
+                    this.animationSprites = animationSprites;
+
+                    // Load the characters
+                    loadCharacters(this)
+                      .then(characters => {
+                        this.characters = characters
+                      })
+
+                      .then(_ => {
+
+                        // Load levels
+                        loadLevels(this.app, this)
+                          .then(levels => {
+                            this.levels = levels;
+
+                            // Create FPS counter
+                            this.fpsCounter = new DrawText(this.app.stage, '', 10, 10);
+
+                            // Create Debug text
+                            this.debugHelper = new DrawText(this.app.stage, '', 10, 30);
+
+                            // Set level to starting point.
+                            this.levelIndex = 0;
+
+                            // Load level
+                            this.loadLevel();
+
+                            // Start game engine
+                            this.start();
+                          });
+                      })
                   })
-
-                  .then(_ => {
-
-                    // Load levels
-                    loadLevels(this.app, this)
-                      .then(levels => {
-                        this.levels = levels;
-
-                        // Create FPS counter
-                        this.fpsCounter = new DrawText(this.app.stage, '', 10, 10);
-
-                        // Create Debug text
-                        this.debugHelper = new DrawText(this.app.stage, '', 10, 30);
-
-                        // Set level to starting point.
-                        this.levelIndex = 0;
-
-                        // Load level
-                        this.loadLevel();
-
-                        // Start game engine
-                        this.start();
-                      });
-                  })
-              })
+              });
           });
       });
+
+
   }
 
   /** Loads all resources that are defined for the specific level */
@@ -183,6 +192,10 @@ export class Game {
     // Load characters
     this.level = this.levels.data[this.levelIndex];
 
+    // Reset all enemies
+    this.enemies = new Enemies();
+    this.enemies.data.clear();
+
     // Add all characters to the stage
     for (let i = 0; i < this.level.characters.length; i++) {
       let character = this.level.characters[i];
@@ -190,6 +203,12 @@ export class Game {
       // Reset the position of the character to the original location as defined in the config
       character.position.x = this.level.config.characters[i].position.x;
       character.position.y = this.level.config.characters[i].position.y;
+
+      if (!character.isPlayer) {
+        let npc: Enemy = new Enemy(character);
+
+        this.enemies.data.set(character.id, npc);
+      }
 
       // Add to stage
       character.addStage();
@@ -218,6 +237,12 @@ export class Game {
         this.onclick(event);
       });
     }
+
+    // Load sounds
+    let s : EntitySound = this.entities.data.get('music_8bit_jammer').sound;
+    PIXI.sound.play(s.id, {
+      volume: s.volume
+    });
 
     // Load background
     this.level.background.show();
@@ -255,6 +280,11 @@ export class Game {
     // Handle the events from the main game loop 
     if (this.gameState === GameState.Running) {
 
+      // TEMP
+      if (PIXI.sound.context.audioContext.state === 'suspended') {
+        PIXI.sound.context.audioContext.resume();
+      }
+
       // Update the background
       this.level.background.update();
 
@@ -267,6 +297,11 @@ export class Game {
       if (this.player) {
         this.player.update();
       }
+
+      // Update all enemy
+      this.enemies.data.forEach(enemy => {
+        enemy.update(this.player);
+      })
 
       // Update game frame
       this.gameFrame++;
@@ -319,10 +354,12 @@ export class Game {
 
     // Determine on which half of the screen was clicked (left or right)
     if (x < this.app.screen.width / 2) {
+
       // Update player position
       if (this.player) {
         this.handleInteraction(Actions.Move, new Point(x, y));
       }
+
     }
     else {
       this.handleInteraction(Actions.Fire, new Point(x, y));
@@ -353,7 +390,6 @@ window.onkeyup = function (e: any) {
   kp[code] = false;
 };
 
-
 export enum Actions {
   Move,
   Fire
@@ -366,4 +402,3 @@ export enum GameState {
   Stopped,
   Running
 }
-

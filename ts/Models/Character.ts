@@ -42,7 +42,7 @@ export class Character {
     private _animation: PIXI.AnimatedSprite;
     private _animationSpeed: number;
 
-    /** Get the unique id of character */
+    /** Get the id of object */
     get id(): string { return this._id }
 
     /** Is this a playable character? */
@@ -203,6 +203,7 @@ export class Character {
         // Interactive?
         this.animation.interactive = interactive;
 
+        /* 
         if (interactive) {
             let e = this;
             this.animation.removeAllListeners();
@@ -210,6 +211,7 @@ export class Character {
             this.animation.on("touchend", function () { e.playAnimation(e) });
             this.animation.on("click", function () { e.playAnimation(e) });
         }
+        */
 
         // Overrides animation details for this specific character.
         if (this._animationDetails && this._animationDetails.has(key)) {
@@ -257,6 +259,7 @@ export class CharacterAction {
     entity: Entity;
     velocity: Point;
     offset: Point;
+    sound: string;
 }
 
 export enum CharacterPlayState {

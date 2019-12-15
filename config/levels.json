@@ -25,6 +25,37 @@
                         "x": 1300,
                         "y": 25
                     }
+                }
+            ],
+            "entities": [
+                {}
+            ]
+        },
+        {
+            "name": "Level 2",
+            "background": "Space2",
+            "characters": [
+                {
+                    "id": "b58db7a6-f8fc-4f31-9162-86fae6282303",
+                    "sprite": "player",
+                    "animationKey": "Player/Default/skeleton-MovingNIdle",
+                    "animationSpeed": 0.14,
+                    "isPlayer": true,
+                    "position": {
+                        "x": 100,
+                        "y": 525
+                    }
+                },
+                {
+                    "id": "6f577ac4-4119-41fe-b620-ca26f8a5ebbf",
+                    "sprite": "enemy01",
+                    "animationKey": "Enemy01/Idle/skeleton-Idle",
+                    "animationSpeed": 0.14,
+                    "isPlayer": false,
+                    "position": {
+                        "x": 1300,
+                        "y": 25
+                    }
                 },
                 {
                     "id": "1927c78c-ac9c-4fed-a29b-d0cdb9142054",
