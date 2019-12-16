@@ -21,10 +21,12 @@ export class Enemy {
     // Character configuration
     private _character: Character;
 
-    // Player movement
+    // Enemy movement
     private _canMove: boolean = true;
     private _position: Point;
     private _gotoPosition: Point;
+    private _reverse: boolean = false;
+    private _moveBox: MoveBox;
 
     private _lastAction: number = Date.now();
 
@@ -52,6 +54,13 @@ export class Enemy {
     /** Set the character of this player */
     set character(character: Character) { this._character = character }
 
+    /** Get the area in which the entity can move */
+    get moveBox(): MoveBox { return this._moveBox }
+
+    /** Set the area in which the entity can move */
+    set moveBox(moveBox: MoveBox) { this._moveBox = moveBox }
+
+    /** Handle action */
     action(actionKey: string, position: Point) {
 
         // Get action from character
@@ -59,6 +68,7 @@ export class Enemy {
 
         switch (actionKey) {
             case "fire":
+            case "missile":
 
                 if (characterAction.entity == null) {
                     console.warn(`${this.character.id} has an invalid action. Action ${characterAction.id} has an invalid or missing sprite.`);
@@ -73,6 +83,11 @@ export class Enemy {
                 // Add offset
                 sprite.position.x += characterAction.offset.x;
                 sprite.position.y += characterAction.offset.y;
+
+                // Scale?
+                if (characterAction.scale) {
+                    sprite.scale = characterAction.scale;
+                }
 
                 // Add to stage
                 this.character.stage.addChild(sprite);
@@ -104,36 +119,51 @@ export class Enemy {
     }
 
     /** Update all events related to the enemy */
-    update(player: Player) {
+    update(playerPosition: Point) {
 
         if (Date.now() - this._lastAction < 750) {
         } else {
 
-            let actionTriggerOdds = Math.floor(Math.random() * 100);
-            if (actionTriggerOdds > 95) {
+            let actionTriggerOdds = Math.floor(Math.random() * 1000);
+
+            if (actionTriggerOdds > 940 && actionTriggerOdds <= 990) {
                 this._lastAction = Date.now();
-                this.action("fire", player.position);
+                this.action("fire", playerPosition);
+            }
+
+            if (actionTriggerOdds > 990) {
+                this._lastAction = Date.now();
+                this.action("missile", playerPosition);
             }
         }
 
         if (!this._gotoPosition) this._gotoPosition = new Point();
-        this._gotoPosition.x = player.position.x;
-        this._gotoPosition.y = player.position.y;
-
-
-        if (this.position.x - player.position.x < 800) {
-            this._gotoPosition.x += 800;
-        }
+        this._gotoPosition.x = playerPosition.x;
+        this._gotoPosition.y = playerPosition.y;
 
         let movementSpeed = 3;
 
         if (this._canMove && this._gotoPosition) {
 
+            if (this.position.x - movementSpeed < this.moveBox.minX + (this.character.animation.width / 2)) {
+                this._reverse = true;
+            }
+            if (this.position.x - movementSpeed > this.moveBox.maxX - this.character.animation.width / 2) {
+                this._reverse = false;
+            }
+
             // Determine if position X needs to be updated
-            this.position.x = calculateMovement(this.position.x, this._gotoPosition.x, movementSpeed);
+            this.position.x = calculateMovement(this.position.x, this._gotoPosition.x, movementSpeed * (this._reverse ? -1 : 1));
 
             // Determine if position Y needs to be updated
             this.position.y = calculateMovement(this.position.y, this._gotoPosition.y, movementSpeed);
+
+            // Add a 0.02% chance to flip position
+            let randomMovement: number = Math.floor(Math.random() * 1000);
+
+            if (randomMovement < 2) {
+                this._reverse = !this._reverse;
+            }
 
             // Set the position of the character
             this.character.position.x = this.position.x;
@@ -154,6 +184,38 @@ export class Enemy {
             }
         }
     }
+}
+
+export class MoveBox {
+    /**  */
+    constructor(minX: number, maxX: number, minY: number, maxY: number) {
+        this._minX = minX;
+        this._maxX = maxX;
+        this._minY = minY;
+        this._maxY = maxY;
+    }
+
+    private _minX: number;
+    private _maxX: number;
+    private _minY: number;
+    private _maxY: number;
+
+    get minX(): number {
+        return this._minX;
+    }
+
+    get maxX(): number {
+        return this._maxX;
+    }
+
+    get minY(): number {
+        return this._minY;
+    }
+
+    get maxY(): number {
+        return this._maxY;
+    }
+
 }
 
 /** Internal class to support action elements */

@@ -15,14 +15,18 @@
             "actions": [
                 {
                     "id": "fire",
-                    "entity": "projectile13",
+                    "entity": "projectile1",
                     "velocity": {
-                        "x": 20,
+                        "x": 22,
                         "y": 0.5
                     },
                     "offset": {
-                        "x": 120,
+                        "x": 100,
                         "y": 100
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
                     }
                 }
             ]
@@ -44,12 +48,32 @@
                     "id": "fire",
                     "entity": "projectile14",
                     "velocity": {
-                        "x": -20,
-                        "y": 1
+                        "x": -23,
+                        "y": 0.45
                     },
                     "offset": {
-                        "x": 100,
-                        "y": 100
+                        "x": 20,
+                        "y": 90
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    }
+                },
+                {
+                    "id": "missile",
+                    "entity": "projectile2",
+                    "velocity": {
+                        "x": -30,
+                        "y": 0.25
+                    },
+                    "offset": {
+                        "x": 24,
+                        "y": 118
+                    },
+                    "scale": {
+                        "x": -1,
+                        "y": -1
                     }
                 }
             ]
@@ -72,10 +96,10 @@
                     "entity": "projectile15",
                     "velocity": {
                         "x": -20,
-                        "y": 1
+                        "y": 0.45
                     },
                     "offset": {
-                        "x": 100,
+                        "x": 50,
                         "y": 100
                     }
                 }

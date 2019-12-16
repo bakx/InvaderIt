@@ -1,5 +1,5 @@
 import { Point } from "pixi.js";
-import { Enemies, Enemy } from "./Enemies";
+import { Enemies, Enemy, MoveBox } from "./Enemies";
 import { loadAnimationSprites, loadBackgrounds, loadCharacters, loadEntities, loadLevels, loadSounds } from "./Functions";
 import { AnimationSprites } from "./Models/AnimatedSprite";
 import { Backgrounds } from "./Models/Background";
@@ -205,9 +205,10 @@ export class Game {
       character.position.y = this.level.config.characters[i].position.y;
 
       if (!character.isPlayer) {
-        let npc: Enemy = new Enemy(character);
+        let enemy: Enemy = new Enemy(character);
+        enemy.moveBox = new MoveBox(this.app.screen.width / 2, this.app.screen.width, 0, this.app.screen.height);
 
-        this.enemies.data.set(character.id, npc);
+        this.enemies.data.set(character.id, enemy);
       }
 
       // Add to stage
@@ -239,9 +240,9 @@ export class Game {
     }
 
     // Load sounds
-    let s : EntitySound = this.entities.data.get('music_8bit_jammer').sound;
-    PIXI.sound.play(s.id, {
-      volume: s.volume
+    let music: EntitySound = this.entities.data.get('music_8bit_jammer').sound;
+    PIXI.sound.play(music.id, {
+      volume: music.volume
     });
 
     // Load background
@@ -300,7 +301,7 @@ export class Game {
 
       // Update all enemy
       this.enemies.data.forEach(enemy => {
-        enemy.update(this.player);
+        enemy.update(this.player.position);
       })
 
       // Update game frame
@@ -333,9 +334,18 @@ export class Game {
     // Resize renderer
     this.app.renderer.resize(newWidth, this.designHeight);
 
-    // Update background
-    if (this.level && this.level.background) {
-      this.level.background.redraw(newWidth, height);
+    // Handle the events from the main game loop 
+    if (this.gameState === GameState.Running) {
+
+      // Update background
+      if (this.level && this.level.background) {
+        this.level.background.redraw(newWidth, this.designHeight);
+      }
+
+      // Update all enemies
+      this.enemies.data.forEach(enemy => {
+        enemy.moveBox = new MoveBox(this.app.screen.width / 2, this.app.screen.width, 0, this.app.screen.height);
+      })
     }
   }
 

@@ -259,6 +259,7 @@ export class CharacterAction {
     entity: Entity;
     velocity: Point;
     offset: Point;
+    scale: Point;
     sound: string;
 }
 

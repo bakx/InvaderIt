@@ -28,4 +28,5 @@ export interface CharacterActionConfig {
     entity: string;
     velocity: Point;
     offset: Point;
+    scale: Point;
 }

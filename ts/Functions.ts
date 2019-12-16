@@ -251,6 +251,7 @@ export function loadCharacters(game: Game): Promise<Characters> {
             action.id = actionData.id;
             action.entity = game.entities.data.get(actionData.entity);
             action.velocity = actionData.velocity;
+            action.scale = actionData.scale;
             action.offset = actionData.offset;
 
             character.actions.set(actionData.id, action);
@@ -345,7 +346,7 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
 }
 
 /** Calculate the new position of a moving element */
-export function calculateMovement(currentPosition: number, moveTo: number, speed: number): number {
+export function calculateMovement(currentPosition: number, moveTo: number, moveSpeed: number): number {
 
   // Determine if movement is required
   if (moveTo == currentPosition) {
@@ -353,7 +354,7 @@ export function calculateMovement(currentPosition: number, moveTo: number, speed
   }
 
   if (currentPosition < moveTo) {
-    currentPosition += speed;
+    currentPosition += moveSpeed;
 
     // It's possible speed is not set to 1 and overshooting its position
     if (currentPosition > moveTo) {
@@ -364,7 +365,7 @@ export function calculateMovement(currentPosition: number, moveTo: number, speed
   }
 
   if (currentPosition > moveTo) {
-    currentPosition -= speed;
+    currentPosition -= moveSpeed;
 
     // It's possible speed is not set to 1 and overshooting its position
     if (currentPosition < moveTo) {
