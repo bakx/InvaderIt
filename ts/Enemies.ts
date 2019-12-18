@@ -1,15 +1,15 @@
 import { Point } from "pixi.js";
 import { Character, CharacterAction } from "./Models/Character";
 import { calculateMovement } from "./Functions";
-import { Player } from "./Player";
-import sound from "pixi-sound"
+import sound from "pixi-sound";
+import { Game } from "./Game";
+import { ActiveActionSprite } from "./ActiveActionSprite";
 
 export class Enemies {
     data: Map<string, Enemy> = new Map<string, Enemy>();
 }
 
 export class Enemy {
-
     /** Constructor of the Player class */
     constructor(character: Character) {
         this._character = character;
@@ -118,12 +118,17 @@ export class Enemy {
         }
     }
 
+    /** Plays a specific animation */
+    playAnimation(animationKey: string) {
+        this._character.playSingleAnimation(animationKey);
+    }
+
     /** Update all events related to the enemy */
-    update(playerPosition: Point) {
+    update(game: Game) {
 
-        if (Date.now() - this._lastAction < 750) {
-        } else {
+        let playerPosition: Point = game.player.position;
 
+        if (Date.now() - this._lastAction > 750) {
             let actionTriggerOdds = Math.floor(Math.random() * 1000);
 
             if (actionTriggerOdds > 940 && actionTriggerOdds <= 990) {
@@ -214,27 +219,5 @@ export class MoveBox {
 
     get maxY(): number {
         return this._maxY;
-    }
-
-}
-
-/** Internal class to support action elements */
-class ActiveActionSprite {
-
-    /** Constructor of the ActiveActionSprite class */
-    constructor(key: string, sprite: PIXI.Sprite) {
-        this._key = key;
-        this._sprite = sprite;
-    }
-
-    private _key: string;
-    private _sprite: PIXI.Sprite;
-
-    get key(): string {
-        return this._key;
-    }
-
-    get sprite(): PIXI.Sprite {
-        return this._sprite;
     }
 }

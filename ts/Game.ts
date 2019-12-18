@@ -1,4 +1,5 @@
 import { Point } from "pixi.js";
+import { Collision2D } from "./Collision2D";
 import { Enemies, Enemy, MoveBox } from "./Enemies";
 import { loadAnimationSprites, loadBackgrounds, loadCharacters, loadEntities, loadLevels, loadSounds } from "./Functions";
 import { AnimationSprites } from "./Models/AnimatedSprite";
@@ -36,6 +37,9 @@ export class Game {
   /** Text */
   fpsCounter: DrawText;
   debugHelper: DrawText;
+
+  /** Libraries */
+  bump: any;
 
   /** Game constructor */
   constructor(width?: number, height?: number) {
@@ -301,8 +305,26 @@ export class Game {
 
       // Update all enemy
       this.enemies.data.forEach(enemy => {
-        enemy.update(this.player.position);
+        enemy.update(this);
       })
+
+      // Collision check
+      this.player.activeActionSprites.forEach(action => {
+        if (action.triggerEvents) {
+
+          // Check collision for all enemies
+          this.enemies.data.forEach(enemy => {
+            if (Collision2D.boxedCollision(
+              action.sprite.position, enemy.position,
+              action.sprite.getLocalBounds(), enemy.character.animation.getLocalBounds()
+            )) {
+              // Prevent retriggering the event for this action element
+              action.triggerEvents = false;
+              enemy.playAnimation("Enemy01/GetHit/skeleton-GetHit");
+            }
+          })
+        }
+      });
 
       // Update game frame
       this.gameFrame++;
@@ -369,7 +391,6 @@ export class Game {
       if (this.player) {
         this.handleInteraction(Actions.Move, new Point(x, y));
       }
-
     }
     else {
       this.handleInteraction(Actions.Fire, new Point(x, y));

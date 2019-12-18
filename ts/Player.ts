@@ -1,6 +1,7 @@
 import { Point } from "pixi.js";
-import { Character, CharacterAction } from "./Models/Character";
+import { ActiveActionSprite } from "./ActiveActionSprite";
 import { calculateMovement } from "./Functions";
+import { Character, CharacterAction } from "./Models/Character";
 
 export class Player {
 
@@ -43,6 +44,9 @@ export class Player {
 
     /** Set the character of this player */
     set character(character: Character) { this._character = character }
+
+    /** Get the active action sprites of this player */
+    get activeActionSprites(): ActiveActionSprite[] { return this._activeActionSprites }
 
     action(actionKey: string, position: Point) {
 
@@ -107,6 +111,11 @@ export class Player {
             for (let i = 0; i < this._activeActionSprites.length; i++) {
                 let action: ActiveActionSprite = this._activeActionSprites[i];
 
+                if (action.markDelete) {
+                    this._activeActionSprites.splice(i, 1);
+                    continue;
+                }
+
                 // Get character action
                 let actionDetails: CharacterAction = this.character.actions.get(action.key);
 
@@ -115,26 +124,5 @@ export class Player {
                 action.sprite.position.y += actionDetails.velocity.y;
             }
         }
-    }
-}
-
-/** Internal class to support action elements */
-class ActiveActionSprite {
-    
-    /** Constructor of the ActiveActionSprite class */
-    constructor(key: string, sprite: PIXI.Sprite) {
-        this._key = key;
-        this._sprite = sprite;
-    }
-
-    private _key: string;
-    private _sprite: PIXI.Sprite;
-
-    get key(): string {
-        return this._key;
-    }
-
-    get sprite(): PIXI.Sprite {
-        return this._sprite;
     }
 }

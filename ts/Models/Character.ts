@@ -158,6 +158,22 @@ export class Character {
         this.stage.removeChild(this.animation);
     }
 
+    playSingleAnimation(key: string) {
+        // Update local variables
+        let restoreAnimationKey = this._animationKey;
+        let restoreAutoPlay = this._autoPlay;
+        let restoreLoop = this._loop;
+        let restoreInteractive = this._interactive;
+
+        // Play new animation
+        this.createAnimation(key, true, false);
+
+        // Hook into the onComplete event 
+        this.animation.onComplete = function () {
+            this.createAnimation(restoreAnimationKey, restoreAutoPlay, restoreLoop, restoreInteractive);
+        };
+    }
+
     /** Set the animation for the character */
     createAnimation(key: string, autoPlay: boolean = true, loop: boolean = true, interactive: boolean = false) {
         // Update local variables
@@ -183,11 +199,17 @@ export class Character {
 
         // Get the original animation source and create a new animated sprite from it
         let animationSource = this.animationSource.getAnimation(this.animationKey).textures;
+        let currentPosition = this.animation?.position;
+
         this.animation = new PIXI.AnimatedSprite(animationSource);
         this.animation.animationSpeed = this._animationSpeed;
 
-        this.animation.scale = new Point(.55, .55);
+        // Set existing position (if any)
+        if (currentPosition) {
+            this.animation.position = currentPosition;
+        }
 
+        // If the character should be visible, add it back to the stage
         if (isVisible) {
             this.stage.addChild(this.animation);
         }
@@ -229,24 +251,6 @@ export class Character {
         }
     }
 
-    /** Plays a specific animation */
-    playAnimation(char: Character) {
-
-        // Temporary interactive code?
-        let key: string;
-        let animationCount = char.animationSource.animationKeys().length;
-        let currentIndex = char.animationSource.animationKeys().indexOf(this._animationKey);
-
-        currentIndex++;
-
-        if (currentIndex >= animationCount) {
-            currentIndex = 0;
-        }
-
-        key = char.animationSource.animationKeys()[currentIndex];
-        char.createAnimation(key, true, true);
-    }
-
     /** Update all events related to the character */
     update() {
         this.animation.x = this.position.x;
@@ -261,9 +265,4 @@ export class CharacterAction {
     offset: Point;
     scale: Point;
     sound: string;
-}
-
-export enum CharacterPlayState {
-    TO,
-    DO
 }
