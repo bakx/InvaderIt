@@ -37,8 +37,10 @@ export class MultipackLoader {
     * @param callback function to call when loading completes. It can call any function that includes a (id : string, message : string, sprites : AnimationSprite)
     */
     loadFile(file: string, startAt: number, endAt: number, callback: CallableFunction) {
+
         // Initialize the loader
         const loader = new PIXI.Loader();
+
         // Keep track of all files passed to the loader
         let files: string[] = [];
 
@@ -47,6 +49,7 @@ export class MultipackLoader {
 
         // Add all files to the loader
         for (let i = startAt; i <= endAt; i++) {
+
             // Generate filename
             let filename = `${file}${i}.json`;
 
@@ -62,12 +65,14 @@ export class MultipackLoader {
 
         /** Callback that processes the loaded resources and adds them to the animatedSprites object */
         loader.load((loader: any, resources: any) => {
+
             // Loop through all resource files
             for (let i = 0; i < files.length; i++) {
                 let resourceFile: PIXI.LoaderResource = resources[files[i]];
 
                 // Loop through the frames
                 for (let key in resourceFile.data.frames) {
+
                     // Convert key to animation key
                     let animationKey = key.slice(0, key.lastIndexOf('_'));
 
@@ -81,11 +86,13 @@ export class MultipackLoader {
 
                     // Does the key exist?
                     if (animationFrames.has(animationKey)) {
+
                         // Retrieve existing frames for this animation
                         let frames = animationFrames.get(animationKey);
                         frames.set(animationIndex, PIXI.Sprite.from(key));
                     }
                     else {
+
                         // Create new placeholder for the frame animations
                         let frame: Map<number, object> = new Map<number, object>();
                         frame.set(animationIndex, PIXI.Sprite.from(key));
@@ -101,6 +108,7 @@ export class MultipackLoader {
 
             // Prepare the animations
             for (let i = 0; i < this._animationKeys.length; i++) {
+
                 // Prepare the key
                 let key = this._animationKeys[i];
 
@@ -110,6 +118,7 @@ export class MultipackLoader {
 
                 // Loop through all animations
                 for (let j = 0; j < frames.size; j++) {
+                    
                     // Get the animation at a specific index
                     let frame: any = frames.get(j);
                     indexedFrames.push(frame);

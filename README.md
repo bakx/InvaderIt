@@ -13,10 +13,12 @@ All code is licensed as MIT.
 Graphics are not MIT licensed and will be removed from future commits. If you like the graphics, consider signing up at : http://www.craftpix.net and get your own copy of these files.
 
 # About
-This should be considering a **personal learning** project and likely will not follow the correct guidelines. However, if any of the code is useful for your project, feel free to use it.
+This should be considering a **personal learning** project and likely will not follow the correct guidelines. However, if any of the code is useful for your project, feel free to use it. The quality of the code should improve build after build and i tend to clean-up duplication of data from time to time.
 
 The goal of this project is not to build a game engine. If you are searching for game engines based on Pixi, perhaps give https://phaser.io/ a try.
 
-
 # Developer Internal notes
-Should Hjson be used to generate JSON in order to keep the files nicely formatted and easier to maintain?
+* Should https://hjson.org/ be used to generate JSON in order to keep the files nicely formatted and easier to maintain?
+* Command to resize gfx | `pngquant *.png --ext=.png --force`
+* Perhaps build a 'level' builder?
+

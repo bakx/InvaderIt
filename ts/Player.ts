@@ -1,8 +1,10 @@
 import { Point } from "pixi.js";
-import { Character, CharacterAction } from "./Models/Character";
+import { ActiveActionSprite } from "./ActiveActionSprite";
 import { calculateMovement } from "./Functions";
+import { Character, CharacterAction } from "./Models/Character";
 
 export class Player {
+
     /** Constructor of the Player class */
     constructor(character: Character) {
         this._character = character;
@@ -43,14 +45,19 @@ export class Player {
     /** Set the character of this player */
     set character(character: Character) { this._character = character }
 
+    /** Get the active action sprites of this player */
+    get activeActionSprites(): ActiveActionSprite[] { return this._activeActionSprites }
+
     action(actionKey: string, position: Point) {
+
         // Get action from character
         let characterAction: CharacterAction = this.character.actions.get(actionKey);
 
         switch (actionKey) {
             case "fire":
+
                 // Create sprite
-                let sprite = PIXI.Sprite.from(characterAction.entity.sprite().texture);
+                let sprite = PIXI.Sprite.from(characterAction.entity.sprite.texture);
 
                 // Set position
                 sprite.position = this.character.position;
@@ -63,10 +70,18 @@ export class Player {
                 this.character.stage.addChild(sprite);
 
                 // Create action class
-                let activeActionSprite: ActiveActionSprite = new ActiveActionSprite("Doesn't matter", actionKey, sprite);
+                let activeActionSprite: ActiveActionSprite = new ActiveActionSprite(actionKey, sprite);
 
                 // Add to collection to keep track
                 this._activeActionSprites.push(activeActionSprite);
+
+                // Play sound effect
+                if (characterAction.entity.sound) {
+                    PIXI.sound.play(characterAction.entity.sound.id, {
+                        volume: characterAction.entity.sound.volume
+                    });
+                }
+
                 break;
 
             default:
@@ -79,6 +94,7 @@ export class Player {
         let movementSpeed = 5;
 
         if (this._canMove && this._gotoPosition) {
+
             // Determine if position X needs to be updated
             this.position.x = calculateMovement(this.position.x, this._gotoPosition.x, movementSpeed);
 
@@ -95,6 +111,11 @@ export class Player {
             for (let i = 0; i < this._activeActionSprites.length; i++) {
                 let action: ActiveActionSprite = this._activeActionSprites[i];
 
+                if (action.markDelete) {
+                    this._activeActionSprites.splice(i, 1);
+                    continue;
+                }
+
                 // Get character action
                 let actionDetails: CharacterAction = this.character.actions.get(action.key);
 
@@ -103,25 +124,5 @@ export class Player {
                 action.sprite.position.y += actionDetails.velocity.y;
             }
         }
-    }
-}
-
-/** Internal class to support action elements */
-class ActiveActionSprite {
-    /** Constructor of the ActiveActionSprite class */
-    constructor(id: string, key: string, sprite: PIXI.Sprite) {
-        this._key = key;
-        this._sprite = sprite;
-    }
-
-    private _key: string;
-    private _sprite: PIXI.Sprite;
-
-    get key(): string {
-        return this._key;
-    }
-
-    get sprite(): PIXI.Sprite {
-        return this._sprite;
     }
 }

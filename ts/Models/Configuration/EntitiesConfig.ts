@@ -7,4 +7,10 @@ export interface EntityConfig {
     filename: string;
     width: number;
     height: number;
+    sound: EntitySoundConfig;
+}
+
+export interface EntitySoundConfig {
+    id: string;
+    volume: number;
 }

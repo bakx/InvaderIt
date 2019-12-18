@@ -6,13 +6,7 @@
             "defaultAnimationSpeed": 0.10,
             "animationDetails": [
                 {
-                    "key": "5_JUMP",
-                    "overrides": {
-                        "loop": false
-                    }
-                },
-                {
-                    "key": "7_DIE",
+                    "key": "Player/Destroyed/skeleton-Destroy",
                     "overrides": {
                         "loop": false
                     }
@@ -21,14 +15,308 @@
             "actions": [
                 {
                     "id": "fire",
-                    "entity": "projectile",
-                    "velocity" : {
-                        "x" : 20,
-                        "y" : 1
+                    "entity": "projectile1",
+                    "velocity": {
+                        "x": 22,
+                        "y": 0.5
                     },
-                    "offset" :{
-                        "x" : 100,
-                        "y" : 100
+                    "offset": {
+                        "x": 100,
+                        "y": 100
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    }
+                }
+            ]
+        },
+        {
+            "id": "enemy01",
+            "defaultAnimationKey": "Enemy01/Idle/skeleton-Idle",
+            "defaultAnimationSpeed": 0.10,
+            "animationDetails": [
+                {
+                    "key": "Enemy01/Destroyed/skeleton-Destroyed",
+                    "overrides": {
+                        "loop": false
+                    }
+                }
+            ],
+            "actions": [
+                {
+                    "id": "fire",
+                    "entity": "projectile14",
+                    "velocity": {
+                        "x": -23,
+                        "y": 0.45
+                    },
+                    "offset": {
+                        "x": 20,
+                        "y": 90
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    }
+                },
+                {
+                    "id": "missile",
+                    "entity": "projectile2",
+                    "velocity": {
+                        "x": -30,
+                        "y": 0.25
+                    },
+                    "offset": {
+                        "x": 24,
+                        "y": 118
+                    },
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    }
+                }
+            ]
+        },
+        {
+            "id": "enemy02",
+            "defaultAnimationKey": "Enemy02/Idle/skeleton-Idle",
+            "defaultAnimationSpeed": 0.10,
+            "animationDetails": [
+                {
+                    "key": "Enemy02/Destroyed/skeleton-Destroyed",
+                    "overrides": {
+                        "loop": false
+                    }
+                }
+            ],
+            "actions": [
+                {
+                    "id": "fire",
+                    "entity": "projectile15",
+                    "velocity": {
+                        "x": -20,
+                        "y": 0.45
+                    },
+                    "offset": {
+                        "x": 50,
+                        "y": 100
+                    }
+                }
+            ]
+        },
+        {
+            "id": "enemy03",
+            "defaultAnimationKey": "Enemy03/Idle/skeleton-Idle",
+            "defaultAnimationSpeed": 0.10,
+            "animationDetails": [
+                {
+                    "key": "Enemy03/Destroyed/skeleton-Destroyed",
+                    "overrides": {
+                        "loop": false
+                    }
+                }
+            ],
+            "actions": [
+                {
+                    "id": "fire",
+                    "entity": "projectile1",
+                    "velocity": {
+                        "x": -20,
+                        "y": 1
+                    },
+                    "offset": {
+                        "x": 100,
+                        "y": 100
+                    }
+                }
+            ]
+        },
+        {
+            "id": "enemy04",
+            "defaultAnimationKey": "Enemy04/Idle/skeleton-Idle",
+            "defaultAnimationSpeed": 0.10,
+            "animationDetails": [
+                {
+                    "key": "Enemy04/Destroyed/skeleton-Destroyed",
+                    "overrides": {
+                        "loop": false
+                    }
+                }
+            ],
+            "actions": [
+                {
+                    "id": "fire",
+                    "entity": "projectile3",
+                    "velocity": {
+                        "x": -20,
+                        "y": 1
+                    },
+                    "offset": {
+                        "x": 100,
+                        "y": 100
+                    }
+                }
+            ]
+        },
+        {
+            "id": "enemy05",
+            "defaultAnimationKey": "Enemy05/Idle/skeleton-Idle",
+            "defaultAnimationSpeed": 0.10,
+            "animationDetails": [
+                {
+                    "key": "Enemy05/Destroyed/skeleton-Destroyed",
+                    "overrides": {
+                        "loop": false
+                    }
+                }
+            ],
+            "actions": [
+                {
+                    "id": "fire",
+                    "entity": "projectile4",
+                    "velocity": {
+                        "x": -20,
+                        "y": 1
+                    },
+                    "offset": {
+                        "x": 100,
+                        "y": 100
+                    }
+                }
+            ]
+        },
+        {
+            "id": "enemy06",
+            "defaultAnimationKey": "Enemy06/Idle/skeleton-Idle",
+            "defaultAnimationSpeed": 0.10,
+            "animationDetails": [
+                {
+                    "key": "Enemy06/Destroyed/skeleton-Destroyed",
+                    "overrides": {
+                        "loop": false
+                    }
+                }
+            ],
+            "actions": [
+                {
+                    "id": "fire",
+                    "entity": "projectile6",
+                    "velocity": {
+                        "x": -20,
+                        "y": 1
+                    },
+                    "offset": {
+                        "x": 100,
+                        "y": 100
+                    }
+                }
+            ]
+        },
+        {
+            "id": "enemy07",
+            "defaultAnimationKey": "Enemy07/Idle/skeleton-Idle",
+            "defaultAnimationSpeed": 0.10,
+            "animationDetails": [
+                {
+                    "key": "Enemy07/Destroyed/skeleton-Destroyed",
+                    "overrides": {
+                        "loop": false
+                    }
+                }
+            ],
+            "actions": [
+                {
+                    "id": "fire",
+                    "entity": "projectile8",
+                    "velocity": {
+                        "x": -20,
+                        "y": 1
+                    },
+                    "offset": {
+                        "x": 100,
+                        "y": 100
+                    }
+                }
+            ]
+        },
+        {
+            "id": "enemy08",
+            "defaultAnimationKey": "Enemy08/Idle/skeleton-Idle",
+            "defaultAnimationSpeed": 0.10,
+            "animationDetails": [
+                {
+                    "key": "Enemy08/Destroyed/skeleton-Destroyed",
+                    "overrides": {
+                        "loop": false
+                    }
+                }
+            ],
+            "actions": [
+                {
+                    "id": "fire",
+                    "entity": "projectile10",
+                    "velocity": {
+                        "x": -20,
+                        "y": 1
+                    },
+                    "offset": {
+                        "x": 100,
+                        "y": 100
+                    }
+                }
+            ]
+        },
+        {
+            "id": "enemy09",
+            "defaultAnimationKey": "Enemy09/Idle/skeleton-Idle",
+            "defaultAnimationSpeed": 0.10,
+            "animationDetails": [
+                {
+                    "key": "Enemy09/Destroyed/skeleton-Destroyed",
+                    "overrides": {
+                        "loop": false
+                    }
+                }
+            ],
+            "actions": [
+                {
+                    "id": "fire",
+                    "entity": "projectile12",
+                    "velocity": {
+                        "x": -20,
+                        "y": 1
+                    },
+                    "offset": {
+                        "x": 100,
+                        "y": 100
+                    }
+                }
+            ]
+        },
+        {
+            "id": "enemy10",
+            "defaultAnimationKey": "Enemy10/Idle/skeleton-Idle",
+            "defaultAnimationSpeed": 0.10,
+            "animationDetails": [
+                {
+                    "key": "Enemy10/Destroyed/skeleton-Destroyed",
+                    "overrides": {
+                        "loop": false
+                    }
+                }
+            ],
+            "actions": [
+                {
+                    "id": "fire",
+                    "entity": "projectile15",
+                    "velocity": {
+                        "x": -20,
+                        "y": 1
+                    },
+                    "offset": {
+                        "x": 100,
+                        "y": 100
                     }
                 }
             ]
