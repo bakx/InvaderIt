@@ -186,6 +186,11 @@ export class Enemy {
                 // Update velocity
                 action.sprite.position.x += actionDetails.velocity.x;
                 action.sprite.position.y += actionDetails.velocity.y;
+
+                // If item is out of screen bounds, mark for delete
+                if (action.sprite.position.x < game.app.screen.width || action.sprite.position.x > game.app.screen.width) {
+                    action.markDelete = true;
+                }
             }
         }
     }

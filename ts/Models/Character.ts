@@ -33,6 +33,13 @@ export class Character {
     private _animationSource: AnimationSprite;
     private _animationKey: string;
 
+    // Restore animation settings
+    private _restoreAnimationKey: string;
+    private _isPlayingSingleAnimation: boolean;
+    private _restoreAutoPlay: boolean = true;
+    private _restoreLoop: boolean = true;
+    private _restoreInteractive: boolean = true;
+
     // Play settings
 
     private _autoPlay: boolean = true;
@@ -103,6 +110,36 @@ export class Character {
     /** Set the animation key of character */
     set animationKey(animationKey: string) { this._animationKey = animationKey }
 
+    /** If a single animation is playing, this key is used to 'restore' to the previous state */
+    get restoreAnimationKey(): string { return this._restoreAnimationKey }
+
+    /** Set the animation key that should be playing after a single animation was played (e.g., when a character gets hit and needs to be restored to their default animation) */
+    set restoreAnimationKey(restoreAnimationKey: string) { this._restoreAnimationKey = restoreAnimationKey }
+
+    /** Is the animation effect playing automatically? */
+    get restoreAutoPlay(): boolean { return this._restoreAutoPlay }
+
+    /** Restore the autoplay value of the animation that was playing before a single animation was played (e.g., when a character gets hit and needs to be restored to their default animation settings) */
+    set restoreAutoPlay(restoreAutoPlay: boolean) { this._restoreAutoPlay = restoreAutoPlay }
+
+    /** Is the animation effect of this character looping? */
+    get restoreLoop(): boolean { return this._restoreLoop }
+
+    /** Restore the loop value of the animation that was playing before a single animation was played (e.g., when a character gets hit and needs to be restored to their default animation settings) */
+    set restoreLoop(restoreLoop: boolean) { this._restoreLoop = restoreLoop }
+
+    /** Is this character interactive? */
+    get restoreInteractive(): boolean { return this._restoreInteractive }
+
+    /** Restore the character interactive value of the animation that was playing before a single animation was played (e.g., when a character gets hit and needs to be restored to their default animation settings) */
+    set restoreInteractive(restoreInteractive: boolean) { this._restoreInteractive = restoreInteractive }
+
+    /** Is a single animation effect playing? */
+    get isPlayingSingleAnimation(): boolean { return this._isPlayingSingleAnimation }
+
+    /** Set the flag that indicates that a single animation is playing */
+    set isPlayingSingleAnimation(isPlayingSingleAnimation: boolean) { this._isPlayingSingleAnimation = isPlayingSingleAnimation }
+
     /** Is the animation effect playing automatically? */
     get autoPlay(): boolean { return this._autoPlay }
 
@@ -139,7 +176,9 @@ export class Character {
 
     /** Add character to stage */
     addStage() {
-        console.debug(`Adding character ${this.id} to the stage at position ${this.position.x},${this.position.y}`);
+        
+        // Diagnostics
+        console.debug(`Adding character ${this.id} to the stage at position ${this.position.x},${this.position.y} with animation ${this.animationKey}`);
 
         if (!this.animation) {
             throw new Error(`Animation object not set for ${this.id}`);
@@ -154,28 +193,43 @@ export class Character {
 
     /** Remove character to stage */
     removeStage() {
-        console.debug(`Removing character ${this.id} to the stage`);
+
+        // Diagnostics
+        console.debug(`Removing character ${this.id} from the stage`);
         this.stage.removeChild(this.animation);
     }
 
+    /** Play an animation once. E.g., when a character is hit. After playing once, it will revert back to the original animation */
     playSingleAnimation(key: string) {
-        // Update local variables
-        let restoreAnimationKey = this._animationKey;
-        let restoreAutoPlay = this._autoPlay;
-        let restoreLoop = this._loop;
-        let restoreInteractive = this._interactive;
+
+        // Indicate that a single animation is currently playing
+        if (!this.isPlayingSingleAnimation) {
+            this.restoreAnimationKey = this._animationKey;
+            this.restoreAutoPlay = this._autoPlay;
+            this.restoreLoop = this._loop;
+            this.restoreInteractive = this._interactive;
+        }
+
+        // Indicate that a single animation is triggered
+        this.isPlayingSingleAnimation = true;
 
         // Play new animation
         this.createAnimation(key, true, false);
 
-        // Hook into the onComplete event 
-        this.animation.onComplete = function () {
-            this.createAnimation(restoreAnimationKey, restoreAutoPlay, restoreLoop, restoreInteractive);
+        // Get a reference to this object for usage in the callback
+        let char = this;
+
+        // Hook into the onComplete event to restore the original animation
+        this.animation.onComplete = function (e) {
+            char.createAnimation(char.restoreAnimationKey, char.restoreAutoPlay, char.restoreLoop, char.restoreInteractive);
+            char.isPlayingSingleAnimation = false;
+            char.restoreAnimationKey = null;
         };
     }
 
     /** Set the animation for the character */
     createAnimation(key: string, autoPlay: boolean = true, loop: boolean = true, interactive: boolean = false) {
+
         // Update local variables
         this.autoPlay = autoPlay;
         this.loop = loop;
@@ -197,6 +251,9 @@ export class Character {
             this.removeStage();
         }
 
+        // Diagnostics
+        console.debug(`Changing the animation for character ${this.id} to  ${this.animationKey}`);
+
         // Get the original animation source and create a new animated sprite from it
         let animationSource = this.animationSource.getAnimation(this.animationKey).textures;
         let currentPosition = this.animation?.position;
@@ -211,7 +268,7 @@ export class Character {
 
         // If the character should be visible, add it back to the stage
         if (isVisible) {
-            this.stage.addChild(this.animation);
+            this.addStage();
         }
 
         // Play?

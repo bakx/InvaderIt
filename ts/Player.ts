@@ -112,6 +112,10 @@ export class Player {
                 let action: ActiveActionSprite = this._activeActionSprites[i];
 
                 if (action.markDelete) {
+                    
+                    // Diagnostics
+                    console.debug(`Removing  ${action.key} from the active action sprites`);
+
                     this._activeActionSprites.splice(i, 1);
                     continue;
                 }

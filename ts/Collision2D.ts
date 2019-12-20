@@ -10,7 +10,7 @@ export class Collision2D {
 
     if (sourcePosition.x > targetPosition.x && 
       sourcePosition.x < targetPosition.x + targetSize.width && 
-        sourcePosition.y > targetPosition.y - targetSize.height && 
+        sourcePosition.y > targetPosition.y && 
         sourcePosition.y < targetPosition.y + targetSize.height) {
           return true;
         }

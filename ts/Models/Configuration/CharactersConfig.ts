@@ -29,4 +29,5 @@ export interface CharacterActionConfig {
     velocity: Point;
     offset: Point;
     scale: Point;
+    triggerTimeout: number;
 }
