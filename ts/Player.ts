@@ -9,8 +9,8 @@ export class Player {
     constructor(character: Character) {
         this._character = character;
         this._position = character.position;
-
         this._activeActionSprites = [];
+        this._actionTriggered = new Map<string, number>();
     }
 
     // Character configuration
@@ -21,8 +21,11 @@ export class Player {
     private _position: Point;
     private _gotoPosition: Point;
 
-    // Action configuration
+    // Active action sprites
     private _activeActionSprites: ActiveActionSprite[];
+
+    // Active action sprites
+    private _actionTriggered: Map<string, number>;
 
     /** Get the unique id of player */
     get id(): string { return this._character.id }
@@ -48,11 +51,33 @@ export class Player {
     /** Get the active action sprites of this player */
     get activeActionSprites(): ActiveActionSprite[] { return this._activeActionSprites }
 
+    /** Get mapping of triggererd actions and their trigger date */
+    get actionTriggered(): Map<string, number> { return this._actionTriggered }
+
+    /** Handle the character action (e.g., firing a rocket) */
     action(actionKey: string, position: Point) {
 
         // Get action from character
         let characterAction: CharacterAction = this.character.actions.get(actionKey);
 
+        // Is this action triggered before?
+        if (this.actionTriggered.has(actionKey)) {
+            let lastTrigger: number = this.actionTriggered.get(actionKey);
+
+            // Check if the last trigger time exceeds the trigger timeout
+            if (Date.now() - lastTrigger < characterAction.triggerTimeout) {
+
+                // Diagnostics
+                console.debug(`Action ${actionKey} ignored due trigger timeout ${characterAction.triggerTimeout} not met`);
+
+                return;
+            }
+        }
+
+        // Update mapping to indicate this action is firing
+        this.actionTriggered.set(actionKey, Date.now())
+
+        // Trigger action
         switch (actionKey) {
             case "fire":
 
@@ -112,7 +137,7 @@ export class Player {
                 let action: ActiveActionSprite = this._activeActionSprites[i];
 
                 if (action.markDelete) {
-                    
+
                     // Diagnostics
                     console.debug(`Removing  ${action.key} from the active action sprites`);
 

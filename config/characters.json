@@ -28,7 +28,8 @@
                         "x": 1,
                         "y": 1
                     },
-                    "triggerTimeout": 50
+                    "triggerTimeout": 250,
+                    "lifetime": 3000
                 }
             ]
         },

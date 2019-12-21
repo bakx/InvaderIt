@@ -7,6 +7,7 @@ export interface LevelsConfig {
 export interface LevelConfig {
     name: string;
     background: string;
+    backgroundMusic: string;
     characters: LevelCharacterConfig[];
 }
 

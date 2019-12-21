@@ -29,7 +29,8 @@
             ],
             "entities": [
                 {}
-            ]
+            ],
+            "backgroundMusic" : "music_8bit_jammer"
         },
         {
             "name": "Level 2",
@@ -159,7 +160,8 @@
             ],
             "entities": [
                 {}
-            ]
+            ],
+            "backgroundMusic" : "music_8bit_jammer"
         }
     ]
 }

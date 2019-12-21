@@ -25,6 +25,7 @@
     "pixi.js": "^5.2.0"
   },
   "devDependencies": {
+    "guid-typescript": "^1.0.9",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.2",
     "webpack": "^4.41.2",

@@ -118,7 +118,7 @@ export class MultipackLoader {
 
                 // Loop through all animations
                 for (let j = 0; j < frames.size; j++) {
-                    
+
                     // Get the animation at a specific index
                     let frame: any = frames.get(j);
                     indexedFrames.push(frame);

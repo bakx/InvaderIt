@@ -244,9 +244,10 @@ export class Game {
     }
 
     // Load sounds
-    let music: EntitySound = this.entities.data.get('music_8bit_jammer').sound;
+    let music: EntitySound = this.entities.data.get(this.level.backgroundMusic).sound;
     PIXI.sound.play(music.id, {
-      volume: music.volume
+      volume: music.volume,
+      loop: true
     });
 
     // Load background
@@ -271,6 +272,7 @@ export class Game {
     this.app.stop();
   }
 
+  /** Stops the game loop and sets the state to menu */
   menu() {
     this.gameState = GameState.Menu;
     this.app.stop();

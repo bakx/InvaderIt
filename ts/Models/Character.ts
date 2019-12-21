@@ -176,7 +176,7 @@ export class Character {
 
     /** Add character to stage */
     addStage() {
-        
+
         // Diagnostics
         console.debug(`Adding character ${this.id} to the stage at position ${this.position.x},${this.position.y} with animation ${this.animationKey}`);
 
@@ -322,4 +322,6 @@ export class CharacterAction {
     offset: Point;
     scale: Point;
     sound: string;
+    triggerTimeout: number;
+    lifetime: number;
 }

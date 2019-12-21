@@ -1,5 +1,4 @@
 import { Point } from "pixi.js"
-import { Entity } from "../Entities";
 
 export interface CharactersConfig {
     data: CharacterConfig[];
@@ -30,4 +29,5 @@ export interface CharacterActionConfig {
     offset: Point;
     scale: Point;
     triggerTimeout: number;
+    lifetime: number;
 }

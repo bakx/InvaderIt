@@ -1,9 +1,9 @@
+import "pixi-sound";
 import { Point } from "pixi.js";
-import { Character, CharacterAction } from "./Models/Character";
-import { calculateMovement } from "./Functions";
-import sound from "pixi-sound";
-import { Game } from "./Game";
 import { ActiveActionSprite } from "./ActiveActionSprite";
+import { calculateMovement } from "./Functions";
+import { Game } from "./Game";
+import { Character, CharacterAction } from "./Models/Character";
 
 export class Enemies {
     data: Map<string, Enemy> = new Map<string, Enemy>();

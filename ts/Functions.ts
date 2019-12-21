@@ -253,6 +253,8 @@ export function loadCharacters(game: Game): Promise<Characters> {
             action.velocity = actionData.velocity;
             action.scale = actionData.scale;
             action.offset = actionData.offset;
+            action.triggerTimeout = actionData.triggerTimeout;
+            action.lifetime = actionData.lifetime;
 
             character.actions.set(actionData.id, action);
           }
@@ -297,6 +299,9 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
           else {
             throw new Error(`Unable to load background ${config.background} for level ${config.name}`);
           }
+          
+          // Set background music
+          level.backgroundMusic = config.backgroundMusic;
 
           // Load Characters
 
