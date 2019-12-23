@@ -1,2 +1,2 @@
 #!/bin/bash
-npx http-server %CD% -p 3000
+npx http-server $pwd -p 3000
