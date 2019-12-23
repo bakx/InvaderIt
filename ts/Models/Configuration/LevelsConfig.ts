@@ -18,4 +18,6 @@ export interface LevelCharacterConfig {
     animationKey: string;
     animationSpeed: number;
     position: Point;
+    life: number;
+    shield: number;
 }

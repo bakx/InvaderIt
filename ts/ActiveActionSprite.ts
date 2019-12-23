@@ -18,6 +18,7 @@ export class ActiveActionSprite {
     private _triggerEvents: boolean;
     private _triggerTime: Date;
     private _lifetime: number;
+    private _damage: number;
 
     /** Get the id of object */
     get id(): string { return this._id }
@@ -70,5 +71,15 @@ export class ActiveActionSprite {
     /** Set the lifetime of this action element (in milliseconds) */
     set lifetime(lifetime: number) {
         this._lifetime = lifetime;
+    }
+
+    /** Get the damage of this action element (in milliseconds) */
+    get damage(): number {
+        return this._damage;
+    }
+
+    /** Set the damage of this action element (in milliseconds) */
+    set damage(damage: number) {
+        this._damage = damage;
     }
 }

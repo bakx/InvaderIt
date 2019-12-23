@@ -320,9 +320,31 @@ export class Game {
               action.sprite.position, enemy.position,
               action.sprite.getLocalBounds(), enemy.character.animation.getLocalBounds()
             )) {
+
               // Prevent retriggering the event for this action element
               action.triggerEvents = false;
-              enemy.playAnimation("Enemy01/GetHit/skeleton-GetHit");
+
+              // Reduce life of enemy
+              enemy.character.life -= action.damage;
+
+              // Check life of entity
+              if (enemy.character.life > 0) {
+
+                // Trigger hit animation - TODO This needs to trigger the enemy specific HIT property
+                enemy.playAnimation("Enemy01/GetHit/skeleton-GetHit");
+
+              } else {
+
+                // create reference to current instance
+                let g = this;
+
+                // Trigger death animation - TODO This needs to trigger the enemy specific DEATH property
+                enemy.playAnimation("Enemy01/Destroyed/skeleton-Destroyed", () => {
+                  g.levelIndex++;
+                  g.loadLevel();
+                });
+                
+              }
             }
           })
         }

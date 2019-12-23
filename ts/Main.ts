@@ -2,7 +2,7 @@ import { Ticker } from "pixi.js";
 import { Game, GameState } from "./Game";
 
 export class Main {
-  
+
   // Global to game engine
   game: Game = new Game();
 

@@ -29,7 +29,8 @@
                         "y": 1
                     },
                     "triggerTimeout": 250,
-                    "lifetime": 3000
+                    "lifetime": 3000,
+                    "damage": 50
                 }
             ]
         },
@@ -61,7 +62,8 @@
                         "x": 1,
                         "y": 1
                     },
-                    "triggerTimeout": 500
+                    "triggerTimeout": 500,
+                    "damage": 5
                 },
                 {
                     "id": "missile",
@@ -78,7 +80,8 @@
                         "x": -1,
                         "y": -1
                     },
-                    "triggerTimeout": 5000
+                    "triggerTimeout": 5000,
+                    "damage": 75
                 }
             ]
         },
@@ -97,7 +100,7 @@
             "actions": [
                 {
                     "id": "fire",
-                    "entity": "projectile15",
+                    "entity": "projectile14",
                     "velocity": {
                         "x": -20,
                         "y": 0.45
@@ -106,7 +109,30 @@
                         "x": 50,
                         "y": 100
                     },
-                    "triggerTimeout": 500
+                    "scale": {
+                        "x": -1,
+                        "y": 1
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
+                },
+                {
+                    "id": "missile",
+                    "entity": "projectile2",
+                    "velocity": {
+                        "x": -30,
+                        "y": 0.25
+                    },
+                    "offset": {
+                        "x": 50,
+                        "y": 180
+                    },
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 5000,
+                    "damage": 75
                 }
             ]
         },
@@ -134,7 +160,12 @@
                         "x": 100,
                         "y": 100
                     },
-                    "triggerTimeout": 500
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
                 }
             ]
         },
@@ -162,7 +193,12 @@
                         "x": 100,
                         "y": 100
                     },
-                    "triggerTimeout": 500
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
                 }
             ]
         },
@@ -190,7 +226,12 @@
                         "x": 100,
                         "y": 100
                     },
-                    "triggerTimeout": 500                      
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
                 }
             ]
         },
@@ -217,8 +258,13 @@
                     "offset": {
                         "x": 100,
                         "y": 100
-                    }, 
-                    "triggerTimeout": 500
+                    },
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
                 }
             ]
         },
@@ -246,7 +292,12 @@
                         "x": 100,
                         "y": 100
                     },
-                    "triggerTimeout": 500
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
                 }
             ]
         },
@@ -274,7 +325,12 @@
                         "x": 100,
                         "y": 100
                     },
-                    "triggerTimeout": 500
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
                 }
             ]
         },
@@ -302,7 +358,12 @@
                         "x": 100,
                         "y": 100
                     },
-                    "triggerTimeout": 250
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 250,
+                    "damage": 5
                 }
             ]
         },
@@ -330,7 +391,12 @@
                         "x": 100,
                         "y": 100
                     },
-                    "triggerTimeout": 450
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 450,
+                    "damage": 5
                 }
             ]
         }

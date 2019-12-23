@@ -75,7 +75,7 @@ export class Player {
         }
 
         // Update mapping to indicate this action is firing
-        this.actionTriggered.set(actionKey, Date.now())
+        this.actionTriggered.set(actionKey, Date.now());
 
         // Trigger action
         switch (actionKey) {
@@ -96,9 +96,13 @@ export class Player {
 
                 // Create action class
                 let activeActionSprite: ActiveActionSprite = new ActiveActionSprite(actionKey, sprite);
+                
+                // Set properties
+                activeActionSprite.lifetime = characterAction.lifetime;
+                activeActionSprite.damage = characterAction.damage;
 
                 // Add to collection to keep track
-                this._activeActionSprites.push(activeActionSprite);
+                this.activeActionSprites.push(activeActionSprite);
 
                 // Play sound effect
                 if (characterAction.entity.sound) {

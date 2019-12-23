@@ -10,6 +10,8 @@ export interface CharacterConfig {
     defaultAnimationSpeed: number;
     animationDetails: CharacterAnimationDetailsConfig[];
     actions: CharacterActionConfig[];
+    life: number;
+    shield: number;
 }
 
 export interface CharacterAnimationDetailsConfig {
@@ -30,4 +32,5 @@ export interface CharacterActionConfig {
     scale: Point;
     triggerTimeout: number;
     lifetime: number;
+    damage: number;
 }

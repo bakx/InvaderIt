@@ -66,13 +66,21 @@ export class Enemy {
         // Get action from character
         let characterAction: CharacterAction = this.character.actions.get(actionKey);
 
+        // Sanity check #1 - TODO update comment
+        if (characterAction == null) {
+            console.error(`${this.character.id} does not have action ${actionKey} defined.`);
+            return;
+        }
+        // Sanity check #2 - TODO update comment
+        if (characterAction.entity == null) {
+            console.error(`${this.character.id} has an invalid action. Action ${characterAction?.id} has an invalid or missing sprite.`);
+            return;
+        }
+
+        // Execute action
         switch (actionKey) {
             case "fire":
             case "missile":
-
-                if (characterAction.entity == null) {
-                    console.warn(`${this.character.id} has an invalid action. Action ${characterAction.id} has an invalid or missing sprite.`);
-                }
 
                 // Create sprite
                 let sprite = PIXI.Sprite.from(characterAction.entity.sprite.texture);
@@ -114,21 +122,20 @@ export class Enemy {
                 break;
 
             default:
-                throw new Error(`Character ${this.character.id} does not have an action ${actionKey}.`)
+                console.error(`Character ${this.character.id} does not have an action ${actionKey}.`);
         }
     }
 
     /** Plays a specific animation */
-    playAnimation(animationKey: string) {
-        this._character.playSingleAnimation(animationKey);
+    playAnimation(animationKey: string, cb: CallableFunction = null) {
+        this._character.playSingleAnimation(animationKey, cb);
     }
 
     /** Update all events related to the enemy */
     update(game: Game) {
-
         let playerPosition: Point = game.player.position;
 
-        if (Date.now() - this._lastAction > 750) {
+        if (this.character.life > 0 && Date.now() - this._lastAction > 750) {
             let actionTriggerOdds = Math.floor(Math.random() * 1000);
 
             if (actionTriggerOdds > 940 && actionTriggerOdds <= 990) {

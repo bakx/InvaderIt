@@ -28,6 +28,11 @@ export class Character {
     private _stage: PIXI.Container;
     private _position: Point;
 
+    // Health settings
+
+    private _life: number;
+    private _shield: number;
+
     // Animation settings
 
     private _animationSource: AnimationSprite;
@@ -96,6 +101,26 @@ export class Character {
         console.debug(`Position for character ${this.id} is x:${this.position.x}, y:${this.position.y}`);
 
         this._position = position
+    }
+
+    /** Get the life of character */
+    get life(): number { return this._life }
+
+    /** Set the life of character */
+    set life(life: number) {
+        console.debug(`Setting life for character ${this.id} to: ${life}`);
+
+        this._life = life
+    }
+
+    /** Get the shield of character */
+    get shield(): number { return this._shield }
+
+    /** Set the shield of character */
+    set shield(shield: number) {
+        console.debug(`Setting shield for character ${this.id} to: ${shield}`);
+
+        this._shield = shield
     }
 
     /** Get the animation source of character */
@@ -200,7 +225,7 @@ export class Character {
     }
 
     /** Play an animation once. E.g., when a character is hit. After playing once, it will revert back to the original animation */
-    playSingleAnimation(key: string) {
+    playSingleAnimation(key: string, callback: CallableFunction = null) {
 
         // Indicate that a single animation is currently playing
         if (!this.isPlayingSingleAnimation) {
@@ -224,6 +249,10 @@ export class Character {
             char.createAnimation(char.restoreAnimationKey, char.restoreAutoPlay, char.restoreLoop, char.restoreInteractive);
             char.isPlayingSingleAnimation = false;
             char.restoreAnimationKey = null;
+
+            if (callback) {
+                callback();
+            }
         };
     }
 
@@ -324,4 +353,5 @@ export class CharacterAction {
     sound: string;
     triggerTimeout: number;
     lifetime: number;
+    damage: number;
 }
