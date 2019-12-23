@@ -12,6 +12,20 @@
                     }
                 }
             ],
+            "animationStates": [
+                {
+                    "state": "idle",
+                    "animationKey": "Player/Default/skeleton-MovingNIdle"
+                },
+                {
+                    "state": "hit",
+                    "animationKey": "Player/GetHit/skeleton-GetHit"
+                },
+                {
+                    "state": "death",
+                    "animationKey": "Player/Destroyed/skeleton-Destroy"
+                }
+            ],
             "actions": [
                 {
                     "id": "fire",
@@ -44,6 +58,20 @@
                     "overrides": {
                         "loop": false
                     }
+                }
+            ],
+            "animationStates": [
+                {
+                    "state": "idle",
+                    "animationKey": "Enemy01/Idle/skeleton-Idle"
+                },
+                {
+                    "state": "hit",
+                    "animationKey": "Enemy01/GetHit/skeleton-GetHit"
+                },
+                {
+                    "state": "death",
+                    "animationKey": "Enemy01/Destroyed/skeleton-Destroyed"
                 }
             ],
             "actions": [
@@ -97,6 +125,20 @@
                     }
                 }
             ],
+            "animationStates": [
+                {
+                    "state": "idle",
+                    "animationKey": "Enemy02/Idle/skeleton-Idle"
+                },
+                {
+                    "state": "hit",
+                    "animationKey": "Enemy02/GetHit/skeleton-GetHit"
+                },
+                {
+                    "state": "death",
+                    "animationKey": "Enemy02/Destroyed/skeleton-Destroyed"
+                }
+            ],
             "actions": [
                 {
                     "id": "fire",
@@ -148,6 +190,20 @@
                     }
                 }
             ],
+            "animationStates": [
+                {
+                    "state": "idle",
+                    "animationKey": "Enemy03/Idle/skeleton-Idle"
+                },
+                {
+                    "state": "hit",
+                    "animationKey": "Enemy03/GetHit/skeleton-GetHit"
+                },
+                {
+                    "state": "death",
+                    "animationKey": "Enemy03/Destroyed/skeleton-Destroyed"
+                }
+            ],
             "actions": [
                 {
                     "id": "fire",
@@ -179,6 +235,20 @@
                     "overrides": {
                         "loop": false
                     }
+                }
+            ],
+            "animationStates": [
+                {
+                    "state": "idle",
+                    "animationKey": "Enemy04/Idle/skeleton-Idle"
+                },
+                {
+                    "state": "hit",
+                    "animationKey": "Enemy04/GetHit/skeleton-GetHit"
+                },
+                {
+                    "state": "death",
+                    "animationKey": "Enemy04/Destroyed/skeleton-Destroyed"
                 }
             ],
             "actions": [
@@ -214,6 +284,20 @@
                     }
                 }
             ],
+            "animationStates": [
+                {
+                    "state": "idle",
+                    "animationKey": "Enemy05/Idle/skeleton-Idle"
+                },
+                {
+                    "state": "hit",
+                    "animationKey": "Enemy05/GetHit/skeleton-GetHit"
+                },
+                {
+                    "state": "death",
+                    "animationKey": "Enemy05/Destroyed/skeleton-Destroyed"
+                }
+            ],
             "actions": [
                 {
                     "id": "fire",
@@ -245,6 +329,20 @@
                     "overrides": {
                         "loop": false
                     }
+                }
+            ],
+            "animationStates": [
+                {
+                    "state": "idle",
+                    "animationKey": "Enemy06/Idle/skeleton-Idle"
+                },
+                {
+                    "state": "hit",
+                    "animationKey": "Enemy06/GetHit/skeleton-GetHit"
+                },
+                {
+                    "state": "death",
+                    "animationKey": "Enemy06/Destroyed/skeleton-Destroyed"
                 }
             ],
             "actions": [
@@ -280,6 +378,20 @@
                     }
                 }
             ],
+            "animationStates": [
+                {
+                    "state": "idle",
+                    "animationKey": "Enemy07/Idle/skeleton-Idle"
+                },
+                {
+                    "state": "hit",
+                    "animationKey": "Enemy07/GetHit/skeleton-GetHit"
+                },
+                {
+                    "state": "death",
+                    "animationKey": "Enemy07/Destroyed/skeleton-Destroyed"
+                }
+            ],
             "actions": [
                 {
                     "id": "fire",
@@ -311,6 +423,20 @@
                     "overrides": {
                         "loop": false
                     }
+                }
+            ],
+            "animationStates": [
+                {
+                    "state": "idle",
+                    "animationKey": "Enemy08/Idle/skeleton-Idle"
+                },
+                {
+                    "state": "hit",
+                    "animationKey": "Enemy08/GetHit/skeleton-GetHit"
+                },
+                {
+                    "state": "death",
+                    "animationKey": "Enemy08/Destroyed/skeleton-Destroyed"
                 }
             ],
             "actions": [
@@ -346,6 +472,20 @@
                     }
                 }
             ],
+            "animationStates": [
+                {
+                    "state": "idle",
+                    "animationKey": "Enemy09/Idle/skeleton-Idle"
+                },
+                {
+                    "state": "hit",
+                    "animationKey": "Enemy09/GetHit/skeleton-GetHit"
+                },
+                {
+                    "state": "death",
+                    "animationKey": "Enemy09/Destroyed/skeleton-Destroyed"
+                }
+            ],
             "actions": [
                 {
                     "id": "fire",
@@ -377,6 +517,20 @@
                     "overrides": {
                         "loop": false
                     }
+                }
+            ],
+            "animationStates": [
+                {
+                    "state": "idle",
+                    "animationKey": "Enemy10/Idle/skeleton-Idle"
+                },
+                {
+                    "state": "hit",
+                    "animationKey": "Enemy10/GetHit/skeleton-GetHit"
+                },
+                {
+                    "state": "death",
+                    "animationKey": "Enemy10/Destroyed/skeleton-Destroyed"
                 }
             ],
             "actions": [

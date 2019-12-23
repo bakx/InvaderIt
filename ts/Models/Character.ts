@@ -21,6 +21,7 @@ export class Character {
     private _defaultAnimationKey: string;
     private _defaultAnimationSpeed: number;
     private _animationDetails: Map<string, AnimationDetails>;
+    private _animationStates: Map<string, string>;
     private _actions: Map<string, CharacterAction>;
 
     // Stage settings
@@ -35,6 +36,8 @@ export class Character {
 
     // Animation settings
 
+    private _animation: PIXI.AnimatedSprite;
+    private _animationSpeed: number;
     private _animationSource: AnimationSprite;
     private _animationKey: string;
 
@@ -50,9 +53,6 @@ export class Character {
     private _autoPlay: boolean = true;
     private _loop: boolean = true;
     private _interactive: boolean = true;
-
-    private _animation: PIXI.AnimatedSprite;
-    private _animationSpeed: number;
 
     /** Get the id of object */
     get id(): string { return this._id }
@@ -80,6 +80,12 @@ export class Character {
 
     /** Set the animation details of character */
     set animationDetails(animationDetails: Map<string, AnimationDetails>) { this._animationDetails = animationDetails }
+
+    /** Get the animation states of character */
+    get animationStates(): Map<string, string> { return this._animationStates }
+
+    /** Set the animation states of character */
+    set animationStates(animationStates: Map<string, string>) { this._animationStates = animationStates }
 
     /** Get the actions of character */
     get actions(): Map<string, CharacterAction> { return this._actions }

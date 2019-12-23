@@ -127,8 +127,15 @@ export class Enemy {
     }
 
     /** Plays a specific animation */
-    playAnimation(animationKey: string, cb: CallableFunction = null) {
-        this._character.playSingleAnimation(animationKey, cb);
+    playAnimation(state: string, cb: CallableFunction = null) {
+
+        // Retrieve the animation key from the animation stage
+        if (this._character.animationStates.has(state)) {
+            let animationKey = this._character.animationStates.get(state);
+            this._character.playSingleAnimation(animationKey, cb);
+        } else {
+            console.error(`Character ${this.character.id} does not support animation state ${state}.`);
+        }
     }
 
     /** Update all events related to the enemy */

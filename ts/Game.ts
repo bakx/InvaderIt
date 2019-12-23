@@ -30,6 +30,9 @@ export class Game {
   player: Player;
   enemies: Enemies;
 
+  /** Sounds */
+  backgroundMusic: EntitySound;
+
   /** Level data */
   level: LevelData;
   levelIndex: number;
@@ -187,6 +190,11 @@ export class Game {
       this.level.background.hide();
     }
 
+    // Unload background music
+    if (this.backgroundMusic) {
+      PIXI.sound.stop(this.backgroundMusic.id);
+    }
+
     // Validate that the level exists
     if (this.levels.data.length - 1 < this.levelIndex) {
       console.warn(`Level ${this.levelIndex} was not found. Resetting to level 0`);
@@ -244,9 +252,9 @@ export class Game {
     }
 
     // Load sounds
-    let music: EntitySound = this.entities.data.get(this.level.backgroundMusic).sound;
-    PIXI.sound.play(music.id, {
-      volume: music.volume,
+    this.backgroundMusic = this.entities.data.get(this.level.backgroundMusic).sound;
+    PIXI.sound.play(this.backgroundMusic.id, {
+      volume: this.backgroundMusic.volume,
       loop: true
     });
 
@@ -331,7 +339,7 @@ export class Game {
               if (enemy.character.life > 0) {
 
                 // Trigger hit animation - TODO This needs to trigger the enemy specific HIT property
-                enemy.playAnimation("Enemy01/GetHit/skeleton-GetHit");
+                enemy.playAnimation("hit");
 
               } else {
 
@@ -339,11 +347,21 @@ export class Game {
                 let g = this;
 
                 // Trigger death animation - TODO This needs to trigger the enemy specific DEATH property
-                enemy.playAnimation("Enemy01/Destroyed/skeleton-Destroyed", () => {
-                  g.levelIndex++;
-                  g.loadLevel();
+                enemy.playAnimation("death", () => {
+
+                  // Remove the character from the stage
+                  enemy.character.removeStage();
+
+                  // Remove the enemies from the list
+                  g.enemies.data.delete(enemy.id);
+
+                  // If all enemies are gone, load the next level
+                  if (g.enemies.data.size == 0) {
+                    g.levelIndex++;
+                    g.loadLevel();
+                  }
                 });
-                
+
               }
             }
           })

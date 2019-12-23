@@ -9,9 +9,15 @@ export interface CharacterConfig {
     defaultAnimationKey: string;
     defaultAnimationSpeed: number;
     animationDetails: CharacterAnimationDetailsConfig[];
+    animationStates: CharacterAnimationStatesConfig[];
     actions: CharacterActionConfig[];
     life: number;
     shield: number;
+}
+
+export interface CharacterAnimationStatesConfig {
+    state: string;
+    animationKey: string;
 }
 
 export interface CharacterAnimationDetailsConfig {
