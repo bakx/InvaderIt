@@ -9,6 +9,7 @@ export class Levels {
 export class LevelData {
     name: string;
     background: Background;
+    backgroundMusic: string;
     characters: Character[];
     config: LevelConfig;
     entities: any[] = [];

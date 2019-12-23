@@ -21,13 +21,16 @@
                         "y": 0.5
                     },
                     "offset": {
-                        "x": 100,
-                        "y": 100
+                        "x": 205,
+                        "y": 190
                     },
                     "scale": {
                         "x": 1,
                         "y": 1
-                    }
+                    },
+                    "triggerTimeout": 250,
+                    "lifetime": 3000,
+                    "damage": 50
                 }
             ]
         },
@@ -52,13 +55,15 @@
                         "y": 0.45
                     },
                     "offset": {
-                        "x": 20,
-                        "y": 90
+                        "x": 50,
+                        "y": 180
                     },
                     "scale": {
                         "x": 1,
                         "y": 1
-                    }
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
                 },
                 {
                     "id": "missile",
@@ -68,13 +73,15 @@
                         "y": 0.25
                     },
                     "offset": {
-                        "x": 24,
-                        "y": 118
+                        "x": 50,
+                        "y": 180
                     },
                     "scale": {
                         "x": -1,
                         "y": -1
-                    }
+                    },
+                    "triggerTimeout": 5000,
+                    "damage": 75
                 }
             ]
         },
@@ -93,7 +100,7 @@
             "actions": [
                 {
                     "id": "fire",
-                    "entity": "projectile15",
+                    "entity": "projectile14",
                     "velocity": {
                         "x": -20,
                         "y": 0.45
@@ -101,7 +108,31 @@
                     "offset": {
                         "x": 50,
                         "y": 100
-                    }
+                    },
+                    "scale": {
+                        "x": -1,
+                        "y": 1
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
+                },
+                {
+                    "id": "missile",
+                    "entity": "projectile2",
+                    "velocity": {
+                        "x": -30,
+                        "y": 0.25
+                    },
+                    "offset": {
+                        "x": 50,
+                        "y": 180
+                    },
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 5000,
+                    "damage": 75
                 }
             ]
         },
@@ -128,7 +159,13 @@
                     "offset": {
                         "x": 100,
                         "y": 100
-                    }
+                    },
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
                 }
             ]
         },
@@ -155,7 +192,13 @@
                     "offset": {
                         "x": 100,
                         "y": 100
-                    }
+                    },
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
                 }
             ]
         },
@@ -182,7 +225,13 @@
                     "offset": {
                         "x": 100,
                         "y": 100
-                    }
+                    },
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
                 }
             ]
         },
@@ -209,7 +258,13 @@
                     "offset": {
                         "x": 100,
                         "y": 100
-                    }
+                    },
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
                 }
             ]
         },
@@ -236,7 +291,13 @@
                     "offset": {
                         "x": 100,
                         "y": 100
-                    }
+                    },
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
                 }
             ]
         },
@@ -263,7 +324,13 @@
                     "offset": {
                         "x": 100,
                         "y": 100
-                    }
+                    },
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 500,
+                    "damage": 5
                 }
             ]
         },
@@ -290,7 +357,13 @@
                     "offset": {
                         "x": 100,
                         "y": 100
-                    }
+                    },
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 250,
+                    "damage": 5
                 }
             ]
         },
@@ -317,7 +390,13 @@
                     "offset": {
                         "x": 100,
                         "y": 100
-                    }
+                    },
+                    "scale": {
+                        "x": -1,
+                        "y": -1
+                    },
+                    "triggerTimeout": 450,
+                    "damage": 5
                 }
             ]
         }

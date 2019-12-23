@@ -224,6 +224,10 @@ export function loadCharacters(game: Game): Promise<Characters> {
           // Create the character data
           let character = new Character(config.id);
 
+          // Health data
+          character.life = config.life;
+          character.shield = config.shield;
+
           // Set animation data
           character.animationSource = animationSource;
           character.defaultAnimationKey = config.defaultAnimationKey;
@@ -253,6 +257,9 @@ export function loadCharacters(game: Game): Promise<Characters> {
             action.velocity = actionData.velocity;
             action.scale = actionData.scale;
             action.offset = actionData.offset;
+            action.triggerTimeout = actionData.triggerTimeout;
+            action.lifetime = actionData.lifetime;
+            action.damage = actionData.damage;
 
             character.actions.set(actionData.id, action);
           }
@@ -298,6 +305,9 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
             throw new Error(`Unable to load background ${config.background} for level ${config.name}`);
           }
 
+          // Set background music
+          level.backgroundMusic = config.backgroundMusic;
+
           // Load Characters
 
           level.characters = [];
@@ -321,6 +331,8 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
               character.animationSpeed = levelCharacterConfig.animationSpeed;
               character.position.x = levelCharacterConfig.position.x;
               character.position.y = levelCharacterConfig.position.y;
+              character.life = levelCharacterConfig.life;
+              character.shield = levelCharacterConfig.shield;
 
               // Set stage
               character.stage = app.stage;

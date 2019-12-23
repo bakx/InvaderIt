@@ -244,9 +244,10 @@ export class Game {
     }
 
     // Load sounds
-    let music: EntitySound = this.entities.data.get('music_8bit_jammer').sound;
+    let music: EntitySound = this.entities.data.get(this.level.backgroundMusic).sound;
     PIXI.sound.play(music.id, {
-      volume: music.volume
+      volume: music.volume,
+      loop: true
     });
 
     // Load background
@@ -271,6 +272,7 @@ export class Game {
     this.app.stop();
   }
 
+  /** Stops the game loop and sets the state to menu */
   menu() {
     this.gameState = GameState.Menu;
     this.app.stop();
@@ -318,9 +320,31 @@ export class Game {
               action.sprite.position, enemy.position,
               action.sprite.getLocalBounds(), enemy.character.animation.getLocalBounds()
             )) {
+
               // Prevent retriggering the event for this action element
               action.triggerEvents = false;
-              enemy.playAnimation("Enemy01/GetHit/skeleton-GetHit");
+
+              // Reduce life of enemy
+              enemy.character.life -= action.damage;
+
+              // Check life of entity
+              if (enemy.character.life > 0) {
+
+                // Trigger hit animation - TODO This needs to trigger the enemy specific HIT property
+                enemy.playAnimation("Enemy01/GetHit/skeleton-GetHit");
+
+              } else {
+
+                // create reference to current instance
+                let g = this;
+
+                // Trigger death animation - TODO This needs to trigger the enemy specific DEATH property
+                enemy.playAnimation("Enemy01/Destroyed/skeleton-Destroyed", () => {
+                  g.levelIndex++;
+                  g.loadLevel();
+                });
+                
+              }
             }
           })
         }

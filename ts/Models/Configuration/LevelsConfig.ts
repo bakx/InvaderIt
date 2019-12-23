@@ -7,6 +7,7 @@ export interface LevelsConfig {
 export interface LevelConfig {
     name: string;
     background: string;
+    backgroundMusic: string;
     characters: LevelCharacterConfig[];
 }
 
@@ -17,4 +18,6 @@ export interface LevelCharacterConfig {
     animationKey: string;
     animationSpeed: number;
     position: Point;
+    life: number;
+    shield: number;
 }

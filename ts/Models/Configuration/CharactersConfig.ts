@@ -1,5 +1,4 @@
 import { Point } from "pixi.js"
-import { Entity } from "../Entities";
 
 export interface CharactersConfig {
     data: CharacterConfig[];
@@ -11,6 +10,8 @@ export interface CharacterConfig {
     defaultAnimationSpeed: number;
     animationDetails: CharacterAnimationDetailsConfig[];
     actions: CharacterActionConfig[];
+    life: number;
+    shield: number;
 }
 
 export interface CharacterAnimationDetailsConfig {
@@ -29,4 +30,7 @@ export interface CharacterActionConfig {
     velocity: Point;
     offset: Point;
     scale: Point;
+    triggerTimeout: number;
+    lifetime: number;
+    damage: number;
 }

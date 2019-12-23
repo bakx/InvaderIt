@@ -2,6 +2,7 @@ import { Ticker } from "pixi.js";
 import { Game, GameState } from "./Game";
 
 export class Main {
+
   // Global to game engine
   game: Game = new Game();
 
@@ -10,7 +11,7 @@ export class Main {
 
   /** Initializes the game and starts the loop */
   async startGame() {
-    
+
     // Initialize game settings
     await this.game.initialize();
 
