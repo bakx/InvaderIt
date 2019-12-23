@@ -122,7 +122,7 @@ export class Game {
 
     // Load sounds
     loadSounds(this.app)
-      .then(sounds => {
+      .then(() => {
 
         // Load backgrounds
         loadBackgrounds(this.app)
@@ -195,6 +195,13 @@ export class Game {
       PIXI.sound.stop(this.backgroundMusic.id);
     }
 
+    // Unload all actions.
+    if (this.player && this.player.activeActionSprites) {
+      for (let i = 0; i < this.player.activeActionSprites.length; i++) {
+        this.app.stage.removeChild(this.player.activeActionSprites[i].sprite);
+      }
+    }
+
     // Validate that the level exists
     if (this.levels.data.length - 1 < this.levelIndex) {
       console.warn(`Level ${this.levelIndex} was not found. Resetting to level 0`);
@@ -218,6 +225,8 @@ export class Game {
 
       if (!character.isPlayer) {
         let enemy: Enemy = new Enemy(character);
+        enemy.life = character.life;
+        enemy.shield = character.shield;
         enemy.moveBox = new MoveBox(this.app.screen.width / 2, this.app.screen.width, 0, this.app.screen.height);
 
         this.enemies.data.set(character.id, enemy);
@@ -333,15 +342,24 @@ export class Game {
               action.triggerEvents = false;
 
               // Reduce life of enemy
-              enemy.character.life -= action.damage;
+              enemy.life -= action.damage;
 
               // Check life of entity
-              if (enemy.character.life > 0) {
+              if (enemy.life > 0) {
 
                 // Trigger hit animation - TODO This needs to trigger the enemy specific HIT property
                 enemy.playAnimation("hit");
 
               } else {
+
+                // Determine if this enemy is already in it's final state
+                if (enemy.finalState) {
+                  console.info(`Enemy ${enemy.id} indicates final state. Ignoring...`);
+                  return;
+                }
+
+                // Mark enemy as final state
+                enemy.finalState = true;
 
                 // create reference to current instance
                 let g = this;

@@ -10,7 +10,7 @@ export class Enemies {
 }
 
 export class Enemy {
-    /** Constructor of the Player class */
+    /** Constructor of the Enemy class */
     constructor(character: Character) {
         this._character = character;
         this._position = character.position;
@@ -33,25 +33,30 @@ export class Enemy {
     // Action configuration
     private _activeActionSprites: ActiveActionSprite[];
 
-    /** Get the unique id of player */
+    // Enemy states
+    private _life: number;
+    private _shield: number;
+    private _finalState: boolean = false;
+
+    /** Get the unique id of enemy */
     get id(): string { return this._character.id }
 
-    /** Get the position of player */
+    /** Get the position of enemy */
     get position(): Point { return this._position }
 
-    /** Set the position of player */
+    /** Set the position of enemy */
     set position(position: Point) { this._position = position }
 
-    /** Get the position the player should be moving towards */
+    /** Get the position the enemy should be moving towards */
     get gotoPosition(): Point { return this._gotoPosition }
 
-    /** Set the position the player should be moving towards */
+    /** Set the position the enemy should be moving towards */
     set gotoPosition(gotoPosition: Point) { this._gotoPosition = gotoPosition }
 
-    /** Get the character of this player */
+    /** Get the character of this enemy */
     get character(): Character { return this._character }
 
-    /** Set the character of this player */
+    /** Set the character of this enemy */
     set character(character: Character) { this._character = character }
 
     /** Get the area in which the entity can move */
@@ -59,6 +64,32 @@ export class Enemy {
 
     /** Set the area in which the entity can move */
     set moveBox(moveBox: MoveBox) { this._moveBox = moveBox }
+
+    /** Get the life of enemy */
+    get life(): number { return this._life }
+
+    /** Set the life of enemy */
+    set life(life: number) {
+        console.debug(`Setting life for enemy ${this.id} to: ${life}`);
+
+        this._life = life
+    }
+
+    /** Get the shield of enemy */
+    get shield(): number { return this._shield }
+
+    /** Set the shield of enemy */
+    set shield(shield: number) {
+        console.debug(`Setting shield for enemy ${this.id} to: ${shield}`);
+
+        this._shield = shield
+    }
+
+    /** Is this enemy in it's final state (e.g., playing a destroy animation) */
+    get finalState(): boolean { return this._finalState }
+
+    /** Set the final state (e.g., playing a destroy animation) state of this enemy */
+    set finalState(finalState: boolean) { this._finalState = finalState }
 
     /** Handle action */
     action(actionKey: string, position: Point) {
@@ -142,7 +173,7 @@ export class Enemy {
     update(game: Game) {
         let playerPosition: Point = game.player.position;
 
-        if (this.character.life > 0 && Date.now() - this._lastAction > 750) {
+        if (this.life > 0 && Date.now() - this._lastAction > 750) {
             let actionTriggerOdds = Math.floor(Math.random() * 1000);
 
             if (actionTriggerOdds > 940 && actionTriggerOdds <= 990) {
