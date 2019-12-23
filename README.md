@@ -5,8 +5,11 @@ In the checkout folder, run:\
 
 This will install some of the required modules like Pixi.JS, Webpack and others.
 
-Currently the project is configured to run from http://local.gamedev.bakx.ca . This will point to `127.0.0.1` so you are able to simply use that domain. Feel free to change
-it to something else.  Configure your webserver to serve files from the root folder of this repo.
+To run the web server, run:
+```server.bat``` on Windows or ```sh server.sh``` on the Mac
+
+To start developing and set up watchers run:
+```dev.bat``` on Windows or ```sh dev.sh``` on the Mac
 
 # Licensing
 All code is licensed as MIT.
