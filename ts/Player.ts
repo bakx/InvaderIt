@@ -24,8 +24,11 @@ export class Player {
     // Active action sprites
     private _activeActionSprites: ActiveActionSprite[];
 
-    // Active action sprites
+    // Keep track of triggered actions
     private _actionTriggered: Map<string, number>;
+
+    // Drawing of the health bar
+    private _healthBar: PIXI.Graphics;
 
     /** Get the unique id of player */
     get id(): string { return this._character.id }
@@ -53,6 +56,9 @@ export class Player {
 
     /** Get mapping of triggererd actions and their trigger date */
     get actionTriggered(): Map<string, number> { return this._actionTriggered }
+
+    /** Get the healthBar */
+    get healthBar(): PIXI.Graphics { return this._healthBar }
 
     /** Handle the character action (e.g., firing a rocket) */
     action(actionKey: string, position: Point) {
@@ -96,7 +102,7 @@ export class Player {
 
                 // Create action class
                 let activeActionSprite: ActiveActionSprite = new ActiveActionSprite(actionKey, sprite);
-                
+
                 // Set properties
                 activeActionSprite.lifetime = characterAction.lifetime;
                 activeActionSprite.damage = characterAction.damage;
@@ -157,5 +163,14 @@ export class Player {
                 action.sprite.position.y += actionDetails.velocity.y;
             }
         }
+    }
+
+    drawBar() {
+        //Create the black background rectangle
+        let innerBar = new PIXI.Graphics();
+        innerBar.beginFill(0x000000);
+        innerBar.drawRect(0, 0, 128, 8);
+        innerBar.endFill();
+        this.character.stage.addChild(innerBar);
     }
 }

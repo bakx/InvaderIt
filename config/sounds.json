@@ -76,8 +76,8 @@
             "loop": false
         },
         {
-            "id": "music_8bit_jammer",
-            "filename": "sfx/music_8bit_jammer.mp3",
+            "id": "sfx/music/music_8bit_jammer",
+            "filename": "sfx/music/music_8bit_jammer.mp3",
             "loop": true
         }
     ]

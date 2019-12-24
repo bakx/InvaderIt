@@ -1,5 +1,5 @@
 import "pixi-sound";
-import { Point } from "pixi.js";
+import { Point, DisplayObject } from "pixi.js";
 import { ActiveActionSprite } from "./ActiveActionSprite";
 import { calculateMovement } from "./Functions";
 import { Game } from "./Game";
@@ -10,12 +10,16 @@ export class Enemies {
 }
 
 export class Enemy {
+
     /** Constructor of the Enemy class */
     constructor(character: Character) {
-        this._character = character;
-        this._position = character.position;
+        this.character = character;
+        this.position = character.position;
 
         this._activeActionSprites = [];
+
+        // Create the statistics bar
+        this.createStatistics();
     }
 
     // Character configuration
@@ -28,15 +32,19 @@ export class Enemy {
     private _reverse: boolean = false;
     private _moveBox: MoveBox;
 
-    private _lastAction: number = Date.now();
-
     // Action configuration
     private _activeActionSprites: ActiveActionSprite[];
 
-    // Enemy states
+    // Enemy statistics
+    private _statisticsContainer: PIXI.Container;
+    private _healthBar: PIXI.Graphics;
+
     private _life: number;
     private _shield: number;
+
+    // Enemy states
     private _finalState: boolean = false;
+    private _lastAction: number = Date.now();
 
     /** Get the unique id of enemy */
     get id(): string { return this._character.id }
@@ -65,14 +73,18 @@ export class Enemy {
     /** Set the area in which the entity can move */
     set moveBox(moveBox: MoveBox) { this._moveBox = moveBox }
 
+    /** Get the statistics container */
+    get statisticsContainer(): PIXI.Container { return this._statisticsContainer }
+
     /** Get the life of enemy */
     get life(): number { return this._life }
 
     /** Set the life of enemy */
     set life(life: number) {
-        console.debug(`Setting life for enemy ${this.id} to: ${life}`);
+        this._life = life;
 
-        this._life = life
+        // Update health bar      
+        this._healthBar.drawRect(0, 0, Math.floor((life / 128) * 100), 8);
     }
 
     /** Get the shield of enemy */
@@ -158,15 +170,39 @@ export class Enemy {
     }
 
     /** Plays a specific animation */
-    playAnimation(state: string, cb: CallableFunction = null) {
+    playAnimation(state: string, cb: CallableFunction = null, attachChildren: boolean = true) {
 
         // Retrieve the animation key from the animation stage
-        if (this._character.animationStates.has(state)) {
+        if (this.character.animationStates.has(state)) {
             let animationKey = this._character.animationStates.get(state);
-            this._character.playSingleAnimation(animationKey, cb);
+            this.character.playSingleAnimation(animationKey, cb, attachChildren);
         } else {
             console.error(`Character ${this.character.id} does not support animation state ${state}.`);
         }
+    }
+
+    /** */
+    createStatistics() {
+
+        // Create the container object
+        this._statisticsContainer = new PIXI.Container();
+
+        // Attach is as a child object
+        this.character.addChild(this.statisticsContainer);
+
+        // Create the black background rectangle
+        let innerBar = new PIXI.Graphics();
+        innerBar.beginFill(0x000000);
+        innerBar.drawRect(0, 0, 128, 8);
+        innerBar.endFill();
+        this.statisticsContainer.addChild(innerBar);
+
+        // Create the front red rectangle
+        this._healthBar = new PIXI.Graphics();
+        this._healthBar.beginFill(0x6EE544);
+        this._healthBar.drawRect(0, 0, 128, 8);
+        this._healthBar.endFill();
+        this.statisticsContainer.addChild(this._healthBar);
     }
 
     /** Update all events related to the enemy */
@@ -218,6 +254,9 @@ export class Enemy {
             // Set the position of the character
             this.character.position.x = this.position.x;
             this.character.position.y = this.position.y;
+
+            // Update the statistics bar
+            this.statisticsContainer.position.set(this.character.animation.width / 2 - this.statisticsContainer.width, -8);
         }
 
         // Handle actions

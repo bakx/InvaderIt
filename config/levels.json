@@ -34,7 +34,7 @@
             "entities": [
                 {}
             ],
-            "backgroundMusic": "music_8bit_jammer"
+            "backgroundMusic": "sfx/music/music_8bit_jammer"
         },
         {
             "name": "Level 2",
@@ -187,7 +187,7 @@
             "entities": [
                 {}
             ],
-            "backgroundMusic": "music_8bit_jammer"
+            "backgroundMusic": "sfx/music/music_8bit_jammer"
         }
     ]
 }
