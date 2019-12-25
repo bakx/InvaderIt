@@ -27,6 +27,7 @@ export class Enemy {
     private _container: PIXI.Container;
 
     // Character configuration
+    private _characterContainer: PIXI.Container;
     private _character: Character;
 
     // Enemy movement
@@ -76,6 +77,12 @@ export class Enemy {
 
     /** Set the container of this enemy */
     set container(container: PIXI.Container) { this._container = container }
+
+    /** Get the character container of this enemy */
+    get characterContainer(): PIXI.Container { return this._characterContainer }
+
+    /** Set the character container of this enemy */
+    set characterContainer(characterContainer: PIXI.Container) { this._characterContainer = characterContainer }
 
     /** Get the character of this enemy */
     get character(): Character { return this._character }
@@ -153,8 +160,15 @@ export class Enemy {
         // Create container that stores the character and other items
         this.container = new PIXI.Container();
 
+        // Create container that stores the character
+        this.characterContainer = new PIXI.Container();
+        this.characterContainer.zIndex = 10;
+
         // Add the character
-        this.container.addChild(this.character.animation);
+        this.characterContainer.addChild(this.character.animation);
+
+        // Add the character container to the global container
+        this.container.addChild(this.characterContainer);
 
         // Initialize statistics
         this.life = this.lifeFull;
@@ -248,7 +262,7 @@ export class Enemy {
         // Retrieve the animation key from the animation stage
         if (this.character.animationStates.has(state)) {
             let animationKey = this._character.animationStates.get(state);
-            this.character.playSingleAnimation(this.container, animationKey, cb, attachChildren);
+            this.character.playSingleAnimation(this.characterContainer, animationKey, 0, cb, attachChildren);
         } else {
             console.error(`Character ${this.character.id} does not support animation state ${state}.`);
         }
@@ -259,6 +273,7 @@ export class Enemy {
 
         // Create the container object
         this.enemyStatistics = new PIXI.Container();
+        this.enemyStatistics.zIndex = 10;
 
         // Attach is as a child object
         this.container.addChild(this.enemyStatistics);
