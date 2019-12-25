@@ -44,7 +44,7 @@
                     },
                     "triggerTimeout": 250,
                     "lifetime": 3000,
-                    "damage": 5
+                    "damage": 50
                 }
             ]
         },

@@ -181,9 +181,13 @@ export class Game {
 
     // If a level is already loaded, remove all items from the stage
     if (this.level) {
-      // Remove all characters from the stage
-      this.level.characters.forEach(char => {
-        char.removeStage()
+
+    // Remove the player from the stage
+      this.player.removeStage();
+
+      // Remove all enemies from the stage
+      this.enemies.data.forEach(enemy => {
+        enemy.removeStage()
       });
 
       // Hide current level
@@ -224,16 +228,16 @@ export class Game {
       character.position.y = this.level.config.characters[i].position.y;
 
       if (!character.isPlayer) {
-        let enemy: Enemy = new Enemy(character);
-        enemy.life = character.life;
-        enemy.shield = character.shield;
+        let enemy: Enemy = new Enemy(this.app.stage, character);
+        enemy.lifeFull = character.life;
+        enemy.shieldFull = character.shield;
         enemy.moveBox = new MoveBox(this.app.screen.width / 2, this.app.screen.width, 0, this.app.screen.height);
+
+        // Initialize the enemy
+        enemy.init();
 
         this.enemies.data.set(character.id, enemy);
       }
-
-      // Add to stage
-      character.addStage();
     }
 
     // Remove event listeners
@@ -247,8 +251,9 @@ export class Game {
       this.player = null;
     }
     else {
+
       // Create new playable character
-      this.player = new Player(playerCharacter);
+      this.player = new Player(this.app.stage, playerCharacter);
 
       // Pointers normalize touch and mouse
       this.app.renderer.plugins.interaction.on('pointerup', (event: any) => {
@@ -347,7 +352,7 @@ export class Game {
               // Check life of entity
               if (enemy.life > 0) {
 
-                // Trigger hit animation - TODO This needs to trigger the enemy specific HIT property
+                // Trigger hit animation
                 enemy.playAnimation("hit");
 
               } else {
@@ -368,7 +373,7 @@ export class Game {
                 enemy.playAnimation("death", () => {
 
                   // Remove the character from the stage
-                  enemy.character.removeStage();
+                  enemy.removeStage();
 
                   // Remove the enemies from the list
                   g.enemies.data.delete(enemy.id);

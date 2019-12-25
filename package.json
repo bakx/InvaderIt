@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bakx/PixiGameDev.git"
+    "url": "git+https://github.com/bakx/InvaderIt.git"
   },
   "author": "Gideon Bakx",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bakx/PixiGameDev/issues"
+    "url": "https://github.com/bakx/InvaderIt/issues"
   },
-  "homepage": "https://github.com/bakx/PixiGameDev#readme",
+  "homepage": "https://github.com/bakx/InvaderIt#readme",
   "description": "",
   "dependencies": {
     "@types/node": "^12.12.14",

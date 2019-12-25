@@ -1,5 +1,5 @@
 import "pixi-sound";
-import { Point, DisplayObject } from "pixi.js";
+import { Point } from "pixi.js";
 import { ActiveActionSprite } from "./ActiveActionSprite";
 import { calculateMovement } from "./Functions";
 import { Game } from "./Game";
@@ -12,15 +12,19 @@ export class Enemies {
 export class Enemy {
 
     /** Constructor of the Enemy class */
-    constructor(character: Character) {
+    constructor(stage: PIXI.Container, character: Character) {
+        this._stage = stage;
         this.character = character;
         this.position = character.position;
 
         this._activeActionSprites = [];
-
-        // Create the statistics bar
-        this.createStatistics();
     }
+
+    // Pixi
+    private _stage: PIXI.Container;
+
+    // Enemy container
+    private _container: PIXI.Container;
 
     // Character configuration
     private _character: Character;
@@ -36,11 +40,17 @@ export class Enemy {
     private _activeActionSprites: ActiveActionSprite[];
 
     // Enemy statistics
-    private _statisticsContainer: PIXI.Container;
+    private _barWidth: number = 128;
+    private _barHeight: number = 8;
+    private _enemyStatistics: PIXI.Container;
+    private _backgroundBar: PIXI.Graphics;
     private _healthBar: PIXI.Graphics;
+    private _shieldsBar: PIXI.Graphics;
 
     private _life: number;
     private _shield: number;
+    private _lifeFull: number;
+    private _shieldFull: number;
 
     // Enemy states
     private _finalState: boolean = false;
@@ -61,6 +71,12 @@ export class Enemy {
     /** Set the position the enemy should be moving towards */
     set gotoPosition(gotoPosition: Point) { this._gotoPosition = gotoPosition }
 
+    /** Get the container of this enemy */
+    get container(): PIXI.Container { return this._container }
+
+    /** Set the container of this enemy */
+    set container(container: PIXI.Container) { this._container = container }
+
     /** Get the character of this enemy */
     get character(): Character { return this._character }
 
@@ -74,7 +90,10 @@ export class Enemy {
     set moveBox(moveBox: MoveBox) { this._moveBox = moveBox }
 
     /** Get the statistics container */
-    get statisticsContainer(): PIXI.Container { return this._statisticsContainer }
+    get enemyStatistics(): PIXI.Container { return this._enemyStatistics }
+
+    /** Set the statistics container */
+    set enemyStatistics(enemyStatistics: PIXI.Container) { this._enemyStatistics = enemyStatistics }
 
     /** Get the life of enemy */
     get life(): number { return this._life }
@@ -83,8 +102,8 @@ export class Enemy {
     set life(life: number) {
         this._life = life;
 
-        // Update health bar      
-        this._healthBar.drawRect(0, 0, Math.floor((life / 128) * 100), 8);
+        // Update health bar
+        this.updateHealthbars();
     }
 
     /** Get the shield of enemy */
@@ -92,9 +111,32 @@ export class Enemy {
 
     /** Set the shield of enemy */
     set shield(shield: number) {
-        console.debug(`Setting shield for enemy ${this.id} to: ${shield}`);
+        this._shield = shield;
 
-        this._shield = shield
+        // Update health bar
+        this.updateHealthbars();
+    }
+
+    /** Get the life of enemy */
+    get lifeFull(): number { return this._lifeFull }
+
+    /** Set the life of enemy */
+    set lifeFull(lifeFull: number) {
+        this._lifeFull = lifeFull;
+
+        // Update health bar
+        this.updateHealthbars();
+    }
+
+    /** Get the shield of enemy */
+    get shieldFull(): number { return this._shieldFull }
+
+    /** Set the shield of enemy */
+    set shieldFull(shieldFull: number) {
+        this._shieldFull = shieldFull;
+
+        // Update health bar
+        this.updateHealthbars();
     }
 
     /** Is this enemy in it's final state (e.g., playing a destroy animation) */
@@ -102,6 +144,37 @@ export class Enemy {
 
     /** Set the final state (e.g., playing a destroy animation) state of this enemy */
     set finalState(finalState: boolean) { this._finalState = finalState }
+
+    /** Initialize all properties related to the enemy. This function needs to be called to render
+     * the item to the screen. It creates the container objects and sets up the health bars .
+     */
+    init() {
+
+        // Create container that stores the character and other items
+        this.container = new PIXI.Container();
+
+        // Add the character
+        this.container.addChild(this.character.animation);
+
+        // Initialize statistics
+        this.life = this.lifeFull;
+        this.shield = this.shieldFull;
+
+        // Create the statistics bar
+        this.createHealthBars();
+
+        // Add container to stage
+        this.addStage();
+    }
+
+    /** Add container to stage */
+    addStage() {
+        this._stage.addChild(this.container);
+    }
+    /** Remove container to stage */
+    removeStage() {
+        this._stage.removeChild(this.container);
+    }
 
     /** Handle action */
     action(actionKey: string, position: Point) {
@@ -175,34 +248,58 @@ export class Enemy {
         // Retrieve the animation key from the animation stage
         if (this.character.animationStates.has(state)) {
             let animationKey = this._character.animationStates.get(state);
-            this.character.playSingleAnimation(animationKey, cb, attachChildren);
+            this.character.playSingleAnimation(this.container, animationKey, cb, attachChildren);
         } else {
             console.error(`Character ${this.character.id} does not support animation state ${state}.`);
         }
     }
 
-    /** */
-    createStatistics() {
+    /** Create the statistics group that contains the health and shield bars */
+    createHealthBars() {
 
         // Create the container object
-        this._statisticsContainer = new PIXI.Container();
+        this.enemyStatistics = new PIXI.Container();
 
         // Attach is as a child object
-        this.character.addChild(this.statisticsContainer);
+        this.container.addChild(this.enemyStatistics);
 
-        // Create the black background rectangle
-        let innerBar = new PIXI.Graphics();
-        innerBar.beginFill(0x000000);
-        innerBar.drawRect(0, 0, 128, 8);
-        innerBar.endFill();
-        this.statisticsContainer.addChild(innerBar);
+        // Create the background rectangle
+        this._backgroundBar = new PIXI.Graphics();
+        this._backgroundBar.beginFill(0x000000);
+        this._backgroundBar.drawRect(0, 0, this._barWidth, this._barHeight * 2);
+        this._backgroundBar.endFill();
 
-        // Create the front red rectangle
+        this.enemyStatistics.addChild(this._backgroundBar);
+
+        // Create the health bar
         this._healthBar = new PIXI.Graphics();
         this._healthBar.beginFill(0x6EE544);
-        this._healthBar.drawRect(0, 0, 128, 8);
+        this._healthBar.drawRect(0, 0, this._barWidth, this._barHeight);
         this._healthBar.endFill();
-        this.statisticsContainer.addChild(this._healthBar);
+
+        this._backgroundBar.addChild(this._healthBar);
+
+        // Create the shields bar
+        this._shieldsBar = new PIXI.Graphics();
+        this._shieldsBar.beginFill(0x0094FF);
+        this._shieldsBar.drawRect(0, this._barHeight, this._barWidth, this._barHeight);
+        this._shieldsBar.endFill();
+
+        this._backgroundBar.addChild(this._shieldsBar);
+    }
+
+    /** */
+    updateHealthbars() {
+        if (this.life && this.shield && this._healthBar && this._shieldsBar) {
+
+            // Update the width of the health bar
+            let h = this._barWidth / this.lifeFull * this.life;
+            this._healthBar.width = h > 0 ? h : 0;
+
+            // Update the width of the shield bar
+            let s = this._barWidth / this.shieldFull * this.shield;
+            this._shieldsBar.width = s > 0 ? s : 0;
+        }
     }
 
     /** Update all events related to the enemy */
@@ -256,7 +353,7 @@ export class Enemy {
             this.character.position.y = this.position.y;
 
             // Update the statistics bar
-            this.statisticsContainer.position.set(this.character.animation.width / 2 - this.statisticsContainer.width, -8);
+            this.enemyStatistics.position.set(this.character.animation.position.x + this.character.animation.width / 2 - this.enemyStatistics.width, this.character.position.y + 10);
         }
 
         // Handle actions
