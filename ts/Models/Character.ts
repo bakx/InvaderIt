@@ -229,7 +229,7 @@ export class Character {
     }
 
     /** Play an animation once. E.g., when a character is hit. After playing once, it will revert back to the original animation */
-    playSingleAnimation(container: PIXI.Container, key: string, callback: CallableFunction = null, attachChildren = true) {
+    playSingleAnimation(container: PIXI.Container, key: string, zIndex: number = 0, callback: CallableFunction = null, attachChildren = true) {
 
         // Indicate that a single animation is currently playing
         if (!this.isPlayingSingleAnimation) {
@@ -251,6 +251,9 @@ export class Character {
         // Add to the container
         container.addChild(this.animation);
 
+        // Apply zIndex
+        container.zIndex = zIndex;
+
         // Get a reference to this object for usage in the callback
         let char = this;
 
@@ -269,6 +272,9 @@ export class Character {
 
             // Add to container
             container.addChild(char.animation);
+
+            // Apply zIndex
+            container.zIndex = zIndex;
 
 
             if (callback) {
