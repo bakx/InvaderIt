@@ -6,12 +6,22 @@ import { Character, CharacterAction } from "./Models/Character";
 export class Player {
 
     /** Constructor of the Player class */
-    constructor(character: Character) {
+    constructor(stage: PIXI.Container, character: Character) {
+        this._stage = stage;
         this._character = character;
         this._position = character.position;
         this._activeActionSprites = [];
         this._actionTriggered = new Map<string, number>();
+
+        // Initialize
+        this.init();
     }
+
+    // Pixi
+    private _stage: PIXI.Container;
+
+    // Enemy container
+    private _container: PIXI.Container;
 
     // Character configuration
     private _character: Character;
@@ -24,8 +34,11 @@ export class Player {
     // Active action sprites
     private _activeActionSprites: ActiveActionSprite[];
 
-    // Active action sprites
+    // Keep track of triggered actions
     private _actionTriggered: Map<string, number>;
+
+    // Drawing of the health bar
+    private _healthBar: PIXI.Graphics;
 
     /** Get the unique id of player */
     get id(): string { return this._character.id }
@@ -48,11 +61,43 @@ export class Player {
     /** Set the character of this player */
     set character(character: Character) { this._character = character }
 
+    /** Get the container of this enemy */
+    get container(): PIXI.Container { return this._container }
+
+    /** Set the container of this enemy */
+    set container(container: PIXI.Container) { this._container = container }
+
     /** Get the active action sprites of this player */
     get activeActionSprites(): ActiveActionSprite[] { return this._activeActionSprites }
 
     /** Get mapping of triggererd actions and their trigger date */
     get actionTriggered(): Map<string, number> { return this._actionTriggered }
+
+    /** Get the healthBar */
+    get healthBar(): PIXI.Graphics { return this._healthBar }
+
+    /** */
+    init() {
+
+        // Create container that stores the character and other items
+        this.container = new PIXI.Container();
+
+        // Add the character
+        this.container.addChild(this.character.animation);
+
+        // Add container to stage
+        this.addStage();
+    }
+
+    /** Add container to stage */
+    addStage() {
+        this._stage.addChild(this.container);
+    }
+
+    /** Remove container to stage */
+    removeStage() {
+        this._stage.removeChild(this.container);
+    }
 
     /** Handle the character action (e.g., firing a rocket) */
     action(actionKey: string, position: Point) {
@@ -96,7 +141,7 @@ export class Player {
 
                 // Create action class
                 let activeActionSprite: ActiveActionSprite = new ActiveActionSprite(actionKey, sprite);
-                
+
                 // Set properties
                 activeActionSprite.lifetime = characterAction.lifetime;
                 activeActionSprite.damage = characterAction.damage;
@@ -157,5 +202,14 @@ export class Player {
                 action.sprite.position.y += actionDetails.velocity.y;
             }
         }
+    }
+
+    drawBar() {
+        //Create the black background rectangle
+        let innerBar = new PIXI.Graphics();
+        innerBar.beginFill(0x000000);
+        innerBar.drawRect(0, 0, 128, 8);
+        innerBar.endFill();
+        this.character.stage.addChild(innerBar);
     }
 }

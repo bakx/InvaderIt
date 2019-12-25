@@ -30,6 +30,9 @@ export class Game {
   player: Player;
   enemies: Enemies;
 
+  /** Sounds */
+  backgroundMusic: EntitySound;
+
   /** Level data */
   level: LevelData;
   levelIndex: number;
@@ -119,7 +122,7 @@ export class Game {
 
     // Load sounds
     loadSounds(this.app)
-      .then(sounds => {
+      .then(() => {
 
         // Load backgrounds
         loadBackgrounds(this.app)
@@ -178,13 +181,29 @@ export class Game {
 
     // If a level is already loaded, remove all items from the stage
     if (this.level) {
-      // Remove all characters from the stage
-      this.level.characters.forEach(char => {
-        char.removeStage()
+
+    // Remove the player from the stage
+      this.player.removeStage();
+
+      // Remove all enemies from the stage
+      this.enemies.data.forEach(enemy => {
+        enemy.removeStage()
       });
 
       // Hide current level
       this.level.background.hide();
+    }
+
+    // Unload background music
+    if (this.backgroundMusic) {
+      PIXI.sound.stop(this.backgroundMusic.id);
+    }
+
+    // Unload all actions.
+    if (this.player && this.player.activeActionSprites) {
+      for (let i = 0; i < this.player.activeActionSprites.length; i++) {
+        this.app.stage.removeChild(this.player.activeActionSprites[i].sprite);
+      }
     }
 
     // Validate that the level exists
@@ -209,14 +228,16 @@ export class Game {
       character.position.y = this.level.config.characters[i].position.y;
 
       if (!character.isPlayer) {
-        let enemy: Enemy = new Enemy(character);
+        let enemy: Enemy = new Enemy(this.app.stage, character);
+        enemy.lifeFull = character.life;
+        enemy.shieldFull = character.shield;
         enemy.moveBox = new MoveBox(this.app.screen.width / 2, this.app.screen.width, 0, this.app.screen.height);
+
+        // Initialize the enemy
+        enemy.init();
 
         this.enemies.data.set(character.id, enemy);
       }
-
-      // Add to stage
-      character.addStage();
     }
 
     // Remove event listeners
@@ -230,8 +251,9 @@ export class Game {
       this.player = null;
     }
     else {
+
       // Create new playable character
-      this.player = new Player(playerCharacter);
+      this.player = new Player(this.app.stage, playerCharacter);
 
       // Pointers normalize touch and mouse
       this.app.renderer.plugins.interaction.on('pointerup', (event: any) => {
@@ -244,9 +266,9 @@ export class Game {
     }
 
     // Load sounds
-    let music: EntitySound = this.entities.data.get(this.level.backgroundMusic).sound;
-    PIXI.sound.play(music.id, {
-      volume: music.volume,
+    this.backgroundMusic = this.entities.data.get(this.level.backgroundMusic).sound;
+    PIXI.sound.play(this.backgroundMusic.id, {
+      volume: this.backgroundMusic.volume,
       loop: true
     });
 
@@ -325,25 +347,44 @@ export class Game {
               action.triggerEvents = false;
 
               // Reduce life of enemy
-              enemy.character.life -= action.damage;
+              enemy.life -= action.damage;
 
               // Check life of entity
-              if (enemy.character.life > 0) {
+              if (enemy.life > 0) {
 
-                // Trigger hit animation - TODO This needs to trigger the enemy specific HIT property
-                enemy.playAnimation("Enemy01/GetHit/skeleton-GetHit");
+                // Trigger hit animation
+                enemy.playAnimation("hit");
 
               } else {
+
+                // Determine if this enemy is already in it's final state
+                if (enemy.finalState) {
+                  console.info(`Enemy ${enemy.id} indicates final state. Ignoring...`);
+                  return;
+                }
+
+                // Mark enemy as final state
+                enemy.finalState = true;
 
                 // create reference to current instance
                 let g = this;
 
                 // Trigger death animation - TODO This needs to trigger the enemy specific DEATH property
-                enemy.playAnimation("Enemy01/Destroyed/skeleton-Destroyed", () => {
-                  g.levelIndex++;
-                  g.loadLevel();
+                enemy.playAnimation("death", () => {
+
+                  // Remove the character from the stage
+                  enemy.removeStage();
+
+                  // Remove the enemies from the list
+                  g.enemies.data.delete(enemy.id);
+
+                  // If all enemies are gone, load the next level
+                  if (g.enemies.data.size == 0) {
+                    g.levelIndex++;
+                    g.loadLevel();
+                  }
                 });
-                
+
               }
             }
           })

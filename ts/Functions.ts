@@ -1,12 +1,12 @@
 import { MultipackLoader } from "./Extensions/MultipackLoader";
 import { SpriteLoader } from "./Extensions/SpriteLoader";
 import { Game } from "./Game";
-import { AnimationDetails, AnimationSprite, AnimationSprites } from "./Models/AnimatedSprite";
+import { AnimationDetails, AnimationSprite, AnimationSprites, AnimationState } from "./Models/AnimatedSprite";
 import { Background, Backgrounds } from "./Models/Background";
 import { Character, CharacterAction, Characters } from "./Models/Character";
 import { AnimationSpriteConfig, AnimationSpritesConfig } from "./Models/Configuration/AnimationSpritesConfig";
 import { BackgroundConfig, BackgroundsConfig, BackgroundSpritesConfig } from "./Models/Configuration/BackgroundsConfig";
-import { CharacterAnimationDetailsConfig, CharacterConfig, CharactersConfig } from "./Models/Configuration/CharactersConfig";
+import { CharacterAnimationDetailsConfig, CharacterConfig, CharactersConfig, CharacterAnimationStatesConfig } from "./Models/Configuration/CharactersConfig";
 import { EntitiesConfig, EntityConfig } from "./Models/Configuration/EntitiesConfig";
 import { LevelCharacterConfig, LevelConfig, LevelsConfig } from "./Models/Configuration/LevelsConfig";
 import { Entities, EntitySound } from "./Models/Entities";
@@ -233,6 +233,20 @@ export function loadCharacters(game: Game): Promise<Characters> {
           character.defaultAnimationKey = config.defaultAnimationKey;
           character.defaultAnimationSpeed = config.defaultAnimationSpeed;
 
+          // Create animation states
+          character.animationStates = new Map<string, string>();
+
+          // Prepare animation details
+          for (let j = 0; j < config.animationStates.length; j++) {
+            let animationStateData: CharacterAnimationStatesConfig = config.animationStates[j];
+            let details: AnimationState = new AnimationState();
+
+            details.state = animationStateData.state;
+            details.animationKey = animationStateData.animationKey;
+            
+            character.animationStates.set(animationStateData.state, animationStateData.animationKey);
+          }
+
           // Create animation details
           character.animationDetails = new Map<string, AnimationDetails>();
 
@@ -326,6 +340,7 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
               character.isPlayer = levelCharacterConfig.isPlayer;
               character.actions = characterSource.actions;
               character.animationSource = characterSource.animationSource;
+              character.animationStates = characterSource.animationStates;
               character.animationDetails = characterSource.animationDetails;
               character.animationKey = levelCharacterConfig.animationKey;
               character.animationSpeed = levelCharacterConfig.animationSpeed;

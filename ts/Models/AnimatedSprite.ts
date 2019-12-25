@@ -39,6 +39,11 @@ export class AnimationSprite {
     }
 }
 
+export class AnimationState {
+    state: string;
+    animationKey: string;
+}
+
 export class AnimationDetails {
     animationSpeed: number;
     loop: boolean;

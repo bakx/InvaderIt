@@ -20,8 +20,14 @@ This should be considering a **personal learning** project and likely will not f
 
 The goal of this project is not to build a game engine. If you are searching for game engines based on Pixi, perhaps give https://phaser.io/ a try.
 
+# Next Tasks
+To support health bars and such, all enemies should actually be placed into a container and not live directly on the stage. This would also make it easier to just update the container instead of all individual items.
+
 # Developer Internal notes
 * Should https://hjson.org/ be used to generate JSON in order to keep the files nicely formatted and easier to maintain?
 * Command to resize gfx | `pngquant *.png --ext=.png --force`
 * Perhaps build a 'level' builder?
+* https://github.com/pixijs/pixi-particles useful for this game?
 
+# Future Projects
+* Cool stuff https://www.nativescript.org/

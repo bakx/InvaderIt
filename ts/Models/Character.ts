@@ -7,6 +7,7 @@ export class Characters {
 }
 
 export class Character {
+
     /** Constructor of the Character class (thanks captain obvious comment - TODO) */
     constructor(id: string) {
         this._id = id;
@@ -21,6 +22,7 @@ export class Character {
     private _defaultAnimationKey: string;
     private _defaultAnimationSpeed: number;
     private _animationDetails: Map<string, AnimationDetails>;
+    private _animationStates: Map<string, string>;
     private _actions: Map<string, CharacterAction>;
 
     // Stage settings
@@ -35,6 +37,8 @@ export class Character {
 
     // Animation settings
 
+    private _animation: PIXI.AnimatedSprite;
+    private _animationSpeed: number;
     private _animationSource: AnimationSprite;
     private _animationKey: string;
 
@@ -50,9 +54,6 @@ export class Character {
     private _autoPlay: boolean = true;
     private _loop: boolean = true;
     private _interactive: boolean = true;
-
-    private _animation: PIXI.AnimatedSprite;
-    private _animationSpeed: number;
 
     /** Get the id of object */
     get id(): string { return this._id }
@@ -80,6 +81,12 @@ export class Character {
 
     /** Set the animation details of character */
     set animationDetails(animationDetails: Map<string, AnimationDetails>) { this._animationDetails = animationDetails }
+
+    /** Get the animation states of character */
+    get animationStates(): Map<string, string> { return this._animationStates }
+
+    /** Set the animation states of character */
+    set animationStates(animationStates: Map<string, string>) { this._animationStates = animationStates }
 
     /** Get the actions of character */
     get actions(): Map<string, CharacterAction> { return this._actions }
@@ -135,25 +142,25 @@ export class Character {
     /** Set the animation key of character */
     set animationKey(animationKey: string) { this._animationKey = animationKey }
 
-    /** If a single animation is playing, this key is used to 'restore' to the previous state */
+    /** If a single animation was playing, this key is used to 'restore' to the previous state */
     get restoreAnimationKey(): string { return this._restoreAnimationKey }
 
     /** Set the animation key that should be playing after a single animation was played (e.g., when a character gets hit and needs to be restored to their default animation) */
     set restoreAnimationKey(restoreAnimationKey: string) { this._restoreAnimationKey = restoreAnimationKey }
 
-    /** Is the animation effect playing automatically? */
+    /** Was the animation effect playing automatically? */
     get restoreAutoPlay(): boolean { return this._restoreAutoPlay }
 
     /** Restore the autoplay value of the animation that was playing before a single animation was played (e.g., when a character gets hit and needs to be restored to their default animation settings) */
     set restoreAutoPlay(restoreAutoPlay: boolean) { this._restoreAutoPlay = restoreAutoPlay }
 
-    /** Is the animation effect of this character looping? */
+    /** Was the animation effect of this character looping? */
     get restoreLoop(): boolean { return this._restoreLoop }
 
     /** Restore the loop value of the animation that was playing before a single animation was played (e.g., when a character gets hit and needs to be restored to their default animation settings) */
     set restoreLoop(restoreLoop: boolean) { this._restoreLoop = restoreLoop }
 
-    /** Is this character interactive? */
+    /** Was this character interactive? */
     get restoreInteractive(): boolean { return this._restoreInteractive }
 
     /** Restore the character interactive value of the animation that was playing before a single animation was played (e.g., when a character gets hit and needs to be restored to their default animation settings) */
@@ -199,33 +206,30 @@ export class Character {
         this._animationSpeed = animationSpeed
     }
 
-    /** Add character to stage */
-    addStage() {
+    /** Add child to the animation */
+    addChild(container: PIXI.Container) {
 
         // Diagnostics
-        console.debug(`Adding character ${this.id} to the stage at position ${this.position.x},${this.position.y} with animation ${this.animationKey}`);
+        console.debug(`Adding child object to  ${this.id}`);
 
         if (!this.animation) {
             throw new Error(`Animation object not set for ${this.id}`);
         }
 
-        if (!this.stage) {
-            throw new Error(`Stage object not set for ${this.id}`);
-        }
-
-        this.stage.addChild(this.animation);
+        this.animation.addChild(container);
     }
 
-    /** Remove character to stage */
-    removeStage() {
+    /** Remove a child from the animation */
+    removeChild(container: PIXI.Container) {
 
         // Diagnostics
-        console.debug(`Removing character ${this.id} from the stage`);
-        this.stage.removeChild(this.animation);
+        console.debug(`Removing child object from character ${this.id}`);
+
+        this.animation.removeChild(container);
     }
 
     /** Play an animation once. E.g., when a character is hit. After playing once, it will revert back to the original animation */
-    playSingleAnimation(key: string, callback: CallableFunction = null) {
+    playSingleAnimation(container: PIXI.Container, key: string, callback: CallableFunction = null, attachChildren = true) {
 
         // Indicate that a single animation is currently playing
         if (!this.isPlayingSingleAnimation) {
@@ -238,17 +242,34 @@ export class Character {
         // Indicate that a single animation is triggered
         this.isPlayingSingleAnimation = true;
 
+        // Remove from container
+        container.removeChild(this.animation);
+
         // Play new animation
-        this.createAnimation(key, true, false);
+        this.createAnimation(key, true, false, false);
+
+        // Add to the container
+        container.addChild(this.animation);
 
         // Get a reference to this object for usage in the callback
         let char = this;
 
         // Hook into the onComplete event to restore the original animation
-        this.animation.onComplete = function (e) {
+        this.animation.onComplete = function () {
+
+            // Remove from container
+            container.removeChild(char.animation);
+
+            // Revert to previous container
             char.createAnimation(char.restoreAnimationKey, char.restoreAutoPlay, char.restoreLoop, char.restoreInteractive);
+
+            // Restore properties
             char.isPlayingSingleAnimation = false;
             char.restoreAnimationKey = null;
+
+            // Add to container
+            container.addChild(char.animation);
+
 
             if (callback) {
                 callback();
@@ -274,12 +295,6 @@ export class Character {
         // Update animation key
         this.animationKey = key;
 
-        // Assign new animation
-        let isVisible: boolean = this.animation != null;
-        if (isVisible) {
-            this.removeStage();
-        }
-
         // Diagnostics
         console.debug(`Changing the animation for character ${this.id} to  ${this.animationKey}`);
 
@@ -287,17 +302,15 @@ export class Character {
         let animationSource = this.animationSource.getAnimation(this.animationKey).textures;
         let currentPosition = this.animation?.position;
 
+        // Create new animation
         this.animation = new PIXI.AnimatedSprite(animationSource);
+
+        // Update animation properties
         this.animation.animationSpeed = this._animationSpeed;
 
         // Set existing position (if any)
         if (currentPosition) {
             this.animation.position = currentPosition;
-        }
-
-        // If the character should be visible, add it back to the stage
-        if (isVisible) {
-            this.addStage();
         }
 
         // Play?

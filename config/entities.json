@@ -151,12 +151,12 @@
             }
         },
         {
-            "id": "music_8bit_jammer",
+            "id": "sfx/music/music_8bit_jammer",
             "filename": "gfx/Entities/Projectiles/15.png",
             "width": null,
             "height": null,
             "sound": {
-                "id": "music_8bit_jammer",
+                "id": "sfx/music/music_8bit_jammer",
                 "volume": 0.25
             }
         }
