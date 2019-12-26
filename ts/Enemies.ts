@@ -423,6 +423,8 @@ export class Enemy {
             this.shield += this.shieldRechargeRate;
         }
 
+        game.debugHelper.Text = `Action Sprites: ${this._activeActionSprites.length}`;
+
         // Handle actions
         if (this._activeActionSprites.length > 0) {
             for (let i = 0; i < this._activeActionSprites.length; i++) {
@@ -436,8 +438,17 @@ export class Enemy {
                 action.sprite.position.y += actionDetails.velocity.y;
 
                 // If item is out of screen bounds, mark for delete
-                if (action.sprite.position.x < game.app.screen.width || action.sprite.position.x > game.app.screen.width) {
+                if (action.sprite.position.x > game.app.screen.width || action.sprite.position.x < game.app.screen.width * -1) {
                     action.markDelete = true;
+                }
+
+                if (action.markDelete) {
+
+                    // Diagnostics
+                    console.debug(`Removing  ${action.key} from the active action sprites`);
+
+                    this._activeActionSprites.splice(i, 1);
+                    continue;
                 }
             }
         }
