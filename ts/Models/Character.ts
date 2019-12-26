@@ -2,10 +2,6 @@ import { Point } from "pixi.js";
 import { AnimationDetails, AnimationSprite } from "./AnimatedSprite";
 import { Entity } from "./Entities";
 
-export class Characters {
-    data: Map<string, Character> = new Map<string, Character>();
-}
-
 export class Character {
 
     /** Constructor of the Character class (thanks captain obvious comment - TODO) */

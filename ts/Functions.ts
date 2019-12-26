@@ -3,13 +3,13 @@ import { SpriteLoader } from "./Extensions/SpriteLoader";
 import { Game } from "./Game";
 import { AnimationDetails, AnimationSprite, AnimationSprites, AnimationState } from "./Models/AnimatedSprite";
 import { Background, Backgrounds } from "./Models/Background";
-import { Character, CharacterAction, Characters } from "./Models/Character";
+import { Character, CharacterAction } from "./Models/Character";
 import { AnimationSpriteConfig, AnimationSpritesConfig } from "./Models/Configuration/AnimationSpritesConfig";
 import { BackgroundConfig, BackgroundsConfig, BackgroundSpritesConfig } from "./Models/Configuration/BackgroundsConfig";
 import { CharacterAnimationDetailsConfig, CharacterConfig, CharactersConfig, CharacterAnimationStatesConfig } from "./Models/Configuration/CharactersConfig";
 import { EntitiesConfig, EntityConfig } from "./Models/Configuration/EntitiesConfig";
 import { LevelCharacterConfig, LevelConfig, LevelsConfig } from "./Models/Configuration/LevelsConfig";
-import { Entities, EntitySound } from "./Models/Entities";
+import { EntitySound, Entity } from "./Models/Entities";
 import { LevelData, Levels } from "./Models/Level";
 import { Sounds, Sound } from "./Models/Sound";
 import { SoundsConfig, SoundConfig } from "./Models/Configuration/SoundsConfig";
@@ -154,7 +154,7 @@ export async function loadAnimationSprites(): Promise<AnimationSprites> {
 }
 
 /** Loads the entities sprites configuration file and parses it to a Entities object */
-export async function loadEntities(): Promise<Entities> {
+export async function loadEntities(): Promise<Map<string, Entity>> {
 
   return new Promise(async (resolve) => {
     let entityData: EntitiesConfig;
@@ -186,7 +186,7 @@ export async function loadEntities(): Promise<Entities> {
         }
 
         // Load files
-        loader.loadFiles(function (cb: Entities) {
+        loader.loadFiles(function (cb: Map<string, Entity>) {
           resolve(cb);
         });
       })
@@ -194,11 +194,11 @@ export async function loadEntities(): Promise<Entities> {
 }
 
 /** Loads the characters */
-export function loadCharacters(game: Game): Promise<Characters> {
+export function loadCharacters(game: Game): Promise<Map<string, Character>> {
 
   return new Promise(async (resolve) => {
 
-    let characters: Characters = new Characters();
+    let characters: Map<string, Character> = new Map<string, Character>();
     let characterData: CharactersConfig;
 
     loadJSON('config/characters.json')
@@ -243,7 +243,7 @@ export function loadCharacters(game: Game): Promise<Characters> {
 
             details.state = animationStateData.state;
             details.animationKey = animationStateData.animationKey;
-            
+
             character.animationStates.set(animationStateData.state, animationStateData.animationKey);
           }
 
@@ -267,7 +267,7 @@ export function loadCharacters(game: Game): Promise<Characters> {
 
             let action = new CharacterAction();
             action.id = actionData.id;
-            action.entity = game.entities.data.get(actionData.entity);
+            action.entity = game.entities.get(actionData.entity);
             action.velocity = actionData.velocity;
             action.scale = actionData.scale;
             action.offset = actionData.offset;
@@ -279,7 +279,7 @@ export function loadCharacters(game: Game): Promise<Characters> {
           }
 
           // Add to collection
-          characters.data.set(config.id, character);
+          characters.set(config.id, character);
         }
 
         resolve(characters);
@@ -330,8 +330,8 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
             let levelCharacterConfig: LevelCharacterConfig = config.characters[j];
             let character: Character;
 
-            if (game.characters.data.has(levelCharacterConfig.sprite)) {
-              let characterSource: Character = game.characters.data.get(levelCharacterConfig.sprite);
+            if (game.characters.has(levelCharacterConfig.sprite)) {
+              let characterSource: Character = game.characters.get(levelCharacterConfig.sprite);
 
               // Clone the original character
               character = new Character(levelCharacterConfig.id);
