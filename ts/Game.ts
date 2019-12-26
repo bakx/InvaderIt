@@ -1,5 +1,5 @@
 import { Point } from "pixi.js";
-import { Collision2D } from "./Collision2D";
+import { Collision2D } from "./Utilities/Collision2D";
 import { Enemy } from "./Enemies";
 import { loadAnimationSprites, loadBackgrounds, loadCharacters, loadEntities, loadLevels, loadSounds } from "./Functions";
 import { AnimationSprites } from "./Models/AnimatedSprite";
