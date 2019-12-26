@@ -2,7 +2,7 @@ import { MultipackLoader } from "./Extensions/MultipackLoader";
 import { SpriteLoader } from "./Extensions/SpriteLoader";
 import { Game } from "./Game";
 import { AnimationDetails, AnimationSprite, AnimationSprites, AnimationState } from "./Models/AnimatedSprite";
-import { Background, Backgrounds } from "./Models/Background";
+import { Background } from "./Models/Background";
 import { Character, CharacterAction } from "./Models/Character";
 import { AnimationSpriteConfig, AnimationSpritesConfig } from "./Models/Configuration/AnimationSpritesConfig";
 import { BackgroundConfig, BackgroundsConfig, BackgroundSpritesConfig } from "./Models/Configuration/BackgroundsConfig";
@@ -10,7 +10,7 @@ import { CharacterAnimationDetailsConfig, CharacterConfig, CharactersConfig, Cha
 import { EntitiesConfig, EntityConfig } from "./Models/Configuration/EntitiesConfig";
 import { LevelCharacterConfig, LevelConfig, LevelsConfig } from "./Models/Configuration/LevelsConfig";
 import { EntitySound, Entity } from "./Models/Entities";
-import { LevelData, Levels } from "./Models/Level";
+import { LevelData } from "./Models/Level";
 import { Sounds, Sound } from "./Models/Sound";
 import { SoundsConfig, SoundConfig } from "./Models/Configuration/SoundsConfig";
 
@@ -69,10 +69,10 @@ export function loadSounds(app: PIXI.Application): Promise<Sounds> {
 }
 
 /** Loads the backgrounds configuration file and parses it to a Backgrounds object */
-export function loadBackgrounds(app: PIXI.Application): Promise<Backgrounds> {
+export function loadBackgrounds(app: PIXI.Application): Promise<Map<string, Background>> {
 
   return new Promise(async (resolve) => {
-    let backgrounds: Backgrounds = new Backgrounds();
+    let backgrounds: Map<string, Background> = new Map<string, Background>();
     let backgroundData: BackgroundsConfig;
 
     loadJSON('config/backgrounds.json')
@@ -109,7 +109,7 @@ export function loadBackgrounds(app: PIXI.Application): Promise<Backgrounds> {
           background.init();
 
           // Add to collection
-          backgrounds.data.set(config.name, background);
+          backgrounds.set(config.name, background);
 
           // Resolve promise
           resolve(backgrounds);
@@ -224,10 +224,6 @@ export function loadCharacters(game: Game): Promise<Map<string, Character>> {
           // Create the character data
           let character = new Character(config.id);
 
-          // Health data
-          character.life = config.life;
-          character.shield = config.shield;
-
           // Set animation data
           character.animationSource = animationSource;
           character.defaultAnimationKey = config.defaultAnimationKey;
@@ -288,10 +284,10 @@ export function loadCharacters(game: Game): Promise<Map<string, Character>> {
 }
 
 /** Loads the levels configuration file and parses it to a Levels object */
-export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
+export function loadLevels(app: PIXI.Application, game: Game): Promise<LevelData[]> {
 
   return new Promise(async (resolve) => {
-    let levels: Levels = new Levels();
+    let levels: LevelData[] = [];
     let levelData: LevelsConfig;
 
     loadJSON('config/levels.json')
@@ -311,8 +307,8 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
           level.config = config;
 
           // Set background
-          if (game.backgrounds.data.has(config.background)) {
-            level.background = game.backgrounds.data.get(config.background);
+          if (game.backgrounds.has(config.background)) {
+            level.background = game.backgrounds.get(config.background);
             level.background.init();
           }
           else {
@@ -347,7 +343,8 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
               character.position.x = levelCharacterConfig.position.x;
               character.position.y = levelCharacterConfig.position.y;
               character.life = levelCharacterConfig.life;
-              character.shield = levelCharacterConfig.shield;
+              character.shield = levelCharacterConfig.shield.strength;
+              character.shieldRechargeRate = levelCharacterConfig.shield.rechargeRate;
 
               // Set stage
               character.stage = app.stage;
@@ -363,7 +360,7 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
           }
 
           // Add to collection
-          levels.data.push(level);
+          levels.push(level);
         }
 
         resolve(levels);

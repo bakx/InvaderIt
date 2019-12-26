@@ -11,8 +11,6 @@ export interface CharacterConfig {
     animationDetails: CharacterAnimationDetailsConfig[];
     animationStates: CharacterAnimationStatesConfig[];
     actions: CharacterActionConfig[];
-    life: number;
-    shield: number;
 }
 
 export interface CharacterAnimationStatesConfig {

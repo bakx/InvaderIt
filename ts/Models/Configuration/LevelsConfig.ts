@@ -19,5 +19,10 @@ export interface LevelCharacterConfig {
     animationSpeed: number;
     position: Point;
     life: number;
-    shield: number;
+    shield: LevelCharacterShieldConfig;
+}
+
+export interface LevelCharacterShieldConfig {
+    strength: number;
+    rechargeRate: number;
 }

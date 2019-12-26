@@ -30,6 +30,7 @@ export class Character {
 
     private _life: number;
     private _shield: number;
+    private _shieldRechargeRate: number;    
 
     // Animation settings
 
@@ -52,154 +53,158 @@ export class Character {
     private _interactive: boolean = true;
 
     /** Get the id of object */
-    get id(): string { return this._id }
+    get id(): string { return this._id; }
 
     /** Is this a playable character? */
-    get isPlayer(): boolean { return this._isPlayer }
+    get isPlayer(): boolean { return this._isPlayer; }
 
     /** Is this a playable character? */
-    set isPlayer(isPlayer: boolean) { this._isPlayer = isPlayer }
+    set isPlayer(isPlayer: boolean) { this._isPlayer = isPlayer; }
 
     /** Get the default animation key of character */
-    get defaultAnimationKey(): string { return this._defaultAnimationKey }
+    get defaultAnimationKey(): string { return this._defaultAnimationKey; }
 
     /** Set the default animation key of character */
-    set defaultAnimationKey(defaultAnimationKey: string) { this._defaultAnimationKey = defaultAnimationKey }
+    set defaultAnimationKey(defaultAnimationKey: string) { this._defaultAnimationKey = defaultAnimationKey; }
 
     /** Get the default animation speed of character */
-    get defaultAnimationSpeed(): number { return this._defaultAnimationSpeed }
+    get defaultAnimationSpeed(): number { return this._defaultAnimationSpeed; }
 
     /** Set the default animation speed of character */
-    set defaultAnimationSpeed(defaultAnimationSpeed: number) { this._defaultAnimationSpeed = defaultAnimationSpeed }
+    set defaultAnimationSpeed(defaultAnimationSpeed: number) { this._defaultAnimationSpeed = defaultAnimationSpeed; }
 
     /** Get the animation details of character */
-    get animationDetails(): Map<string, AnimationDetails> { return this._animationDetails }
+    get animationDetails(): Map<string, AnimationDetails> { return this._animationDetails; }
 
     /** Set the animation details of character */
-    set animationDetails(animationDetails: Map<string, AnimationDetails>) { this._animationDetails = animationDetails }
+    set animationDetails(animationDetails: Map<string, AnimationDetails>) { this._animationDetails = animationDetails; }
 
     /** Get the animation states of character */
-    get animationStates(): Map<string, string> { return this._animationStates }
+    get animationStates(): Map<string, string> { return this._animationStates; }
 
     /** Set the animation states of character */
-    set animationStates(animationStates: Map<string, string>) { this._animationStates = animationStates }
+    set animationStates(animationStates: Map<string, string>) { this._animationStates = animationStates; }
 
     /** Get the actions of character */
-    get actions(): Map<string, CharacterAction> { return this._actions }
+    get actions(): Map<string, CharacterAction> { return this._actions; }
 
     /** Set the actions of character */
-    set actions(actions: Map<string, CharacterAction>) { this._actions = actions }
+    set actions(actions: Map<string, CharacterAction>) { this._actions = actions; }
 
     /** Get the stage of character */
-    get stage(): PIXI.Container { return this._stage }
+    get stage(): PIXI.Container { return this._stage; }
 
     /** Set the stage of character */
-    set stage(stage: PIXI.Container) { this._stage = stage }
+    set stage(stage: PIXI.Container) { this._stage = stage; }
 
     /** Get the position of character */
-    get position(): Point { return this._position }
+    get position(): Point { return this._position; }
 
     /** Set the position of character */
     set position(position: Point) {
         console.debug(`Position for character ${this.id} is x:${this.position.x}, y:${this.position.y}`);
 
-        this._position = position
+        this._position = position;
     }
 
     /** Get the life of character */
-    get life(): number { return this._life }
+    get life(): number { return this._life; }
 
     /** Set the life of character */
     set life(life: number) {
         console.debug(`Setting life for character ${this.id} to: ${life}`);
 
-        this._life = life
+        this._life = life;
     }
 
     /** Get the shield of character */
-    get shield(): number { return this._shield }
+    get shield(): number { return this._shield; }
 
     /** Set the shield of character */
     set shield(shield: number) {
-        console.debug(`Setting shield for character ${this.id} to: ${shield}`);
-
-        this._shield = shield
+        this._shield = shield;
     }
 
+    /** Get the shield recharge of character */
+    get shieldRechargeRate(): number { return this._shieldRechargeRate; }
+
+    /** Set the shield recharge rate of character */
+    set shieldRechargeRate(shieldRechargeRate: number) { this._shieldRechargeRate = shieldRechargeRate; }
+
     /** Get the animation source of character */
-    get animationSource(): AnimationSprite { return this._animationSource }
+    get animationSource(): AnimationSprite { return this._animationSource; }
 
     /** Set the animation source of character */
-    set animationSource(animationSource: AnimationSprite) { this._animationSource = animationSource }
+    set animationSource(animationSource: AnimationSprite) { this._animationSource = animationSource; }
 
     /** Get the animation key of character */
-    get animationKey(): string { return this._animationKey }
+    get animationKey(): string { return this._animationKey; }
 
     /** Set the animation key of character */
-    set animationKey(animationKey: string) { this._animationKey = animationKey }
+    set animationKey(animationKey: string) { this._animationKey = animationKey; }
 
     /** If a single animation was playing, this key is used to 'restore' to the previous state */
-    get restoreAnimationKey(): string { return this._restoreAnimationKey }
+    get restoreAnimationKey(): string { return this._restoreAnimationKey; }
 
     /** Set the animation key that should be playing after a single animation was played (e.g., when a character gets hit and needs to be restored to their default animation) */
-    set restoreAnimationKey(restoreAnimationKey: string) { this._restoreAnimationKey = restoreAnimationKey }
+    set restoreAnimationKey(restoreAnimationKey: string) { this._restoreAnimationKey = restoreAnimationKey; }
 
     /** Was the animation effect playing automatically? */
-    get restoreAutoPlay(): boolean { return this._restoreAutoPlay }
+    get restoreAutoPlay(): boolean { return this._restoreAutoPlay; }
 
     /** Restore the autoplay value of the animation that was playing before a single animation was played (e.g., when a character gets hit and needs to be restored to their default animation settings) */
-    set restoreAutoPlay(restoreAutoPlay: boolean) { this._restoreAutoPlay = restoreAutoPlay }
+    set restoreAutoPlay(restoreAutoPlay: boolean) { this._restoreAutoPlay = restoreAutoPlay; }
 
     /** Was the animation effect of this character looping? */
-    get restoreLoop(): boolean { return this._restoreLoop }
+    get restoreLoop(): boolean { return this._restoreLoop; }
 
     /** Restore the loop value of the animation that was playing before a single animation was played (e.g., when a character gets hit and needs to be restored to their default animation settings) */
-    set restoreLoop(restoreLoop: boolean) { this._restoreLoop = restoreLoop }
+    set restoreLoop(restoreLoop: boolean) { this._restoreLoop = restoreLoop; }
 
     /** Was this character interactive? */
-    get restoreInteractive(): boolean { return this._restoreInteractive }
+    get restoreInteractive(): boolean { return this._restoreInteractive; }
 
     /** Restore the character interactive value of the animation that was playing before a single animation was played (e.g., when a character gets hit and needs to be restored to their default animation settings) */
-    set restoreInteractive(restoreInteractive: boolean) { this._restoreInteractive = restoreInteractive }
+    set restoreInteractive(restoreInteractive: boolean) { this._restoreInteractive = restoreInteractive; }
 
     /** Is a single animation effect playing? */
-    get isPlayingSingleAnimation(): boolean { return this._isPlayingSingleAnimation }
+    get isPlayingSingleAnimation(): boolean { return this._isPlayingSingleAnimation; }
 
     /** Set the flag that indicates that a single animation is playing */
-    set isPlayingSingleAnimation(isPlayingSingleAnimation: boolean) { this._isPlayingSingleAnimation = isPlayingSingleAnimation }
+    set isPlayingSingleAnimation(isPlayingSingleAnimation: boolean) { this._isPlayingSingleAnimation = isPlayingSingleAnimation; }
 
     /** Is the animation effect playing automatically? */
-    get autoPlay(): boolean { return this._autoPlay }
+    get autoPlay(): boolean { return this._autoPlay; }
 
     /** Should the animation effect play automatically? */
-    set autoPlay(autoPlay: boolean) { this._autoPlay = autoPlay }
+    set autoPlay(autoPlay: boolean) { this._autoPlay = autoPlay; }
 
     /** Is the animation effect of this character looping? */
-    get loop(): boolean { return this._loop }
+    get loop(): boolean { return this._loop; }
 
     /** Should the animation effect of this character loop? */
-    set loop(loop: boolean) { this._loop = loop }
+    set loop(loop: boolean) { this._loop = loop; }
 
     /** Is this character interactive? */
-    get interactive(): boolean { return this._interactive }
+    get interactive(): boolean { return this._interactive; }
 
     /** Is this character interactive? */
-    set interactive(interactive: boolean) { this._interactive = interactive }
+    set interactive(interactive: boolean) { this._interactive = interactive; }
 
     /** Get the amination of character */
-    get animation(): PIXI.AnimatedSprite { return this._animation }
+    get animation(): PIXI.AnimatedSprite { return this._animation; }
 
     /** Set the amination of character */
-    set animation(animation: PIXI.AnimatedSprite) { this._animation = animation }
+    set animation(animation: PIXI.AnimatedSprite) { this._animation = animation; }
 
     /** Get the animation speed of character */
-    get animationSpeed(): number { return this._animationSpeed }
+    get animationSpeed(): number { return this._animationSpeed; }
 
     /** Set the animation speed of character */
     set animationSpeed(animationSpeed: number) {
         console.debug(`Setting animation speed to ${animationSpeed} for character ${this.id}`);
 
-        this._animationSpeed = animationSpeed
+        this._animationSpeed = animationSpeed;
     }
 
     /** Add child to the animation */

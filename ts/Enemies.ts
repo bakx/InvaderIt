@@ -5,6 +5,7 @@ import { calculateMovement } from "./Functions";
 import { Game } from "./Game";
 import { Character, CharacterAction } from "./Models/Character";
 import { MoveBox } from "./MoveBox";
+import { Calculate } from "./Utilities/Calculate";
 
 export class Enemy {
 
@@ -46,61 +47,62 @@ export class Enemy {
     private _shieldsBar: PIXI.Graphics;
 
     private _life: number;
-    private _shield: number;
     private _lifeFull: number;
+    private _shield: number;
     private _shieldFull: number;
+    private _shieldRechargeRate: number;
 
     // Enemy states
     private _finalState: boolean = false;
     private _lastAction: number = Date.now();
 
     /** Get the unique id of enemy */
-    get id(): string { return this._character.id }
+    get id(): string { return this._character.id; }
 
     /** Get the position of enemy */
-    get position(): Point { return this._position }
+    get position(): Point { return this._position; }
 
     /** Set the position of enemy */
-    set position(position: Point) { this._position = position }
+    set position(position: Point) { this._position = position; }
 
     /** Get the position the enemy should be moving towards */
-    get gotoPosition(): Point { return this._gotoPosition }
+    get gotoPosition(): Point { return this._gotoPosition; }
 
     /** Set the position the enemy should be moving towards */
-    set gotoPosition(gotoPosition: Point) { this._gotoPosition = gotoPosition }
+    set gotoPosition(gotoPosition: Point) { this._gotoPosition = gotoPosition; }
 
     /** Get the container of this enemy */
-    get container(): PIXI.Container { return this._container }
+    get container(): PIXI.Container { return this._container; }
 
     /** Set the container of this enemy */
-    set container(container: PIXI.Container) { this._container = container }
+    set container(container: PIXI.Container) { this._container = container; }
 
     /** Get the character container of this enemy */
-    get characterContainer(): PIXI.Container { return this._characterContainer }
+    get characterContainer(): PIXI.Container { return this._characterContainer; }
 
     /** Set the character container of this enemy */
-    set characterContainer(characterContainer: PIXI.Container) { this._characterContainer = characterContainer }
+    set characterContainer(characterContainer: PIXI.Container) { this._characterContainer = characterContainer; }
 
     /** Get the character of this enemy */
-    get character(): Character { return this._character }
+    get character(): Character { return this._character; }
 
     /** Set the character of this enemy */
-    set character(character: Character) { this._character = character }
+    set character(character: Character) { this._character = character; }
 
     /** Get the area in which the entity can move */
-    get moveBox(): MoveBox { return this._moveBox }
+    get moveBox(): MoveBox { return this._moveBox; }
 
     /** Set the area in which the entity can move */
-    set moveBox(moveBox: MoveBox) { this._moveBox = moveBox }
+    set moveBox(moveBox: MoveBox) { this._moveBox = moveBox; }
 
     /** Get the statistics container */
-    get enemyStatistics(): PIXI.Container { return this._enemyStatistics }
+    get enemyStatistics(): PIXI.Container { return this._enemyStatistics; }
 
     /** Set the statistics container */
-    set enemyStatistics(enemyStatistics: PIXI.Container) { this._enemyStatistics = enemyStatistics }
+    set enemyStatistics(enemyStatistics: PIXI.Container) { this._enemyStatistics = enemyStatistics; }
 
     /** Get the life of enemy */
-    get life(): number { return this._life }
+    get life(): number { return this._life; }
 
     /** Set the life of enemy */
     set life(life: number) {
@@ -110,19 +112,8 @@ export class Enemy {
         this.updateHealthbars();
     }
 
-    /** Get the shield of enemy */
-    get shield(): number { return this._shield }
-
-    /** Set the shield of enemy */
-    set shield(shield: number) {
-        this._shield = shield;
-
-        // Update health bar
-        this.updateHealthbars();
-    }
-
     /** Get the life of enemy */
-    get lifeFull(): number { return this._lifeFull }
+    get lifeFull(): number { return this._lifeFull; }
 
     /** Set the life of enemy */
     set lifeFull(lifeFull: number) {
@@ -133,7 +124,18 @@ export class Enemy {
     }
 
     /** Get the shield of enemy */
-    get shieldFull(): number { return this._shieldFull }
+    get shield(): number { return this._shield; }
+
+    /** Set the shield of enemy */
+    set shield(shield: number) {
+        this._shield = shield;
+
+        // Update health bar
+        this.updateHealthbars();
+    }
+
+    /** Get the shield of enemy */
+    get shieldFull(): number { return this._shieldFull; }
 
     /** Set the shield of enemy */
     set shieldFull(shieldFull: number) {
@@ -143,11 +145,17 @@ export class Enemy {
         this.updateHealthbars();
     }
 
+    /** Get the shield recharge of character */
+    get shieldRechargeRate(): number { return this._shieldRechargeRate; }
+
+    /** Set the shield recharge rate of character */
+    set shieldRechargeRate(shieldRechargeRate: number) { this._shieldRechargeRate = shieldRechargeRate; }
+
     /** Is this enemy in it's final state (e.g., playing a destroy animation) */
-    get finalState(): boolean { return this._finalState }
+    get finalState(): boolean { return this._finalState; }
 
     /** Set the final state (e.g., playing a destroy animation) state of this enemy */
-    set finalState(finalState: boolean) { this._finalState = finalState }
+    set finalState(finalState: boolean) { this._finalState = finalState; }
 
     /** Initialize all properties related to the enemy. This function needs to be called to render
      * the item to the screen. It creates the container objects and sets up the health bars .
@@ -265,6 +273,53 @@ export class Enemy {
         }
     }
 
+    /** */
+    hasCollision(game: Game, action: ActiveActionSprite) {
+        // Prevent retriggering the event for this action element
+        action.triggerEvents = false;
+
+
+        this.shield -= action.damage;
+
+        if (this.shield < 0) {
+            this.life -= action.damage;
+        }
+        // Check life of entity
+        if (this.life > 0) {
+
+            // Trigger hit animation
+            this.playAnimation("hit");
+
+        } else {
+
+            // Determine if this enemy is already in it's final state
+            if (this.finalState) {
+                console.info(`Enemy ${this.id} indicates final state. Ignoring...`);
+                return;
+            }
+
+            // Hide health bar
+            this._backgroundBar.width = 0;
+
+            // Mark enemy as final state
+            this.finalState = true;
+
+            // create reference to current instance
+            let g = this;
+
+            // Trigger death animation - TODO This needs to trigger the enemy specific DEATH property
+            this.playAnimation("death", () => {
+
+                // Remove the character from the stage
+                this.removeStage();
+
+                // Remove the enemies from the list
+                game.enemies.delete(this.id);
+            });
+
+        }
+    }
+
     /** Create the statistics group that contains the health and shield bars */
     createHealthBars() {
 
@@ -304,13 +359,8 @@ export class Enemy {
     updateHealthbars() {
         if (this.life && this.shield && this._healthBar && this._shieldsBar) {
 
-            // Update the width of the health bar
-            let h = this._barWidth / this.lifeFull * this.life;
-            this._healthBar.width = h > 0 ? h : 0;
-
-            // Update the width of the shield bar
-            let s = this._barWidth / this.shieldFull * this.shield;
-            this._shieldsBar.width = s > 0 ? s : 0;
+            this._healthBar.width = Calculate.getBarWidth(this._barWidth, this.life, this.lifeFull);
+            this._shieldsBar.width = Calculate.getBarWidth(this._barWidth, this.shield, this.shieldFull);
         }
     }
 
@@ -366,6 +416,11 @@ export class Enemy {
 
             // Update the statistics bar
             this.enemyStatistics.position.set(this.character.animation.position.x + this.character.animation.width / 2 - this.enemyStatistics.width, this.character.position.y + 10);
+        }
+
+        // Regenerate shields?
+        if (this.shield != this.shieldFull) {
+            this.shield += this.shieldRechargeRate;
         }
 
         // Handle actions

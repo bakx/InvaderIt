@@ -1,17 +1,17 @@
 import { Point } from "pixi.js";
-import { Collision2D } from "./Utilities/Collision2D";
 import { Enemy } from "./Enemies";
-import { loadAnimationSprites, loadBackgrounds, loadCharacters, loadEntities, loadLevels, loadSounds } from "./Functions";
-import { AnimationSprites } from "./Models/AnimatedSprite";
-import { Backgrounds } from "./Models/Background";
-import { Character } from "./Models/Character";
-import { DrawText } from "./Models/DrawText";
-import { EntitySound, Entity } from "./Models/Entities";
-import { LevelData, Levels } from "./Models/Level";
-import { MoveBox } from "./MoveBox";
-import { Player } from "./Player";
 import { Actions } from "./Enums/Actions";
 import { GameState } from "./Enums/GameState";
+import { loadAnimationSprites, loadBackgrounds, loadCharacters, loadEntities, loadLevels, loadSounds } from "./Functions";
+import { AnimationSprites } from "./Models/AnimatedSprite";
+import { Background } from "./Models/Background";
+import { Character } from "./Models/Character";
+import { DrawText } from "./Models/DrawText";
+import { Entity, EntitySound } from "./Models/Entities";
+import { LevelData } from "./Models/Level";
+import { MoveBox } from "./MoveBox";
+import { Player } from "./Player";
+import { Collision2D } from "./Utilities/Collision2D";
 
 export class Game {
 
@@ -25,8 +25,8 @@ export class Game {
   gameFrame: number = 0;
 
   /** Resources */
-  backgrounds: Backgrounds;
-  levels: Levels;
+  backgrounds: Map<string, Background>;
+  levels: LevelData[];
   animationSprites: AnimationSprites;
   entities: Map<string, Entity>;
   characters: Map<string, Character>;
@@ -210,13 +210,13 @@ export class Game {
     }
 
     // Validate that the level exists
-    if (this.levels.data.length - 1 < this.levelIndex) {
+    if (this.levels.length - 1 < this.levelIndex) {
       console.warn(`Level ${this.levelIndex} was not found. Resetting to level 0`);
       this.levelIndex = 0;
     }
 
     // Load characters
-    this.level = this.levels.data[this.levelIndex];
+    this.level = this.levels[this.levelIndex];
 
     // Reset all enemies
     this.enemies = new Map<string, Enemy>();
@@ -234,6 +234,7 @@ export class Game {
         let enemy: Enemy = new Enemy(this.app.stage, character);
         enemy.lifeFull = character.life;
         enemy.shieldFull = character.shield;
+        enemy.shieldRechargeRate = character.shieldRechargeRate;
         enemy.moveBox = new MoveBox(this.app.screen.width / 2, this.app.screen.width, 0, this.app.screen.height);
 
         // Initialize the enemy
@@ -345,55 +346,17 @@ export class Game {
               action.sprite.position, enemy.position,
               action.sprite.getLocalBounds(), enemy.character.animation.getLocalBounds()
             )) {
-
-              // Prevent retriggering the event for this action element
-              action.triggerEvents = false;
-
-              // Reduce life of enemy
-              enemy.life -= action.damage;
-
-              // Check life of entity
-              if (enemy.life > 0) {
-
-                // Trigger hit animation
-                enemy.playAnimation("hit");
-
-              } else {
-
-                // Determine if this enemy is already in it's final state
-                if (enemy.finalState) {
-                  console.info(`Enemy ${enemy.id} indicates final state. Ignoring...`);
-                  return;
-                }
-
-                // Mark enemy as final state
-                enemy.finalState = true;
-
-                // create reference to current instance
-                let g = this;
-
-                // Trigger death animation - TODO This needs to trigger the enemy specific DEATH property
-                enemy.playAnimation("death", () => {
-
-                  // Remove the character from the stage
-                  enemy.removeStage();
-
-                  // Remove the enemies from the list
-                  g.enemies.delete(enemy.id);
-
-                  // If all enemies are gone, load the next level
-                  if (g.enemies.size == 0) {
-                    g.levelIndex++;
-                    g.loadLevel();
-                  }
-                });
-
-              }
+              enemy.hasCollision(this, action);
             }
           })
         }
       });
 
+      // Check if all enemies are defeated
+      if (this.enemies.size == 0) {
+        this.levelIndex++;
+        this.loadLevel();
+      }
       // Update game frame
       this.gameFrame++;
     }

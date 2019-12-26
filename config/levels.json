@@ -15,7 +15,10 @@
                         "y": 525
                     },
                     "life": 100,
-                    "shield": 300
+                    "shield": {
+                        "strength": 300,
+                        "rechargeRate": 0.20
+                    }
                 },
                 {
                     "id": "6f577ac4-4119-41fe-b620-ca26f8a5ebbf",
@@ -28,7 +31,10 @@
                         "y": 25
                     },
                     "life": 100,
-                    "shield": 300
+                    "shield": {
+                        "strength": 300,
+                        "rechargeRate": 0.20
+                    }
                 },
                 {
                     "id": "1927c78c-ac9c-4fed-a29b-d0cdb9142054",
@@ -41,7 +47,10 @@
                         "y": 200
                     },
                     "life": 100,
-                    "shield": 300
+                    "shield": {
+                        "strength": 300,
+                        "rechargeRate": 0.20
+                    }
                 }
             ],
             "entities": [
@@ -64,7 +73,10 @@
                         "y": 525
                     },
                     "life": 100,
-                    "shield": 300
+                    "shield": {
+                        "strength": 300,
+                        "rechargeRate": 0.20
+                    }
                 },
                 {
                     "id": "6f577ac4-4119-41fe-b620-ca26f8a5ebbf",
@@ -77,7 +89,10 @@
                         "y": 25
                     },
                     "life": 100,
-                    "shield": 300
+                    "shield": {
+                        "strength": 300,
+                        "rechargeRate": 0.20
+                    }
                 }
             ],
             "entities": [
@@ -100,7 +115,10 @@
                         "y": 525
                     },
                     "life": 100,
-                    "shield": 300
+                    "shield": {
+                        "strength": 300,
+                        "rechargeRate": 0.20
+                    }
                 },
                 {
                     "id": "6f577ac4-4119-41fe-b620-ca26f8a5ebbf",
@@ -113,7 +131,10 @@
                         "y": 25
                     },
                     "life": 100,
-                    "shield": 300
+                    "shield": {
+                        "strength": 300,
+                        "rechargeRate": 0.20
+                    }
                 },
                 {
                     "id": "1927c78c-ac9c-4fed-a29b-d0cdb9142054",
@@ -126,7 +147,10 @@
                         "y": 200
                     },
                     "life": 100,
-                    "shield": 300
+                    "shield": {
+                        "strength": 300,
+                        "rechargeRate": 0.20
+                    }
                 }
             ],
             "entities": [
