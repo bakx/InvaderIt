@@ -1,14 +1,14 @@
 export class DrawText {
     private pixiText: PIXI.Text;
 
-    constructor(stage: PIXI.Container, text: string, x: number, y: number, style?: PIXI.TextStyle) {
+    constructor(container: PIXI.Container, text: string, x: number, y: number, style?: PIXI.TextStyle) {
         let textStyle = (style) ? style : this.getDefaultStyle();
         this.pixiText = new PIXI.Text(text, textStyle);
         this.pixiText.x = x;
         this.pixiText.y = y;
 
-        // Add to stage
-        stage.addChild(this.pixiText);
+        // Add to container
+        container.addChild(this.pixiText);
     }
 
     /** Set the text of the text object */

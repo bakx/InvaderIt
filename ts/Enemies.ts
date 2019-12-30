@@ -6,6 +6,8 @@ import { Game } from "./Game";
 import { Character, CharacterAction } from "./Models/Character";
 import { MoveBox } from "./MoveBox";
 import { Calculate } from "./Utilities/Calculate";
+import { CanMove, PathFinding } from "./Utilities/PathFinding";
+import { DrawText } from "./Models/DrawText";
 
 export class Enemy {
 
@@ -32,7 +34,8 @@ export class Enemy {
     private _canMove: boolean = true;
     private _position: Point;
     private _gotoPosition: Point;
-    private _reverse: boolean = false;
+    private _reverseX: boolean = false;
+    private _reverseY: boolean = false;
     private _moveBox: MoveBox;
 
     // Action configuration
@@ -41,6 +44,7 @@ export class Enemy {
     // Enemy statistics
     private _barWidth: number = 128;
     private _barHeight: number = 8;
+    private _idContainer: PIXI.Container;
     private _enemyStatistics: PIXI.Container;
     private _backgroundBar: PIXI.Graphics;
     private _healthBar: PIXI.Graphics;
@@ -130,6 +134,10 @@ export class Enemy {
     set shield(shield: number) {
         this._shield = shield;
 
+        if (this.shield > this.shieldFull) {
+            this.shield = this.shieldFull;
+        }
+
         // Update health bar
         this.updateHealthbars();
     }
@@ -181,6 +189,12 @@ export class Enemy {
 
         // Create the statistics bar
         this.createHealthBars();
+
+        // Debug
+        this._idContainer = new PIXI.Container();
+        new DrawText(this._idContainer, this.id, this.characterContainer.x, this.character.animation.height);
+        this.container.addChild(this._idContainer);
+
 
         // Add container to stage
         this.addStage();
@@ -390,29 +404,114 @@ export class Enemy {
 
         if (this._canMove && this._gotoPosition) {
 
-            if (this.position.x - movementSpeed < this.moveBox.minX + (this.character.animation.width / 2)) {
-                this._reverse = true;
-            }
-            if (this.position.x - movementSpeed > this.moveBox.maxX - this.character.animation.width / 2) {
-                this._reverse = false;
+
+            if (this.position.x < this.moveBox.minX + (this.character.animation.width / 2) && this._reverseX) {
+                this._reverseX = !this._reverseX;
             }
 
-            // Determine if position X needs to be updated
-            this.position.x = calculateMovement(this.position.x, this._gotoPosition.x, movementSpeed * (this._reverse ? -1 : 1));
+            
+            if (this.position.x > this.moveBox.maxX - (this.character.animation.width / 2)) {
+                this._reverseX = !this._reverseX;
+            }
+            
+
+            if (this.position.y < this.moveBox.minY + (this.character.animation.height / 2) && this._reverseY) {
+                this._reverseY = !this._reverseY;
+            }
+
+            if (this.position.y > this.moveBox.maxY - (this.character.animation.height / 2)) {
+                this._reverseY = !this._reverseY;
+            }
 
             // Determine if position Y needs to be updated
-            this.position.y = calculateMovement(this.position.y, this._gotoPosition.y, movementSpeed);
 
             // Add a 0.02% chance to flip position
             let randomMovement: number = Math.floor(Math.random() * 1000);
 
             if (randomMovement < 2) {
-                this._reverse = !this._reverse;
+                this._reverseX = !this._reverseX;
+            }
+
+            let canMove: CanMove = PathFinding.enemyPaths(this.moveBox, this, game.enemies, movementSpeed);
+
+            // Determine if position X needs to be updated
+            //
+
+            // Should this enemy move horizontally
+            if (this._gotoPosition.x > this.position.x || !this._reverseX) {
+
+                if (this._reverseX) {
+                    movementSpeed = movementSpeed * -1;
+                }
+
+                /** */
+                if (canMove.right) {
+                    this.position.x = calculateMovement(this.position.x, this._gotoPosition.x, movementSpeed);
+                }
+                else {
+                    console.warn(`Unable to move right for enemy ${this.id}`);
+                    this._reverseX = !this._reverseX;
+                }
+
+
+            } else {
+
+                if (this._reverseX) {
+                    movementSpeed = movementSpeed * -1;
+                }
+
+                /** */
+                if (canMove.left) {
+                    this.position.x = calculateMovement(this.position.x, this._gotoPosition.x, movementSpeed);
+                }
+                else {
+                    console.warn(`Unable to move left for enemy ${this.id}`);
+                    this._reverseX = !this._reverseX;
+                }
+
+
+            }
+            // Determine if position Y needs to be updated
+            //
+
+            // Should this enemy move vertically
+            if (this._gotoPosition.y > this.position.y || !this._reverseY) {
+
+                if (this._reverseY) {
+                    movementSpeed = movementSpeed * -1;
+                }
+
+                /** */
+                if (canMove.down) {
+                    this.position.y = calculateMovement(this.position.y, this._gotoPosition.y, movementSpeed);
+                }
+                else {
+                    console.warn(`Unable to move down for enemy ${this.id}`);
+                    this._reverseY = !this._reverseY;
+                }
+            } else {
+
+                if (this._reverseY) {
+                    movementSpeed = movementSpeed * -1;
+                }
+
+                /** */
+                if (canMove.up) {
+                    this.position.y = calculateMovement(this.position.y, this._gotoPosition.y, movementSpeed);
+                }
+                else {
+                    console.warn(`Unable to move up for enemy ${this.id}`);
+                    this._reverseY = !this._reverseY;
+                }
             }
 
             // Set the position of the character
             this.character.position.x = this.position.x;
             this.character.position.y = this.position.y;
+
+            // Update debug text
+            this._idContainer.position.set(this.character.animation.position.x + this.character.animation.width / 2 - this._idContainer.width / 2, this.character.position.y + 10);
+
 
             // Update the statistics bar
             this.enemyStatistics.position.set(this.character.animation.position.x + this.character.animation.width / 2 - this.enemyStatistics.width, this.character.position.y + 10);
