@@ -338,6 +338,7 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<LevelData
 
               // Set level character properties 
               character.isPlayer = levelCharacterConfig.isPlayer;
+              character.movementSpeed = levelCharacterConfig.movementSpeed;
               character.actions = characterSource.actions;
               character.animationSource = characterSource.animationSource;
               character.animationStates = characterSource.animationStates;

@@ -12,8 +12,9 @@ export class InteractiveEntities {
     /** Constructor of the InteractiveEntities class */
     constructor(container: PIXI.Container, character: Character) {
         this._stage = container;
-        this.character = character;
-        this.position = character.position;
+        this._character = character;
+        this._position = character.position;
+        this._gotoPosition = new Point();
         this._activeActionSprites = [];
         this._actionTriggered = new Map<string, number>();
     }

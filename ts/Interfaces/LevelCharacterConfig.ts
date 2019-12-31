@@ -4,6 +4,7 @@ export interface LevelCharacterConfig {
     id: string;
     sprite: string;
     isPlayer: boolean;
+    movementSpeed: number;
     animationKey: string;
     animationSpeed: number;
     position: Point;

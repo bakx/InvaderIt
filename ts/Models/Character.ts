@@ -15,6 +15,7 @@ export class Character {
 
     private _id: string;
     private _isPlayer: boolean;
+    private _movementSpeed: number;
     private _defaultAnimationKey: string;
     private _defaultAnimationSpeed: number;
     private _animationDetails: Map<string, AnimationDetails>;
@@ -30,7 +31,7 @@ export class Character {
 
     private _life: number;
     private _shield: number;
-    private _shieldRechargeRate: number;    
+    private _shieldRechargeRate: number;
 
     // Animation settings
 
@@ -60,6 +61,12 @@ export class Character {
 
     /** Is this a playable character? */
     set isPlayer(isPlayer: boolean) { this._isPlayer = isPlayer; }
+
+    /** Get the movement speed of character? */
+    get movementSpeed(): number { return this._movementSpeed; }
+
+    /** Set the movement speed of character? */
+    set movementSpeed(movementSpeed: number) { this._movementSpeed = movementSpeed; }
 
     /** Get the default animation key of character */
     get defaultAnimationKey(): string { return this._defaultAnimationKey; }

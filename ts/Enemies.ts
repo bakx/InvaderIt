@@ -1,11 +1,11 @@
 import "pixi-sound";
-import { Character, CharacterAction } from "./Models/Character";
-import { InteractiveEntities } from "./InteractiveEntities";
-import { ActiveActionSprite } from "./ActiveActionSprite";
 import { Point } from "pixi.js";
-import { Game } from "./Game";
-import { CanMove, PathFinding } from "./Utilities/PathFinding";
+import { ActiveActionSprite } from "./ActiveActionSprite";
 import { calculateMovement } from "./Functions";
+import { Game } from "./Game";
+import { InteractiveEntities } from "./InteractiveEntities";
+import { Character, CharacterAction } from "./Models/Character";
+import { CanMove, PathFinding } from "./Utilities/PathFinding";
 
 export class Enemy extends InteractiveEntities {
 
@@ -25,6 +25,7 @@ export class Enemy extends InteractiveEntities {
             console.error(`${this.character.id} does not have action ${actionKey} defined.`);
             return;
         }
+
         // Sanity check #2 - TODO update comment
         if (characterAction.entity == null) {
             console.error(`${this.character.id} has an invalid action. Action ${characterAction?.id} has an invalid or missing sprite.`);
@@ -84,25 +85,12 @@ export class Enemy extends InteractiveEntities {
     update(game: Game) {
         let playerPosition: Point = game.player.position;
 
-        if (this.life > 0 && Date.now() - this.lastAction > 750) {
-            let actionTriggerOdds = Math.floor(Math.random() * 1000);
+        // Handle actions related to enemy
+        this.handleActions(game);
 
-            if (actionTriggerOdds > 940 && actionTriggerOdds <= 990) {
-                this.lastAction = Date.now();
-                this.action("fire", playerPosition);
-            }
-
-            if (actionTriggerOdds > 990) {
-                this.lastAction = Date.now();
-                this.action("missile", playerPosition);
-            }
-        }
-
-        if (!this.gotoPosition) this.gotoPosition = new Point();
+        //
         this.gotoPosition.x = playerPosition.x;
         this.gotoPosition.y = playerPosition.y;
-
-        let movementSpeed = 3;
 
         if (this.canMove && this.gotoPosition) {
 
@@ -134,7 +122,7 @@ export class Enemy extends InteractiveEntities {
                 this.reverseX = !this.reverseX;
             }
 
-            let canMove: CanMove = PathFinding.enemyPaths(this.moveBox, this, game.enemies, movementSpeed);
+            let canMove: CanMove = PathFinding.enemyPaths(this.moveBox, this, game.enemies, this.character.movementSpeed);
 
             // Determine if position X needs to be updated
             //
@@ -143,36 +131,33 @@ export class Enemy extends InteractiveEntities {
             if (this.gotoPosition.x > this.position.x || !this.reverseX) {
 
                 if (this.reverseX) {
-                    movementSpeed = movementSpeed * -1;
+                    this.character.movementSpeed = this.character.movementSpeed * -1;
                 }
 
                 /** */
                 if (canMove.right) {
-                    this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, movementSpeed);
+                    this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, this.character.movementSpeed);
                 }
                 else {
                     console.warn(`Unable to move right for enemy ${this.id}`);
                     this.reverseX = !this.reverseX;
                 }
-
-
             } else {
 
                 if (this.reverseX) {
-                    movementSpeed = movementSpeed * -1;
+                    this.character.movementSpeed = this.character.movementSpeed * -1;
                 }
 
                 /** */
                 if (canMove.left) {
-                    this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, movementSpeed);
+                    this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, this.character.movementSpeed);
                 }
                 else {
                     console.warn(`Unable to move left for enemy ${this.id}`);
                     this.reverseX = !this.reverseX;
                 }
-
-
             }
+
             // Determine if position Y needs to be updated
             //
 
@@ -180,12 +165,12 @@ export class Enemy extends InteractiveEntities {
             if (this.gotoPosition.y > this.position.y || !this.reverseY) {
 
                 if (this.reverseY) {
-                    movementSpeed = movementSpeed * -1;
+                    this.character.movementSpeed = this.character.movementSpeed * -1;
                 }
 
                 /** */
                 if (canMove.down) {
-                    this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, movementSpeed);
+                    this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed);
                 }
                 else {
                     console.warn(`Unable to move down for enemy ${this.id}`);
@@ -194,12 +179,12 @@ export class Enemy extends InteractiveEntities {
             } else {
 
                 if (this.reverseY) {
-                    movementSpeed = movementSpeed * -1;
+                    this.character.movementSpeed = this.character.movementSpeed * -1;
                 }
 
                 /** */
                 if (canMove.up) {
-                    this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, movementSpeed);
+                    this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed);
                 }
                 else {
                     console.warn(`Unable to move up for enemy ${this.id}`);
@@ -215,6 +200,30 @@ export class Enemy extends InteractiveEntities {
         // Regenerate shields?
         if (this.shield != this.shieldFull) {
             this.shield += this.shieldRechargeRate;
+        }
+
+        /**         */
+        super.updateHealthContainers();
+    }
+
+    /** */
+    handleActions(game: Game) {
+
+        /** */
+        let playerPosition: Point = game.player.position;
+
+        if (this.life > 0 && Date.now() - this.lastAction > 750) {
+            let actionTriggerOdds = Math.floor(Math.random() * 1000);
+
+            if (actionTriggerOdds > 940 && actionTriggerOdds <= 990) {
+                this.lastAction = Date.now();
+                this.action("fire", playerPosition);
+            }
+
+            if (actionTriggerOdds > 990) {
+                this.lastAction = Date.now();
+                this.action("missile", playerPosition);
+            }
         }
 
         game.debugHelper.Text = `Action Sprites: ${this.activeActionSprites.length}`;
@@ -246,7 +255,5 @@ export class Enemy extends InteractiveEntities {
                 }
             }
         }
-    
-    super.updateHealthContainers();
     }
 }

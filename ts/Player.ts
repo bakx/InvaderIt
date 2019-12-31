@@ -80,15 +80,14 @@ export class Player extends InteractiveEntities {
 
     /** Update all events related to the player */
     update(game: Game) {
-        let movementSpeed = 5;
-
+        
         if (this.canMove && this.gotoPosition) {
 
             // Determine if position X needs to be updated
-            this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, movementSpeed);
+            this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, this.character.movementSpeed);
 
             // Determine if position Y needs to be updated
-            this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, movementSpeed);
+            this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed);
 
             // Set the position of the character
             this.character.position.x = this.position.x;
