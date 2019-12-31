@@ -175,8 +175,6 @@ export class Game {
               });
           });
       });
-
-
   }
 
   /** Loads all resources that are defined for the specific level */
@@ -259,6 +257,12 @@ export class Game {
       // Create new playable character
       this.player = new Player(this.app.stage, playerCharacter);
 
+      // Set the move box for player
+      this.player.moveBox = new MoveBox(0, this.app.screen.width / 2, 0, this.app.screen.height);
+
+      // Initialize the player
+      this.player.init();
+
       // Pointers normalize touch and mouse
       this.app.renderer.plugins.interaction.on('pointerup', (event: any) => {
         this.onclick(event);
@@ -328,12 +332,14 @@ export class Game {
 
       // Update the player (if any)
       if (this.player) {
-        this.player.update();
+        this.player.update(this);
       }
 
       // Update all enemy
       this.enemies.forEach(enemy => {
+        //   if (Date.now() % 15 == 0) {
         enemy.update(this);
+        // }
       })
 
       // Collision check
@@ -394,6 +400,9 @@ export class Game {
       if (this.level && this.level.background) {
         this.level.background.redraw(newWidth, this.designHeight);
       }
+
+      // Set the move box for player
+      this.player.moveBox = new MoveBox(0, this.app.screen.width / 2, 0, this.app.screen.height);
 
       // Update all enemies
       this.enemies.forEach(enemy => {

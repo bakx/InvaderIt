@@ -1,7 +1,3 @@
-export interface AnimationSpritesConfig {
-    data: AnimationSpriteConfig[];
-}
-
 export interface AnimationSpriteConfig {
     id: string;
     filename: string;

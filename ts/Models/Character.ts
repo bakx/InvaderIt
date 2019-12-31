@@ -4,7 +4,7 @@ import { Entity } from "./Entities";
 
 export class Character {
 
-    /** Constructor of the Character class (thanks captain obvious comment - TODO) */
+    /** Constructor of the Character class */
     constructor(id: string) {
         this._id = id;
         this._actions = new Map<string, CharacterAction>();
