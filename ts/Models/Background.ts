@@ -1,9 +1,5 @@
 import { Point } from "pixi.js";
 
-export class Backgrounds {
-    data: Map<string, Background> = new Map<string, Background>();
-}
-
 export class Background {
     name: string;
     private backgroundArray: PIXI.TilingSprite[];

@@ -1,7 +1,4 @@
-export class Entities {
-    data: Map<string, Entity> = new Map<string, Entity>();
-}
-
+/** */
 export class Entity {
     /** Constructor of the Entity class  
     * @param id the id of the entity

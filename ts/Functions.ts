@@ -1,18 +1,22 @@
 import { MultipackLoader } from "./Extensions/MultipackLoader";
 import { SpriteLoader } from "./Extensions/SpriteLoader";
 import { Game } from "./Game";
+import { AnimationSpriteConfig } from "./Interfaces/AnimationSpriteConfig";
+import { BackgroundConfig } from "./Interfaces/BackgroundsConfig";
+import { BackgroundSpritesConfig } from "./Interfaces/BackgroundSpritesConfig";
+import { CharacterAnimationDetailsConfig } from "./Interfaces/CharacterAnimationDetailsConfig";
+import { CharacterAnimationStatesConfig } from "./Interfaces/CharacterAnimationStatesConfig";
+import { CharacterConfig } from "./Interfaces/CharactersConfig";
+import { EntityConfig } from "./Interfaces/EntitiesConfig";
+import { LevelCharacterConfig } from "./Interfaces/LevelCharacterConfig";
+import { LevelConfig } from "./Interfaces/LevelsConfig";
+import { SoundConfig } from "./Interfaces/SoundsConfig";
 import { AnimationDetails, AnimationSprite, AnimationSprites, AnimationState } from "./Models/AnimatedSprite";
-import { Background, Backgrounds } from "./Models/Background";
-import { Character, CharacterAction, Characters } from "./Models/Character";
-import { AnimationSpriteConfig, AnimationSpritesConfig } from "./Models/Configuration/AnimationSpritesConfig";
-import { BackgroundConfig, BackgroundsConfig, BackgroundSpritesConfig } from "./Models/Configuration/BackgroundsConfig";
-import { CharacterAnimationDetailsConfig, CharacterConfig, CharactersConfig, CharacterAnimationStatesConfig } from "./Models/Configuration/CharactersConfig";
-import { EntitiesConfig, EntityConfig } from "./Models/Configuration/EntitiesConfig";
-import { LevelCharacterConfig, LevelConfig, LevelsConfig } from "./Models/Configuration/LevelsConfig";
-import { Entities, EntitySound } from "./Models/Entities";
-import { LevelData, Levels } from "./Models/Level";
-import { Sounds, Sound } from "./Models/Sound";
-import { SoundsConfig, SoundConfig } from "./Models/Configuration/SoundsConfig";
+import { Background } from "./Models/Background";
+import { Character, CharacterAction } from "./Models/Character";
+import { Entity, EntitySound } from "./Models/Entities";
+import { LevelData } from "./Models/Level";
+import { Sound, Sounds } from "./Models/Sound";
 
 /**
  * Loads a local .json file and returns the contents of the file
@@ -42,18 +46,18 @@ export function loadSounds(app: PIXI.Application): Promise<Sounds> {
 
   return new Promise(async (resolve) => {
     let sounds: Sounds = new Sounds();
-    let soundDataData: SoundsConfig;
+    let soundDataData: SoundConfig[];
 
     loadJSON('config/sounds.json')
       .then(data => {
-        soundDataData = JSON.parse(data) as SoundsConfig;
+        soundDataData = JSON.parse(data) as SoundConfig[];
 
         if (soundDataData == null) {
           throw new Error('Unable to load sounds');
         }
 
-        for (let i = 0; i < soundDataData.data.length; i++) {
-          let config: SoundConfig = soundDataData.data[i];
+        for (let i = 0; i < soundDataData.length; i++) {
+          let config: SoundConfig = soundDataData[i];
 
           // Prepare sound effect
           let sound: Sound = new Sound(config.id, config.filename);
@@ -69,22 +73,22 @@ export function loadSounds(app: PIXI.Application): Promise<Sounds> {
 }
 
 /** Loads the backgrounds configuration file and parses it to a Backgrounds object */
-export function loadBackgrounds(app: PIXI.Application): Promise<Backgrounds> {
+export function loadBackgrounds(app: PIXI.Application): Promise<Map<string, Background>> {
 
   return new Promise(async (resolve) => {
-    let backgrounds: Backgrounds = new Backgrounds();
-    let backgroundData: BackgroundsConfig;
+    let backgrounds: Map<string, Background> = new Map<string, Background>();
+    let backgroundData: BackgroundConfig[];
 
     loadJSON('config/backgrounds.json')
       .then(data => {
-        backgroundData = JSON.parse(data) as BackgroundsConfig;
+        backgroundData = JSON.parse(data) as BackgroundConfig[];
 
         if (backgroundData == null) {
           throw new Error('Unable to load backgrounds');
         }
 
-        for (let i = 0; i < backgroundData.data.length; i++) {
-          let config: BackgroundConfig = backgroundData.data[i];
+        for (let i = 0; i < backgroundData.length; i++) {
+          let config: BackgroundConfig = backgroundData[i];
 
           // Prepare background
           let background: Background = new Background(config.name);
@@ -109,7 +113,7 @@ export function loadBackgrounds(app: PIXI.Application): Promise<Backgrounds> {
           background.init();
 
           // Add to collection
-          backgrounds.data.set(config.name, background);
+          backgrounds.set(config.name, background);
 
           // Resolve promise
           resolve(backgrounds);
@@ -122,19 +126,19 @@ export function loadBackgrounds(app: PIXI.Application): Promise<Backgrounds> {
 export async function loadAnimationSprites(): Promise<AnimationSprites> {
 
   return new Promise(async (resolve) => {
-    let animationData: AnimationSpritesConfig;
+    let animationData: AnimationSpriteConfig[];
     let animationSprites: AnimationSprites = new AnimationSprites();
 
     loadJSON('config/animation_sprites.json')
       .then(data => {
-        animationData = JSON.parse(data) as AnimationSpritesConfig;
+        animationData = JSON.parse(data) as AnimationSpriteConfig[];
 
         if (animationData == null) {
           throw new Error('Unable to load animation data.');
         }
 
-        for (let i = 0; i < animationData.data.length; i++) {
-          let config: AnimationSpriteConfig = animationData.data[i];
+        for (let i = 0; i < animationData.length; i++) {
+          let config: AnimationSpriteConfig = animationData[i];
 
           // Diagnostics
           console.info(`Loading ${config.id} ${config.filename}`);
@@ -144,7 +148,7 @@ export async function loadAnimationSprites(): Promise<AnimationSprites> {
           packLoader.loadFile(config.filename, config.startAt, config.endAt, (id: string, message: string, sprites: AnimationSprite) => {
             animationSprites.data.set(config.id, sprites);
 
-            if (animationData.data.length == animationSprites.data.size) {
+            if (animationData.length == animationSprites.data.size) {
               resolve(animationSprites);
             }
           });
@@ -154,14 +158,14 @@ export async function loadAnimationSprites(): Promise<AnimationSprites> {
 }
 
 /** Loads the entities sprites configuration file and parses it to a Entities object */
-export async function loadEntities(): Promise<Entities> {
+export async function loadEntities(): Promise<Map<string, Entity>> {
 
   return new Promise(async (resolve) => {
-    let entityData: EntitiesConfig;
+    let entityData: EntityConfig[];
 
     loadJSON('config/entities.json')
       .then(data => {
-        entityData = JSON.parse(data) as EntitiesConfig;
+        entityData = JSON.parse(data) as EntityConfig[];
 
         if (entityData == null) {
           throw new Error('Unable to load entities data.');
@@ -171,8 +175,8 @@ export async function loadEntities(): Promise<Entities> {
         let loader: SpriteLoader = new SpriteLoader();
 
         // Get all config items
-        for (let i = 0; i < entityData.data.length; i++) {
-          let config: EntityConfig = entityData.data[i];
+        for (let i = 0; i < entityData.length; i++) {
+          let config: EntityConfig = entityData[i];
 
           // Diagnostics
           console.info(`Adding ${config.id} ${config.filename}`);
@@ -186,7 +190,7 @@ export async function loadEntities(): Promise<Entities> {
         }
 
         // Load files
-        loader.loadFiles(function (cb: Entities) {
+        loader.loadFiles(function (cb: Map<string, Entity>) {
           resolve(cb);
         });
       })
@@ -194,23 +198,23 @@ export async function loadEntities(): Promise<Entities> {
 }
 
 /** Loads the characters */
-export function loadCharacters(game: Game): Promise<Characters> {
+export function loadCharacters(game: Game): Promise<Map<string, Character>> {
 
   return new Promise(async (resolve) => {
 
-    let characters: Characters = new Characters();
-    let characterData: CharactersConfig;
+    let characters: Map<string, Character> = new Map<string, Character>();
+    let characterData: CharacterConfig[];
 
     loadJSON('config/characters.json')
       .then(data => {
-        characterData = JSON.parse(data) as CharactersConfig;
+        characterData = JSON.parse(data) as CharacterConfig[];
 
         if (characterData == null) {
           throw new Error('Unable to load character data');
         }
 
-        for (let i = 0; i < characterData.data.length; i++) {
-          let config: CharacterConfig = characterData.data[i];
+        for (let i = 0; i < characterData.length; i++) {
+          let config: CharacterConfig = characterData[i];
           let animationSource: AnimationSprite;
 
           // Set animation source
@@ -223,10 +227,6 @@ export function loadCharacters(game: Game): Promise<Characters> {
 
           // Create the character data
           let character = new Character(config.id);
-
-          // Health data
-          character.life = config.life;
-          character.shield = config.shield;
 
           // Set animation data
           character.animationSource = animationSource;
@@ -243,7 +243,7 @@ export function loadCharacters(game: Game): Promise<Characters> {
 
             details.state = animationStateData.state;
             details.animationKey = animationStateData.animationKey;
-            
+
             character.animationStates.set(animationStateData.state, animationStateData.animationKey);
           }
 
@@ -267,7 +267,7 @@ export function loadCharacters(game: Game): Promise<Characters> {
 
             let action = new CharacterAction();
             action.id = actionData.id;
-            action.entity = game.entities.data.get(actionData.entity);
+            action.entity = game.entities.get(actionData.entity);
             action.velocity = actionData.velocity;
             action.scale = actionData.scale;
             action.offset = actionData.offset;
@@ -279,7 +279,7 @@ export function loadCharacters(game: Game): Promise<Characters> {
           }
 
           // Add to collection
-          characters.data.set(config.id, character);
+          characters.set(config.id, character);
         }
 
         resolve(characters);
@@ -288,22 +288,22 @@ export function loadCharacters(game: Game): Promise<Characters> {
 }
 
 /** Loads the levels configuration file and parses it to a Levels object */
-export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
+export function loadLevels(app: PIXI.Application, game: Game): Promise<LevelData[]> {
 
   return new Promise(async (resolve) => {
-    let levels: Levels = new Levels();
-    let levelData: LevelsConfig;
+    let levels: LevelData[] = [];
+    let levelData: LevelConfig[];
 
     loadJSON('config/levels.json')
       .then(data => {
-        levelData = JSON.parse(data) as LevelsConfig;
+        levelData = JSON.parse(data) as LevelConfig[];
 
         if (levelData == null) {
           throw new Error('Unable to load levels');
         }
 
-        for (let i = 0; i < levelData.data.length; i++) {
-          let config: LevelConfig = levelData.data[i];
+        for (let i = 0; i < levelData.length; i++) {
+          let config: LevelConfig = levelData[i];
 
           // Create level object
 
@@ -311,8 +311,8 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
           level.config = config;
 
           // Set background
-          if (game.backgrounds.data.has(config.background)) {
-            level.background = game.backgrounds.data.get(config.background);
+          if (game.backgrounds.has(config.background)) {
+            level.background = game.backgrounds.get(config.background);
             level.background.init();
           }
           else {
@@ -330,14 +330,15 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
             let levelCharacterConfig: LevelCharacterConfig = config.characters[j];
             let character: Character;
 
-            if (game.characters.data.has(levelCharacterConfig.sprite)) {
-              let characterSource: Character = game.characters.data.get(levelCharacterConfig.sprite);
+            if (game.characters.has(levelCharacterConfig.sprite)) {
+              let characterSource: Character = game.characters.get(levelCharacterConfig.sprite);
 
               // Clone the original character
               character = new Character(levelCharacterConfig.id);
 
               // Set level character properties 
               character.isPlayer = levelCharacterConfig.isPlayer;
+              character.movementSpeed = levelCharacterConfig.movementSpeed;
               character.actions = characterSource.actions;
               character.animationSource = characterSource.animationSource;
               character.animationStates = characterSource.animationStates;
@@ -347,7 +348,8 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
               character.position.x = levelCharacterConfig.position.x;
               character.position.y = levelCharacterConfig.position.y;
               character.life = levelCharacterConfig.life;
-              character.shield = levelCharacterConfig.shield;
+              character.shield = levelCharacterConfig.shield.strength;
+              character.shieldRechargeRate = levelCharacterConfig.shield.rechargeRate;
 
               // Set stage
               character.stage = app.stage;
@@ -363,7 +365,7 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
           }
 
           // Add to collection
-          levels.data.push(level);
+          levels.push(level);
         }
 
         resolve(levels);
@@ -373,34 +375,32 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<Levels> {
 }
 
 /** Calculate the new position of a moving element */
-export function calculateMovement(currentPosition: number, moveTo: number, moveSpeed: number): number {
+export function calculateMovement(currentPosition: number, moveTo: number, moveSpeed: number, isPlayer: boolean = false): number {
 
   // Determine if movement is required
   if (moveTo == currentPosition) {
     return currentPosition;
   }
 
-  if (currentPosition < moveTo) {
-    currentPosition += moveSpeed;
+  // It's possible speed is not set to 1 and overshooting its position. These variables are used to prevent that from happening
+  let isBefore: boolean = currentPosition < moveTo;
+  let isAfter: boolean = !isBefore;
 
-    // It's possible speed is not set to 1 and overshooting its position
+  if (isPlayer) {
     if (currentPosition > moveTo) {
-      currentPosition = moveTo;
+      currentPosition -= moveSpeed;
+    } else {
+      currentPosition += moveSpeed;
     }
-
-    return currentPosition;
+  }
+  else {
+    // Update the current position
+    currentPosition += moveSpeed;
   }
 
-  if (currentPosition > moveTo) {
-    currentPosition -= moveSpeed;
-
-    // It's possible speed is not set to 1 and overshooting its position
-    if (currentPosition < moveTo) {
-      currentPosition = moveTo;
-    }
-
-    return currentPosition;
+  // 
+  if (isBefore && currentPosition > moveTo || isAfter && currentPosition < moveTo) {
+    return moveTo;
   }
-
-  throw new Error(`Unexpected condition in calculateMovement`);
+  return currentPosition;
 }

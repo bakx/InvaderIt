@@ -3,191 +3,15 @@ import { Point } from "pixi.js";
 import { ActiveActionSprite } from "./ActiveActionSprite";
 import { calculateMovement } from "./Functions";
 import { Game } from "./Game";
+import { InteractiveEntities } from "./InteractiveEntities";
 import { Character, CharacterAction } from "./Models/Character";
+import { MoveDirections, PathFinding } from "./Utilities/PathFinding";
 
-export class Enemies {
-    data: Map<string, Enemy> = new Map<string, Enemy>();
-}
-
-export class Enemy {
+export class Enemy extends InteractiveEntities {
 
     /** Constructor of the Enemy class */
-    constructor(stage: PIXI.Container, character: Character) {
-        this._stage = stage;
-        this.character = character;
-        this.position = character.position;
-
-        this._activeActionSprites = [];
-    }
-
-    // Pixi
-    private _stage: PIXI.Container;
-
-    // Enemy container
-    private _container: PIXI.Container;
-
-    // Character configuration
-    private _characterContainer: PIXI.Container;
-    private _character: Character;
-
-    // Enemy movement
-    private _canMove: boolean = true;
-    private _position: Point;
-    private _gotoPosition: Point;
-    private _reverse: boolean = false;
-    private _moveBox: MoveBox;
-
-    // Action configuration
-    private _activeActionSprites: ActiveActionSprite[];
-
-    // Enemy statistics
-    private _barWidth: number = 128;
-    private _barHeight: number = 8;
-    private _enemyStatistics: PIXI.Container;
-    private _backgroundBar: PIXI.Graphics;
-    private _healthBar: PIXI.Graphics;
-    private _shieldsBar: PIXI.Graphics;
-
-    private _life: number;
-    private _shield: number;
-    private _lifeFull: number;
-    private _shieldFull: number;
-
-    // Enemy states
-    private _finalState: boolean = false;
-    private _lastAction: number = Date.now();
-
-    /** Get the unique id of enemy */
-    get id(): string { return this._character.id }
-
-    /** Get the position of enemy */
-    get position(): Point { return this._position }
-
-    /** Set the position of enemy */
-    set position(position: Point) { this._position = position }
-
-    /** Get the position the enemy should be moving towards */
-    get gotoPosition(): Point { return this._gotoPosition }
-
-    /** Set the position the enemy should be moving towards */
-    set gotoPosition(gotoPosition: Point) { this._gotoPosition = gotoPosition }
-
-    /** Get the container of this enemy */
-    get container(): PIXI.Container { return this._container }
-
-    /** Set the container of this enemy */
-    set container(container: PIXI.Container) { this._container = container }
-
-    /** Get the character container of this enemy */
-    get characterContainer(): PIXI.Container { return this._characterContainer }
-
-    /** Set the character container of this enemy */
-    set characterContainer(characterContainer: PIXI.Container) { this._characterContainer = characterContainer }
-
-    /** Get the character of this enemy */
-    get character(): Character { return this._character }
-
-    /** Set the character of this enemy */
-    set character(character: Character) { this._character = character }
-
-    /** Get the area in which the entity can move */
-    get moveBox(): MoveBox { return this._moveBox }
-
-    /** Set the area in which the entity can move */
-    set moveBox(moveBox: MoveBox) { this._moveBox = moveBox }
-
-    /** Get the statistics container */
-    get enemyStatistics(): PIXI.Container { return this._enemyStatistics }
-
-    /** Set the statistics container */
-    set enemyStatistics(enemyStatistics: PIXI.Container) { this._enemyStatistics = enemyStatistics }
-
-    /** Get the life of enemy */
-    get life(): number { return this._life }
-
-    /** Set the life of enemy */
-    set life(life: number) {
-        this._life = life;
-
-        // Update health bar
-        this.updateHealthbars();
-    }
-
-    /** Get the shield of enemy */
-    get shield(): number { return this._shield }
-
-    /** Set the shield of enemy */
-    set shield(shield: number) {
-        this._shield = shield;
-
-        // Update health bar
-        this.updateHealthbars();
-    }
-
-    /** Get the life of enemy */
-    get lifeFull(): number { return this._lifeFull }
-
-    /** Set the life of enemy */
-    set lifeFull(lifeFull: number) {
-        this._lifeFull = lifeFull;
-
-        // Update health bar
-        this.updateHealthbars();
-    }
-
-    /** Get the shield of enemy */
-    get shieldFull(): number { return this._shieldFull }
-
-    /** Set the shield of enemy */
-    set shieldFull(shieldFull: number) {
-        this._shieldFull = shieldFull;
-
-        // Update health bar
-        this.updateHealthbars();
-    }
-
-    /** Is this enemy in it's final state (e.g., playing a destroy animation) */
-    get finalState(): boolean { return this._finalState }
-
-    /** Set the final state (e.g., playing a destroy animation) state of this enemy */
-    set finalState(finalState: boolean) { this._finalState = finalState }
-
-    /** Initialize all properties related to the enemy. This function needs to be called to render
-     * the item to the screen. It creates the container objects and sets up the health bars .
-     */
-    init() {
-
-        // Create container that stores the character and other items
-        this.container = new PIXI.Container();
-
-        // Create container that stores the character
-        this.characterContainer = new PIXI.Container();
-        this.characterContainer.zIndex = 10;
-
-        // Add the character
-        this.characterContainer.addChild(this.character.animation);
-
-        // Add the character container to the global container
-        this.container.addChild(this.characterContainer);
-
-        // Initialize statistics
-        this.life = this.lifeFull;
-        this.shield = this.shieldFull;
-
-        // Create the statistics bar
-        this.createHealthBars();
-
-        // Add container to stage
-        this.addStage();
-    }
-
-    /** Add container to stage */
-    addStage() {
-        this._stage.addChild(this.container);
-    }
-    /** Remove container to stage */
-    removeStage() {
-        this._stage.removeChild(this.container);
+    constructor(container: PIXI.Container, character: Character) {
+        super(container, character);
     }
 
     /** Handle action */
@@ -201,6 +25,7 @@ export class Enemy {
             console.error(`${this.character.id} does not have action ${actionKey} defined.`);
             return;
         }
+
         // Sanity check #2 - TODO update comment
         if (characterAction.entity == null) {
             console.error(`${this.character.id} has an invalid action. Action ${characterAction?.id} has an invalid or missing sprite.`);
@@ -234,7 +59,7 @@ export class Enemy {
                 let activeActionSprite: ActiveActionSprite = new ActiveActionSprite(actionKey, sprite);
 
                 // Add to collection to keep track
-                this._activeActionSprites.push(activeActionSprite);
+                this.activeActionSprites.push(activeActionSprite);
 
                 // Play sound effect
                 if (characterAction.entity.sound.id) {
@@ -256,125 +81,117 @@ export class Enemy {
         }
     }
 
-    /** Plays a specific animation */
-    playAnimation(state: string, cb: CallableFunction = null, attachChildren: boolean = true) {
-
-        // Retrieve the animation key from the animation stage
-        if (this.character.animationStates.has(state)) {
-            let animationKey = this._character.animationStates.get(state);
-            this.character.playSingleAnimation(this.characterContainer, animationKey, 0, cb, attachChildren);
-        } else {
-            console.error(`Character ${this.character.id} does not support animation state ${state}.`);
-        }
-    }
-
-    /** Create the statistics group that contains the health and shield bars */
-    createHealthBars() {
-
-        // Create the container object
-        this.enemyStatistics = new PIXI.Container();
-        this.enemyStatistics.zIndex = 10;
-
-        // Attach is as a child object
-        this.container.addChild(this.enemyStatistics);
-
-        // Create the background rectangle
-        this._backgroundBar = new PIXI.Graphics();
-        this._backgroundBar.beginFill(0x000000);
-        this._backgroundBar.drawRect(0, 0, this._barWidth, this._barHeight * 2);
-        this._backgroundBar.endFill();
-
-        this.enemyStatistics.addChild(this._backgroundBar);
-
-        // Create the health bar
-        this._healthBar = new PIXI.Graphics();
-        this._healthBar.beginFill(0x6EE544);
-        this._healthBar.drawRect(0, 0, this._barWidth, this._barHeight);
-        this._healthBar.endFill();
-
-        this._backgroundBar.addChild(this._healthBar);
-
-        // Create the shields bar
-        this._shieldsBar = new PIXI.Graphics();
-        this._shieldsBar.beginFill(0x0094FF);
-        this._shieldsBar.drawRect(0, this._barHeight, this._barWidth, this._barHeight);
-        this._shieldsBar.endFill();
-
-        this._backgroundBar.addChild(this._shieldsBar);
-    }
-
-    /** */
-    updateHealthbars() {
-        if (this.life && this.shield && this._healthBar && this._shieldsBar) {
-
-            // Update the width of the health bar
-            let h = this._barWidth / this.lifeFull * this.life;
-            this._healthBar.width = h > 0 ? h : 0;
-
-            // Update the width of the shield bar
-            let s = this._barWidth / this.shieldFull * this.shield;
-            this._shieldsBar.width = s > 0 ? s : 0;
-        }
-    }
-
     /** Update all events related to the enemy */
     update(game: Game) {
         let playerPosition: Point = game.player.position;
 
-        if (this.life > 0 && Date.now() - this._lastAction > 750) {
+        if (this.life < 0) {
+            return;
+        }
+
+        // Handle actions related to enemy
+        this.handleActions(game);
+
+        // If the enemy can move
+        if (this.canMove) {
+
+            // Update the desired position
+            this.gotoPosition.x = playerPosition.x;
+            this.gotoPosition.y = playerPosition.y;
+
+            this.handleMovement(game);
+        }
+
+        // Regenerate shields?
+        if (this.shield != this.shieldFull) {
+            this.shield += this.shieldRechargeRate;
+        }
+
+        // Update the position of the health containers
+        super.updateHealthContainers();
+    }
+
+    /** */
+    handleMovement(game: Game) {
+
+        // Determine which directions this entity can move to
+        let moveDirections: MoveDirections = PathFinding.entityPaths(this.moveBox, this, game.enemies, this.character.movementSpeed);
+
+        // Determine which direction to go
+        // 
+
+        let wantMoveLeft: boolean = this.reverseX;
+        let wantMoveRight: boolean = !wantMoveLeft;
+
+        if (wantMoveLeft && !moveDirections.left) {
+            this.reverseX = false;
+        }
+
+        if (wantMoveRight && !moveDirections.right) {
+            this.reverseX = true;
+        }
+
+        // Handle horizontal movement
+        if (moveDirections.left || moveDirections.right) {
+
+            // Set speed
+            let speed = this.character.movementSpeed * (this.reverseX ? -1 : 1);
+
+            // Move character
+            this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, speed);
+        }
+        else {
+            console.warn(`Unable to move horizontally for enemy ${this.id}`);
+        }
+
+        // Handle vertical movement
+        if (moveDirections.up || moveDirections.down) {
+
+            if (moveDirections.up && this.position.y > this.gotoPosition.y) {
+                this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed * -1);
+            } else if (moveDirections.down && this.position.y < this.gotoPosition.y) {
+                this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed);
+            }
+        }
+        else {
+            console.warn(`Unable to move vertically for enemy ${this.id}`);
+        }
+
+
+        // Set the position of the character
+        this.character.position.x = this.position.x;
+        this.character.position.y = this.position.y;
+
+        this.debugPosition.Text = `x: ${this.position.x} y: ${this.position.y}`;
+
+    }
+
+    /** */
+    handleActions(game: Game) {
+
+        /** */
+        let playerPosition: Point = game.player.position;
+
+        if (this.life > 0 && Date.now() - this.lastAction > 750) {
             let actionTriggerOdds = Math.floor(Math.random() * 1000);
 
             if (actionTriggerOdds > 940 && actionTriggerOdds <= 990) {
-                this._lastAction = Date.now();
+                this.lastAction = Date.now();
                 this.action("fire", playerPosition);
             }
 
             if (actionTriggerOdds > 990) {
-                this._lastAction = Date.now();
+                this.lastAction = Date.now();
                 this.action("missile", playerPosition);
             }
         }
 
-        if (!this._gotoPosition) this._gotoPosition = new Point();
-        this._gotoPosition.x = playerPosition.x;
-        this._gotoPosition.y = playerPosition.y;
-
-        let movementSpeed = 3;
-
-        if (this._canMove && this._gotoPosition) {
-
-            if (this.position.x - movementSpeed < this.moveBox.minX + (this.character.animation.width / 2)) {
-                this._reverse = true;
-            }
-            if (this.position.x - movementSpeed > this.moveBox.maxX - this.character.animation.width / 2) {
-                this._reverse = false;
-            }
-
-            // Determine if position X needs to be updated
-            this.position.x = calculateMovement(this.position.x, this._gotoPosition.x, movementSpeed * (this._reverse ? -1 : 1));
-
-            // Determine if position Y needs to be updated
-            this.position.y = calculateMovement(this.position.y, this._gotoPosition.y, movementSpeed);
-
-            // Add a 0.02% chance to flip position
-            let randomMovement: number = Math.floor(Math.random() * 1000);
-
-            if (randomMovement < 2) {
-                this._reverse = !this._reverse;
-            }
-
-            // Set the position of the character
-            this.character.position.x = this.position.x;
-            this.character.position.y = this.position.y;
-
-            // Update the statistics bar
-            this.enemyStatistics.position.set(this.character.animation.position.x + this.character.animation.width / 2 - this.enemyStatistics.width, this.character.position.y + 10);
-        }
+        game.debugHelper.Text = `Action Sprites: ${this.activeActionSprites.length}`;
 
         // Handle actions
-        if (this._activeActionSprites.length > 0) {
-            for (let i = 0; i < this._activeActionSprites.length; i++) {
-                let action: ActiveActionSprite = this._activeActionSprites[i];
+        if (this.activeActionSprites.length > 0) {
+            for (let i = 0; i < this.activeActionSprites.length; i++) {
+                let action: ActiveActionSprite = this.activeActionSprites[i];
 
                 // Get character action
                 let actionDetails: CharacterAction = this.character.actions.get(action.key);
@@ -384,41 +201,19 @@ export class Enemy {
                 action.sprite.position.y += actionDetails.velocity.y;
 
                 // If item is out of screen bounds, mark for delete
-                if (action.sprite.position.x < game.app.screen.width || action.sprite.position.x > game.app.screen.width) {
+                if (action.sprite.position.x > game.app.screen.width || action.sprite.position.x < game.app.screen.width * -1) {
                     action.markDelete = true;
+                }
+
+                if (action.markDelete) {
+
+                    // Diagnostics
+                    console.debug(`Removing  ${action.key} from the active action sprites`);
+
+                    this.activeActionSprites.splice(i, 1);
+                    continue;
                 }
             }
         }
-    }
-}
-
-export class MoveBox {
-    /**  */
-    constructor(minX: number, maxX: number, minY: number, maxY: number) {
-        this._minX = minX;
-        this._maxX = maxX;
-        this._minY = minY;
-        this._maxY = maxY;
-    }
-
-    private _minX: number;
-    private _maxX: number;
-    private _minY: number;
-    private _maxY: number;
-
-    get minX(): number {
-        return this._minX;
-    }
-
-    get maxX(): number {
-        return this._maxX;
-    }
-
-    get minY(): number {
-        return this._minY;
-    }
-
-    get maxY(): number {
-        return this._maxY;
     }
 }

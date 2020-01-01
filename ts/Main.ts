@@ -1,5 +1,6 @@
 import { Ticker } from "pixi.js";
-import { Game, GameState } from "./Game";
+import { Game } from "./Game";
+import { GameState } from "./Enums/GameState";
 
 export class Main {
 

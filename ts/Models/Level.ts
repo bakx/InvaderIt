@@ -1,10 +1,6 @@
 import { Background } from "./Background";
 import { Character } from "./Character";
-import { LevelConfig } from "./Configuration/LevelsConfig";
-
-export class Levels {
-    data: LevelData[] = [];
-}
+import { LevelConfig } from "../Interfaces/LevelsConfig";
 
 export class LevelData {
     name: string;

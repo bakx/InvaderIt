@@ -1,6 +1,4 @@
-import { Entities, Entity, EntitySound } from "../Models/Entities";
-import { SoundConfig } from "../Models/Configuration/SoundsConfig";
-import { EntitySoundConfig } from "../Models/Configuration/EntitiesConfig";
+import { Entity, EntitySound } from "../Models/Entities";
 
 /**
  * 
@@ -39,7 +37,7 @@ export class SpriteLoader {
     loadFiles(callback: CallableFunction) {
 
         // Prepare return data
-        let entities: Entities = new Entities();
+        let entities: Map<string, Entity> = new Map<string, Entity>();
 
         // Initialize the loader
         const loader = new PIXI.Loader();
@@ -66,7 +64,7 @@ export class SpriteLoader {
                 entity.sound = this._sounds.get(key);
 
                 // Update the return object
-                entities.data.set(key, entity);
+                entities.set(key, entity);
             });
         });
 

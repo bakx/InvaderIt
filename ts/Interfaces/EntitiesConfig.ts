@@ -1,6 +1,4 @@
-export interface EntitiesConfig {
-    data: EntityConfig[];
-}
+import { EntitySoundConfig } from "./EntitySoundConfig";
 
 export interface EntityConfig {
     id: string;
@@ -10,7 +8,3 @@ export interface EntityConfig {
     sound: EntitySoundConfig;
 }
 
-export interface EntitySoundConfig {
-    id: string;
-    volume: number;
-}

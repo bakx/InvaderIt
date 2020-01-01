@@ -1,14 +1,17 @@
 import { Point } from "pixi.js";
-import { Collision2D } from "./Collision2D";
-import { Enemies, Enemy, MoveBox } from "./Enemies";
+import { Enemy } from "./Enemies";
+import { Actions } from "./Enums/Actions";
+import { GameState } from "./Enums/GameState";
 import { loadAnimationSprites, loadBackgrounds, loadCharacters, loadEntities, loadLevels, loadSounds } from "./Functions";
 import { AnimationSprites } from "./Models/AnimatedSprite";
-import { Backgrounds } from "./Models/Background";
-import { Character, Characters } from "./Models/Character";
+import { Background } from "./Models/Background";
+import { Character } from "./Models/Character";
 import { DrawText } from "./Models/DrawText";
-import { Entities, EntitySound } from "./Models/Entities";
-import { LevelData, Levels } from "./Models/Level";
+import { Entity, EntitySound } from "./Models/Entities";
+import { LevelData } from "./Models/Level";
+import { MoveBox } from "./MoveBox";
 import { Player } from "./Player";
+import { Collision2D } from "./Utilities/Collision2D";
 
 export class Game {
 
@@ -22,13 +25,13 @@ export class Game {
   gameFrame: number = 0;
 
   /** Resources */
-  backgrounds: Backgrounds;
-  levels: Levels;
+  backgrounds: Map<string, Background>;
+  levels: LevelData[];
   animationSprites: AnimationSprites;
-  entities: Entities;
-  characters: Characters;
+  entities: Map<string, Entity>;
+  characters: Map<string, Character>;
   player: Player;
-  enemies: Enemies;
+  enemies: Map<string, Enemy>;
 
   /** Sounds */
   backgroundMusic: EntitySound;
@@ -172,8 +175,6 @@ export class Game {
               });
           });
       });
-
-
   }
 
   /** Loads all resources that are defined for the specific level */
@@ -182,11 +183,11 @@ export class Game {
     // If a level is already loaded, remove all items from the stage
     if (this.level) {
 
-    // Remove the player from the stage
+      // Remove the player from the stage
       this.player.removeStage();
 
       // Remove all enemies from the stage
-      this.enemies.data.forEach(enemy => {
+      this.enemies.forEach(enemy => {
         enemy.removeStage()
       });
 
@@ -207,17 +208,17 @@ export class Game {
     }
 
     // Validate that the level exists
-    if (this.levels.data.length - 1 < this.levelIndex) {
+    if (this.levels.length - 1 < this.levelIndex) {
       console.warn(`Level ${this.levelIndex} was not found. Resetting to level 0`);
       this.levelIndex = 0;
     }
 
     // Load characters
-    this.level = this.levels.data[this.levelIndex];
+    this.level = this.levels[this.levelIndex];
 
     // Reset all enemies
-    this.enemies = new Enemies();
-    this.enemies.data.clear();
+    this.enemies = new Map<string, Enemy>();
+    this.enemies.clear();
 
     // Add all characters to the stage
     for (let i = 0; i < this.level.characters.length; i++) {
@@ -231,12 +232,13 @@ export class Game {
         let enemy: Enemy = new Enemy(this.app.stage, character);
         enemy.lifeFull = character.life;
         enemy.shieldFull = character.shield;
+        enemy.shieldRechargeRate = character.shieldRechargeRate;
         enemy.moveBox = new MoveBox(this.app.screen.width / 2, this.app.screen.width, 0, this.app.screen.height);
 
         // Initialize the enemy
         enemy.init();
 
-        this.enemies.data.set(character.id, enemy);
+        this.enemies.set(character.id, enemy);
       }
     }
 
@@ -255,6 +257,12 @@ export class Game {
       // Create new playable character
       this.player = new Player(this.app.stage, playerCharacter);
 
+      // Set the move box for player
+      this.player.moveBox = new MoveBox(0, this.app.screen.width / 2, 0, this.app.screen.height);
+
+      // Initialize the player
+      this.player.init();
+
       // Pointers normalize touch and mouse
       this.app.renderer.plugins.interaction.on('pointerup', (event: any) => {
         this.onclick(event);
@@ -266,7 +274,7 @@ export class Game {
     }
 
     // Load sounds
-    this.backgroundMusic = this.entities.data.get(this.level.backgroundMusic).sound;
+    this.backgroundMusic = this.entities.get(this.level.backgroundMusic).sound;
     PIXI.sound.play(this.backgroundMusic.id, {
       volume: this.backgroundMusic.volume,
       loop: true
@@ -324,11 +332,11 @@ export class Game {
 
       // Update the player (if any)
       if (this.player) {
-        this.player.update();
+        this.player.update(this);
       }
 
       // Update all enemy
-      this.enemies.data.forEach(enemy => {
+      this.enemies.forEach(enemy => {
         enemy.update(this);
       })
 
@@ -337,60 +345,22 @@ export class Game {
         if (action.triggerEvents) {
 
           // Check collision for all enemies
-          this.enemies.data.forEach(enemy => {
+          this.enemies.forEach(enemy => {
             if (Collision2D.boxedCollision(
               action.sprite.position, enemy.position,
               action.sprite.getLocalBounds(), enemy.character.animation.getLocalBounds()
             )) {
-
-              // Prevent retriggering the event for this action element
-              action.triggerEvents = false;
-
-              // Reduce life of enemy
-              enemy.life -= action.damage;
-
-              // Check life of entity
-              if (enemy.life > 0) {
-
-                // Trigger hit animation
-                enemy.playAnimation("hit");
-
-              } else {
-
-                // Determine if this enemy is already in it's final state
-                if (enemy.finalState) {
-                  console.info(`Enemy ${enemy.id} indicates final state. Ignoring...`);
-                  return;
-                }
-
-                // Mark enemy as final state
-                enemy.finalState = true;
-
-                // create reference to current instance
-                let g = this;
-
-                // Trigger death animation - TODO This needs to trigger the enemy specific DEATH property
-                enemy.playAnimation("death", () => {
-
-                  // Remove the character from the stage
-                  enemy.removeStage();
-
-                  // Remove the enemies from the list
-                  g.enemies.data.delete(enemy.id);
-
-                  // If all enemies are gone, load the next level
-                  if (g.enemies.data.size == 0) {
-                    g.levelIndex++;
-                    g.loadLevel();
-                  }
-                });
-
-              }
+              enemy.hasCollision(this, action);
             }
           })
         }
       });
 
+      // Check if all enemies are defeated
+      if (this.enemies.size == 0) {
+        this.levelIndex++;
+        this.loadLevel();
+      }
       // Update game frame
       this.gameFrame++;
     }
@@ -429,8 +399,11 @@ export class Game {
         this.level.background.redraw(newWidth, this.designHeight);
       }
 
+      // Set the move box for player
+      this.player.moveBox = new MoveBox(0, this.app.screen.width / 2, 0, this.app.screen.height);
+
       // Update all enemies
-      this.enemies.data.forEach(enemy => {
+      this.enemies.forEach(enemy => {
         enemy.moveBox = new MoveBox(this.app.screen.width / 2, this.app.screen.width, 0, this.app.screen.height);
       })
     }
@@ -469,7 +442,7 @@ export class Game {
         this.player.gotoPosition = position;
         break;
       case Actions.Fire:
-        this.player.action("fire", position);
+        this.player.action("fire");
         break;
     }
   }
@@ -486,15 +459,3 @@ window.onkeyup = function (e: any) {
   kp[code] = false;
 };
 
-export enum Actions {
-  Move,
-  Fire
-}
-
-export enum GameState {
-  Loading,
-  Menu,
-  Paused,
-  Stopped,
-  Running
-}

@@ -1,164 +1,162 @@
-{
-    "data": [
-        {
-            "id": "projectile1",
-            "filename": "gfx/Entities/Projectiles/01.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_weapon_blaster_laser_boom_zap_03",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "projectile2",
-            "filename": "gfx/Entities/Projectiles/02.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_weapon_blaster_laser_boom_heavy_03",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "projectile3",
-            "filename": "gfx/Entities/Projectiles/03.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_power_up_01",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "projectile4",
-            "filename": "gfx/Entities/Projectiles/04.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_power_up_01",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "projectile5",
-            "filename": "gfx/Entities/Projectiles/05.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_power_up_01",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "projectile6",
-            "filename": "gfx/Entities/Projectiles/06.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_power_up_01",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "projectile7",
-            "filename": "gfx/Entities/Projectiles/07.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_power_up_01",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "projectile8",
-            "filename": "gfx/Entities/Projectiles/08.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_power_up_01",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "projectile9",
-            "filename": "gfx/Entities/Projectiles/09.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_power_up_01",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "projectile10",
-            "filename": "gfx/Entities/Projectiles/10.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_power_up_01",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "projectile11",
-            "filename": "gfx/Entities/Projectiles/11.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_power_up_01",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "projectile12",
-            "filename": "gfx/Entities/Projectiles/12.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_power_up_01",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "projectile13",
-            "filename": "gfx/Entities/Projectiles/13.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_power_up_01",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "projectile14",
-            "filename": "gfx/Entities/Projectiles/14.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_power_up_03",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "projectile15",
-            "filename": "gfx/Entities/Projectiles/15.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sci-fi_power_up_02",
-                "volume": 0.5
-            }
-        },
-        {
-            "id": "sfx/music/music_8bit_jammer",
-            "filename": "gfx/Entities/Projectiles/15.png",
-            "width": null,
-            "height": null,
-            "sound": {
-                "id": "sfx/music/music_8bit_jammer",
-                "volume": 0.25
-            }
+[
+    {
+        "id": "projectile1",
+        "filename": "gfx/Entities/Projectiles/01.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_weapon_blaster_laser_boom_zap_03",
+            "volume": 0.5
         }
-    ]
-}
+    },
+    {
+        "id": "projectile2",
+        "filename": "gfx/Entities/Projectiles/02.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_weapon_blaster_laser_boom_heavy_03",
+            "volume": 0.5
+        }
+    },
+    {
+        "id": "projectile3",
+        "filename": "gfx/Entities/Projectiles/03.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_power_up_01",
+            "volume": 0.5
+        }
+    },
+    {
+        "id": "projectile4",
+        "filename": "gfx/Entities/Projectiles/04.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_power_up_01",
+            "volume": 0.5
+        }
+    },
+    {
+        "id": "projectile5",
+        "filename": "gfx/Entities/Projectiles/05.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_power_up_01",
+            "volume": 0.5
+        }
+    },
+    {
+        "id": "projectile6",
+        "filename": "gfx/Entities/Projectiles/06.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_power_up_01",
+            "volume": 0.5
+        }
+    },
+    {
+        "id": "projectile7",
+        "filename": "gfx/Entities/Projectiles/07.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_power_up_01",
+            "volume": 0.5
+        }
+    },
+    {
+        "id": "projectile8",
+        "filename": "gfx/Entities/Projectiles/08.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_power_up_01",
+            "volume": 0.5
+        }
+    },
+    {
+        "id": "projectile9",
+        "filename": "gfx/Entities/Projectiles/09.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_power_up_01",
+            "volume": 0.5
+        }
+    },
+    {
+        "id": "projectile10",
+        "filename": "gfx/Entities/Projectiles/10.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_power_up_01",
+            "volume": 0.5
+        }
+    },
+    {
+        "id": "projectile11",
+        "filename": "gfx/Entities/Projectiles/11.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_power_up_01",
+            "volume": 0.5
+        }
+    },
+    {
+        "id": "projectile12",
+        "filename": "gfx/Entities/Projectiles/12.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_power_up_01",
+            "volume": 0.5
+        }
+    },
+    {
+        "id": "projectile13",
+        "filename": "gfx/Entities/Projectiles/13.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_power_up_01",
+            "volume": 0.5
+        }
+    },
+    {
+        "id": "projectile14",
+        "filename": "gfx/Entities/Projectiles/14.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_power_up_03",
+            "volume": 0.5
+        }
+    },
+    {
+        "id": "projectile15",
+        "filename": "gfx/Entities/Projectiles/15.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sci-fi_power_up_02",
+            "volume": 0.5
+        }
+    },
+    {
+        "id": "sfx/music/music_8bit_jammer",
+        "filename": "gfx/Entities/Projectiles/15.png",
+        "width": null,
+        "height": null,
+        "sound": {
+            "id": "sfx/music/music_8bit_jammer",
+            "volume": 0.25
+        }
+    }
+]

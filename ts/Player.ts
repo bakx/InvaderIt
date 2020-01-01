@@ -1,106 +1,19 @@
-import { Point } from "pixi.js";
+import "pixi-sound";
 import { ActiveActionSprite } from "./ActiveActionSprite";
 import { calculateMovement } from "./Functions";
+import { Game } from "./Game";
+import { InteractiveEntities } from "./InteractiveEntities";
 import { Character, CharacterAction } from "./Models/Character";
 
-export class Player {
+export class Player extends InteractiveEntities {
 
-    /** Constructor of the Player class */
-    constructor(stage: PIXI.Container, character: Character) {
-        this._stage = stage;
-        this._character = character;
-        this._position = character.position;
-        this._activeActionSprites = [];
-        this._actionTriggered = new Map<string, number>();
-
-        // Initialize
-        this.init();
-    }
-
-    // Pixi
-    private _stage: PIXI.Container;
-
-    // Enemy container
-    private _container: PIXI.Container;
-
-    // Character configuration
-    private _character: Character;
-
-    // Player movement
-    private _canMove: boolean = true;
-    private _position: Point;
-    private _gotoPosition: Point;
-
-    // Active action sprites
-    private _activeActionSprites: ActiveActionSprite[];
-
-    // Keep track of triggered actions
-    private _actionTriggered: Map<string, number>;
-
-    // Drawing of the health bar
-    private _healthBar: PIXI.Graphics;
-
-    /** Get the unique id of player */
-    get id(): string { return this._character.id }
-
-    /** Get the position of player */
-    get position(): Point { return this._position }
-
-    /** Set the position of player */
-    set position(position: Point) { this._position = position }
-
-    /** Get the position the player should be moving towards */
-    get gotoPosition(): Point { return this._gotoPosition }
-
-    /** Set the position the player should be moving towards */
-    set gotoPosition(gotoPosition: Point) { this._gotoPosition = gotoPosition }
-
-    /** Get the character of this player */
-    get character(): Character { return this._character }
-
-    /** Set the character of this player */
-    set character(character: Character) { this._character = character }
-
-    /** Get the container of this enemy */
-    get container(): PIXI.Container { return this._container }
-
-    /** Set the container of this enemy */
-    set container(container: PIXI.Container) { this._container = container }
-
-    /** Get the active action sprites of this player */
-    get activeActionSprites(): ActiveActionSprite[] { return this._activeActionSprites }
-
-    /** Get mapping of triggererd actions and their trigger date */
-    get actionTriggered(): Map<string, number> { return this._actionTriggered }
-
-    /** Get the healthBar */
-    get healthBar(): PIXI.Graphics { return this._healthBar }
-
-    /** */
-    init() {
-
-        // Create container that stores the character and other items
-        this.container = new PIXI.Container();
-
-        // Add the character
-        this.container.addChild(this.character.animation);
-
-        // Add container to stage
-        this.addStage();
-    }
-
-    /** Add container to stage */
-    addStage() {
-        this._stage.addChild(this.container);
-    }
-
-    /** Remove container to stage */
-    removeStage() {
-        this._stage.removeChild(this.container);
+    /** Constructor of the Enemy class */
+    constructor(container: PIXI.Container, character: Character) {
+        super(container, character);
     }
 
     /** Handle the character action (e.g., firing a rocket) */
-    action(actionKey: string, position: Point) {
+    action(actionKey: string) {
 
         // Get action from character
         let characterAction: CharacterAction = this.character.actions.get(actionKey);
@@ -164,16 +77,15 @@ export class Player {
     }
 
     /** Update all events related to the player */
-    update() {
-        let movementSpeed = 5;
+    update(game: Game) {
 
-        if (this._canMove && this._gotoPosition) {
+        if (this.canMove && this.gotoPosition) {
 
             // Determine if position X needs to be updated
-            this.position.x = calculateMovement(this.position.x, this._gotoPosition.x, movementSpeed);
+            this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, this.character.movementSpeed, true);
 
             // Determine if position Y needs to be updated
-            this.position.y = calculateMovement(this.position.y, this._gotoPosition.y, movementSpeed);
+            this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed, true);
 
             // Set the position of the character
             this.character.position.x = this.position.x;
@@ -181,16 +93,16 @@ export class Player {
         }
 
         // Handle actions
-        if (this._activeActionSprites.length > 0) {
-            for (let i = 0; i < this._activeActionSprites.length; i++) {
-                let action: ActiveActionSprite = this._activeActionSprites[i];
+        if (this.activeActionSprites.length > 0) {
+            for (let i = 0; i < this.activeActionSprites.length; i++) {
+                let action: ActiveActionSprite = this.activeActionSprites[i];
 
                 if (action.markDelete) {
 
                     // Diagnostics
                     console.debug(`Removing  ${action.key} from the active action sprites`);
 
-                    this._activeActionSprites.splice(i, 1);
+                    this.activeActionSprites.splice(i, 1);
                     continue;
                 }
 
@@ -202,14 +114,8 @@ export class Player {
                 action.sprite.position.y += actionDetails.velocity.y;
             }
         }
+
+        super.updateHealthContainers();
     }
 
-    drawBar() {
-        //Create the black background rectangle
-        let innerBar = new PIXI.Graphics();
-        innerBar.beginFill(0x000000);
-        innerBar.drawRect(0, 0, 128, 8);
-        innerBar.endFill();
-        this.character.stage.addChild(innerBar);
-    }
 }
