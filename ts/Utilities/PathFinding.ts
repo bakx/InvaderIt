@@ -9,7 +9,7 @@ export class PathFinding {
 
     static entityPaths(moveBox: MoveBox, source: Enemy, entities: Map<string, Enemy>, moveSpeed: number): MoveDirections {
 
-        let canMove: MoveDirections = new MoveDirections();
+        let moveDirections: MoveDirections = new MoveDirections();
 
         // Determine what directions the entity can move to
         entities.forEach(entity => {
@@ -65,14 +65,14 @@ export class PathFinding {
 
                         // If the other entity is located 
                         if (source.position.x + source.character.animation.width + moveSpeed > entity.position.x) {
-                            canMove.right = false;
+                            moveDirections.right = false;
                         }
 
                     } else {
 
                         // 
                         if (source.position.x + moveSpeed < entity.position.x + entity.character.animation.width) {
-                            canMove.left = false;
+                            moveDirections.left = false;
                         }
                     }
                 }
@@ -85,14 +85,14 @@ export class PathFinding {
 
                         // 
                         if (source.position.y + source.character.animation.height > entity.position.y) {
-                            canMove.down = false;
+                            moveDirections.down = false;
                         }
 
                     } else {
 
                         // 
                         if (source.position.y < entity.position.y + entity.character.animation.height) {
-                            canMove.up = false;
+                            moveDirections.up = false;
                         }
                     }
                 }
@@ -102,22 +102,22 @@ export class PathFinding {
         })
 
         if (source.position.y - moveSpeed < moveBox.minY) {
-            canMove.up = false;
+            moveDirections.up = false;
         }
 
         if (source.position.y + source.character.animation.height + moveSpeed > moveBox.maxY) {
-            canMove.down = false;
+            moveDirections.down = false;
         }
 
         if (source.position.x - moveSpeed < moveBox.minX) {
-            canMove.left = false;
+            moveDirections.left = false;
         }
 
         if (source.position.x + source.character.animation.width + moveSpeed > moveBox.maxX) {
-            canMove.right = false;
+            moveDirections.right = false;
         }
 
-        return canMove;
+        return moveDirections;
     }
 }
 

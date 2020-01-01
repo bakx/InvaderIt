@@ -44,7 +44,6 @@ export class InteractiveEntities {
     // Entity statistics
     private _barWidth: number = 128;
     private _barHeight: number = 8;
-    private _idContainer: PIXI.Container;
     private _statisticsContainer: PIXI.Container;
     private _backgroundBar: PIXI.Graphics;
     private _healthBar: PIXI.Graphics;
@@ -58,6 +57,11 @@ export class InteractiveEntities {
     // Enemy states
     private _finalState: boolean = false;
     private _lastAction: number = Date.now();
+
+    // Debug
+    private _debugContainer: PIXI.Container;
+    private _debugId: DrawText
+    private _debugPosition: DrawText;
 
     /** Get the unique id of entity */
     get id(): string { return this._character.id; }
@@ -142,19 +146,11 @@ export class InteractiveEntities {
 
     // Entity statistics
 
-    /** Get the id container of this entity */
-    get idContainer(): PIXI.Container { return this._idContainer; }
-
-    /** Set the id container of this entity */
-    set idContainer(idContainer: PIXI.Container) { this._idContainer = idContainer; }
-
     /** Get the statistics container */
     get statisticsContainer(): PIXI.Container { return this._statisticsContainer; }
 
     /** Set the statistics container */
     set statisticsContainer(enemyStatistics: PIXI.Container) { this._statisticsContainer = enemyStatistics; }
-
-
 
     /** Get the life of entity */
     get life(): number { return this._life; }
@@ -224,6 +220,26 @@ export class InteractiveEntities {
     /** */
     public set lastAction(lastAction: number) { this._lastAction = lastAction; }
 
+    // Debug
+
+    /** Get the debug container of this entity */
+    get debugContainer(): PIXI.Container { return this._debugContainer; }
+
+    /** Set the debug container of this entity */
+    set debugContainer(idContainer: PIXI.Container) { this._debugContainer = idContainer; }
+
+    /** Get the debug container of this entity */
+    get debugId(): DrawText { return this._debugId; }
+
+    /** Set the debug container of this entity */
+    set debugId(debugId: DrawText) { this._debugId = debugId; }
+
+    /** Get the debug container of this entity */
+    get debugPosition(): DrawText { return this._debugPosition; }
+
+    /** Set the debug container of this entity */
+    set debugPosition(debugPosition: DrawText) { this._debugPosition = debugPosition; }
+
     /** Initialize all properties related to the entity. This function needs to be called to render
      * the item to the screen. It creates the container objects and sets up the health bars .
      */
@@ -250,9 +266,11 @@ export class InteractiveEntities {
         this.createHealthBars();
 
         // Debug
-        this._idContainer = new PIXI.Container();
-        new DrawText(this._idContainer, this.id, this.characterContainer.x, this.character.animation.height);
-        this.container.addChild(this._idContainer);
+        this.debugContainer = new PIXI.Container();
+        this.debugId = new DrawText(this.debugContainer, this.id, this.characterContainer.x, this.character.animation.height);
+        this.debugPosition = new DrawText(this.debugContainer, "", this.characterContainer.x, this.character.animation.height + this.debugId.height);
+
+        this.container.addChild(this.debugContainer);
 
         // Add container to stage
         this.addStage();
@@ -375,6 +393,6 @@ export class InteractiveEntities {
         this.statisticsContainer.position.set(this.character.animation.position.x + this.character.animation.width / 2 - this.statisticsContainer.width / 2, this.character.position.y - 20);
 
         // Update debug text
-        this.idContainer.position.set(this.character.animation.position.x + this.character.animation.width / 2 - this.idContainer.width / 2, this.character.position.y + 10);
+        this.debugContainer.position.set(this.character.animation.position.x + this.character.animation.width / 2 - this.debugContainer.width / 2, this.character.position.y + 10);
     }
 }

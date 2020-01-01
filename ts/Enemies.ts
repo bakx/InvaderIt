@@ -122,8 +122,6 @@ export class Enemy extends InteractiveEntities {
 
         let wantMoveLeft: boolean = this.reverseX;
         let wantMoveRight: boolean = !wantMoveLeft;
-        let wantMoveUp: boolean = this.position.y >= this.gotoPosition.y || this.reverseY;
-        let wantMoveDown: boolean = !wantMoveUp;
 
         if (wantMoveLeft && !moveDirections.left) {
             this.reverseX = false;
@@ -146,10 +144,25 @@ export class Enemy extends InteractiveEntities {
             console.warn(`Unable to move horizontally for enemy ${this.id}`);
         }
 
+        // Handle vertical movement
+        if (moveDirections.up || moveDirections.down) {
+
+            if (moveDirections.up) {
+                this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed * -1);
+            } else if (moveDirections.down) {
+                    this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed);
+                }
+        }
+        else {
+            console.warn(`Unable to move vertically for enemy ${this.id}`);
+        }
+
 
         // Set the position of the character
         this.character.position.x = this.position.x;
         this.character.position.y = this.position.y;
+
+        this.debugPosition.Text = `x: ${this.position.x} y: ${this.position.y}`;
 
     }
 

@@ -26,6 +26,11 @@ export class DrawText {
         this.pixiText.y = y;
     }
 
+    /** Retrieve the height of the draw text object */
+    get height() : number {
+        return this.pixiText.height;
+    }
+
     getDefaultStyle(): PIXI.TextStyle {
         const style = new PIXI.TextStyle({
             fontFamily: "Tahoma",
