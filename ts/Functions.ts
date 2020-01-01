@@ -375,34 +375,32 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<LevelData
 }
 
 /** Calculate the new position of a moving element */
-export function calculateMovement(currentPosition: number, moveTo: number, moveSpeed: number): number {
+export function calculateMovement(currentPosition: number, moveTo: number, moveSpeed: number, isPlayer: boolean = false): number {
 
   // Determine if movement is required
   if (moveTo == currentPosition) {
     return currentPosition;
   }
 
-  if (currentPosition < moveTo) {
-    currentPosition += moveSpeed;
+  // It's possible speed is not set to 1 and overshooting its position. These variables are used to prevent that from happening
+  let isBefore: boolean = currentPosition < moveTo;
+  let isAfter: boolean = !isBefore;
 
-    // It's possible speed is not set to 1 and overshooting its position
+  if (isPlayer) {
     if (currentPosition > moveTo) {
-      currentPosition = moveTo;
+      currentPosition -= moveSpeed;
+    } else {
+      currentPosition += moveSpeed;
     }
-
-    return currentPosition;
+  }
+  else {
+    // Update the current position
+    currentPosition += moveSpeed;
   }
 
-  if (currentPosition > moveTo) {
-    currentPosition -= moveSpeed;
-
-    // It's possible speed is not set to 1 and overshooting its position
-    if (currentPosition < moveTo) {
-      currentPosition = moveTo;
-    }
-
-    return currentPosition;
+  // 
+  if (isBefore && currentPosition > moveTo || isAfter && currentPosition < moveTo) {
+    return moveTo;
   }
-
-  throw new Error(`Unexpected condition in calculateMovement`);
+  return currentPosition;
 }

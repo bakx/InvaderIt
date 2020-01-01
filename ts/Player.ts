@@ -1,11 +1,9 @@
 import "pixi-sound";
-import { Character, CharacterAction } from "./Models/Character";
-import { InteractiveEntities } from "./InteractiveEntities";
 import { ActiveActionSprite } from "./ActiveActionSprite";
-import { Point } from "pixi.js";
-import { Game } from "./Game";
-import { CanMove, PathFinding } from "./Utilities/PathFinding";
 import { calculateMovement } from "./Functions";
+import { Game } from "./Game";
+import { InteractiveEntities } from "./InteractiveEntities";
+import { Character, CharacterAction } from "./Models/Character";
 
 export class Player extends InteractiveEntities {
 
@@ -15,7 +13,7 @@ export class Player extends InteractiveEntities {
     }
 
     /** Handle the character action (e.g., firing a rocket) */
-    action(actionKey: string, position: Point) {
+    action(actionKey: string) {
 
         // Get action from character
         let characterAction: CharacterAction = this.character.actions.get(actionKey);
@@ -80,14 +78,14 @@ export class Player extends InteractiveEntities {
 
     /** Update all events related to the player */
     update(game: Game) {
-        
+
         if (this.canMove && this.gotoPosition) {
 
             // Determine if position X needs to be updated
-            this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, this.character.movementSpeed);
+            this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, this.character.movementSpeed, true);
 
             // Determine if position Y needs to be updated
-            this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed);
+            this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed, true);
 
             // Set the position of the character
             this.character.position.x = this.position.x;

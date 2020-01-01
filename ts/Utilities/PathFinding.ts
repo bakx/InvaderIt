@@ -7,55 +7,96 @@ export class PathFinding {
     constructor() {
     }
 
-    static enemyPaths(moveBox: MoveBox, source: Enemy, enemies: Map<string, Enemy>, moveSpeed: number): CanMove {
+    static entityPaths(moveBox: MoveBox, source: Enemy, entities: Map<string, Enemy>, moveSpeed: number): MoveDirections {
 
-        let canMove: CanMove = new CanMove();
+        let canMove: MoveDirections = new MoveDirections();
 
-        // Determine what directions the enemy can move to
-        enemies.forEach(enemy => {
-            if (source.id != enemy.id) {
+        // Determine what directions the entity can move to
+        entities.forEach(entity => {
+
+            if (source.id != entity.id) {
 
                 let horizontalAlign: boolean = false;
                 let verticalAlign: boolean = false;
 
-                // Determine if they are on the same line vertically
-                if (source.position.y >= enemy.position.y &&
-                    source.position.y < enemy.position.y + enemy.character.animation.height) {
-                    verticalAlign = true;
-                }
-
                 // Determine if they are on the same line horizontally
-                if (source.position.x > enemy.position.x &&
-                    source.position.x < enemy.position.x + enemy.character.animation.width) {
-                    horizontalAlign = true;
+                //
+
+                // If the source is located before the other entity
+                if (source.position.x <= entity.position.x) {
+
+                    // 
+                    if (source.position.x + source.character.animation.width > entity.position.x) {
+                        horizontalAlign = true;
+                    }
+
+                } else {
+
+                    // 
+                    if (source.position.x < entity.position.x + entity.character.animation.width) {
+                        horizontalAlign = true;
+                    }
+                }
+
+                // Determine if they are on the same line vertically
+                //
+
+                // If the source is located before the other entity
+                if (source.position.y <= entity.position.y) {
+
+                    // 
+                    if (source.position.y + source.character.animation.height > entity.position.y) {
+                        verticalAlign = true;
+                    }
+
+                } else {
+
+                    // 
+                    if (source.position.y < entity.position.y + entity.character.animation.height) {
+                        verticalAlign = true;
+                    }
                 }
 
                 /** */
-                if (horizontalAlign &&
-                    source.position.y >= enemy.position.y - moveSpeed &&
-                    source.position.y < enemy.position.y - moveSpeed + enemy.character.animation.height) {
-                    canMove.up = false;
+                if (verticalAlign) {
+
+                    // If the source is located before the other entity
+                    if (source.position.x <= entity.position.x) {
+
+                        // If the other entity is located 
+                        if (source.position.x + source.character.animation.width + moveSpeed > entity.position.x) {
+                            canMove.right = false;
+                        }
+
+                    } else {
+
+                        // 
+                        if (source.position.x + moveSpeed < entity.position.x + entity.character.animation.width) {
+                            canMove.left = false;
+                        }
+                    }
                 }
 
                 /** */
-                if (horizontalAlign &&
-                    source.position.y >= enemy.position.y + moveSpeed &&
-                    source.position.y < enemy.position.y + moveSpeed) {
+                if (horizontalAlign) {
+
+                    // If the source is located before the other entity
+                    if (source.position.y <= entity.position.y) {
+
+                        // 
+                        if (source.position.y + source.character.animation.height > entity.position.y) {
+                            canMove.down = false;
+                        }
+
+                    } else {
+
+                        // 
+                        if (source.position.y < entity.position.y + entity.character.animation.height) {
+                            canMove.up = false;
+                        }
+                    }
                 }
 
-                /** */
-                if (verticalAlign &&
-                    source.position.x >= enemy.position.x - moveSpeed &&
-                    source.position.x < enemy.position.x - moveSpeed + enemy.character.animation.width) {
-                    canMove.left = false;
-                }
-
-                /** */
-                if (verticalAlign &&
-                    source.position.x >= enemy.position.x + moveSpeed &&
-                    source.position.x < enemy.position.x + moveSpeed) {
-                    canMove.right = false;
-                }
 
             };
         })
@@ -80,7 +121,7 @@ export class PathFinding {
     }
 }
 
-export class CanMove {
+export class MoveDirections {
 
     /** Constructor of the CanMove class */
     constructor(up: boolean = true, right: boolean = true, down: boolean = true, left: boolean = true) {

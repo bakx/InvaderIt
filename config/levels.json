@@ -9,7 +9,7 @@
                 "animationKey": "Player/Default/skeleton-MovingNIdle",
                 "animationSpeed": 0.14,
                 "isPlayer": true,
-                "movementSpeed" : 5,
+                "movementSpeed": 7,
                 "position": {
                     "x": 100,
                     "y": 525
@@ -26,7 +26,7 @@
                 "animationKey": "Enemy01/Idle/skeleton-Idle",
                 "animationSpeed": 0.14,
                 "isPlayer": false,
-                "movementSpeed" : 2,
+                "movementSpeed": 6,
                 "position": {
                     "x": 1300,
                     "y": 25
@@ -43,10 +43,27 @@
                 "animationKey": "Enemy01/Idle/skeleton-Idle",
                 "animationSpeed": 0.14,
                 "isPlayer": false,
-                "movementSpeed" : 1,
+                "movementSpeed": 3,
                 "position": {
-                    "x": 1300,
+                    "x": 750,
                     "y": 25
+                },
+                "life": 100,
+                "shield": {
+                    "strength": 300,
+                    "rechargeRate": 0.20
+                }
+            },
+            {
+                "id": "6f577ac4-4119-41fe-b620-ca26f8a5ebbe",
+                "sprite": "enemy01",
+                "animationKey": "Enemy01/Idle/skeleton-Idle",
+                "animationSpeed": 0.14,
+                "isPlayer": false,
+                "movementSpeed": 8,
+                "position": {
+                    "x": 750,
+                    "y": 450
                 },
                 "life": 100,
                 "shield": {
@@ -70,7 +87,7 @@
                 "animationKey": "Player/Default/skeleton-MovingNIdle",
                 "animationSpeed": 0.14,
                 "isPlayer": true,
-                "movementSpeed" : 10,
+                "movementSpeed": 10,
                 "position": {
                     "x": 100,
                     "y": 525
@@ -87,7 +104,7 @@
                 "animationKey": "Enemy01/Idle/skeleton-Idle",
                 "animationSpeed": 0.14,
                 "isPlayer": false,
-                "movementSpeed" : 10,
+                "movementSpeed": 10,
                 "position": {
                     "x": 1300,
                     "y": 25
@@ -114,7 +131,7 @@
                 "animationKey": "Player/Default/skeleton-MovingNIdle",
                 "animationSpeed": 0.14,
                 "isPlayer": true,
-                "movementSpeed" : 10,
+                "movementSpeed": 10,
                 "position": {
                     "x": 100,
                     "y": 525
@@ -131,7 +148,7 @@
                 "animationKey": "Enemy01/Idle/skeleton-Idle",
                 "animationSpeed": 0.14,
                 "isPlayer": false,
-                "movementSpeed" : 10,
+                "movementSpeed": 10,
                 "position": {
                     "x": 1300,
                     "y": 25
@@ -148,7 +165,7 @@
                 "animationKey": "Enemy02/Idle/skeleton-Idle",
                 "animationSpeed": 0.14,
                 "isPlayer": false,
-                "movementSpeed" : 10,
+                "movementSpeed": 10,
                 "position": {
                     "x": 1300,
                     "y": 200

@@ -5,7 +5,7 @@ import { calculateMovement } from "./Functions";
 import { Game } from "./Game";
 import { InteractiveEntities } from "./InteractiveEntities";
 import { Character, CharacterAction } from "./Models/Character";
-import { CanMove, PathFinding } from "./Utilities/PathFinding";
+import { MoveDirections, PathFinding } from "./Utilities/PathFinding";
 
 export class Enemy extends InteractiveEntities {
 
@@ -85,116 +85,21 @@ export class Enemy extends InteractiveEntities {
     update(game: Game) {
         let playerPosition: Point = game.player.position;
 
+        if (this.life < 0) {
+            return;
+        }
+
         // Handle actions related to enemy
         this.handleActions(game);
 
-        //
-        this.gotoPosition.x = playerPosition.x;
-        this.gotoPosition.y = playerPosition.y;
+        // If the enemy can move
+        if (this.canMove) {
 
-        if (this.canMove && this.gotoPosition) {
+            // Update the desired position
+            this.gotoPosition.x = playerPosition.x;
+            this.gotoPosition.y = playerPosition.y;
 
-
-            if (this.position.x < this.moveBox.minX + (this.character.animation.width / 2) && this.reverseX) {
-                this.reverseX = !this.reverseX;
-            }
-
-
-            if (this.position.x > this.moveBox.maxX - (this.character.animation.width / 2)) {
-                this.reverseX = !this.reverseX;
-            }
-
-
-            if (this.position.y < this.moveBox.minY + (this.character.animation.height / 2) && this.reverseY) {
-                this.reverseY = !this.reverseY;
-            }
-
-            if (this.position.y > this.moveBox.maxY - (this.character.animation.height / 2)) {
-                this.reverseY = !this.reverseY;
-            }
-
-            // Determine if position Y needs to be updated
-
-            // Add a 0.02% chance to flip position
-            let randomMovement: number = Math.floor(Math.random() * 1000);
-
-            if (randomMovement < 2) {
-                this.reverseX = !this.reverseX;
-            }
-
-            let canMove: CanMove = PathFinding.enemyPaths(this.moveBox, this, game.enemies, this.character.movementSpeed);
-
-            // Determine if position X needs to be updated
-            //
-
-            // Should this enemy move horizontally
-            if (this.gotoPosition.x > this.position.x || !this.reverseX) {
-
-                if (this.reverseX) {
-                    this.character.movementSpeed = this.character.movementSpeed * -1;
-                }
-
-                /** */
-                if (canMove.right) {
-                    this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, this.character.movementSpeed);
-                }
-                else {
-                    console.warn(`Unable to move right for enemy ${this.id}`);
-                    this.reverseX = !this.reverseX;
-                }
-            } else {
-
-                if (this.reverseX) {
-                    this.character.movementSpeed = this.character.movementSpeed * -1;
-                }
-
-                /** */
-                if (canMove.left) {
-                    this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, this.character.movementSpeed);
-                }
-                else {
-                    console.warn(`Unable to move left for enemy ${this.id}`);
-                    this.reverseX = !this.reverseX;
-                }
-            }
-
-            // Determine if position Y needs to be updated
-            //
-
-            // Should this enemy move vertically
-            if (this.gotoPosition.y > this.position.y || !this.reverseY) {
-
-                if (this.reverseY) {
-                    this.character.movementSpeed = this.character.movementSpeed * -1;
-                }
-
-                /** */
-                if (canMove.down) {
-                    this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed);
-                }
-                else {
-                    console.warn(`Unable to move down for enemy ${this.id}`);
-                    this.reverseY = !this.reverseY;
-                }
-            } else {
-
-                if (this.reverseY) {
-                    this.character.movementSpeed = this.character.movementSpeed * -1;
-                }
-
-                /** */
-                if (canMove.up) {
-                    this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed);
-                }
-                else {
-                    console.warn(`Unable to move up for enemy ${this.id}`);
-                    this.reverseY = !this.reverseY;
-                }
-            }
-
-            // Set the position of the character
-            this.character.position.x = this.position.x;
-            this.character.position.y = this.position.y;
+            this.handleMovement(game);
         }
 
         // Regenerate shields?
@@ -202,8 +107,50 @@ export class Enemy extends InteractiveEntities {
             this.shield += this.shieldRechargeRate;
         }
 
-        /**         */
+        // Update the position of the health containers
         super.updateHealthContainers();
+    }
+
+    /** */
+    handleMovement(game: Game) {
+
+        // Determine which directions this entity can move to
+        let moveDirections: MoveDirections = PathFinding.entityPaths(this.moveBox, this, game.enemies, this.character.movementSpeed);
+
+        // Determine which direction to go
+        // 
+
+        let wantMoveLeft: boolean = this.reverseX;
+        let wantMoveRight: boolean = !wantMoveLeft;
+        let wantMoveUp: boolean = this.position.y >= this.gotoPosition.y || this.reverseY;
+        let wantMoveDown: boolean = !wantMoveUp;
+
+        if (wantMoveLeft && !moveDirections.left) {
+            this.reverseX = false;
+        }
+
+        if (wantMoveRight && !moveDirections.right) {
+            this.reverseX = true;
+        }
+
+        // Handle horizontal movement
+        if (moveDirections.left || moveDirections.right) {
+
+            // Set speed
+            let speed = this.character.movementSpeed * (this.reverseX ? -1 : 1);
+
+            // Move character
+            this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, speed);
+        }
+        else {
+            console.warn(`Unable to move horizontally for enemy ${this.id}`);
+        }
+
+
+        // Set the position of the character
+        this.character.position.x = this.position.x;
+        this.character.position.y = this.position.y;
+
     }
 
     /** */

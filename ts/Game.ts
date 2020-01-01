@@ -337,9 +337,7 @@ export class Game {
 
       // Update all enemy
       this.enemies.forEach(enemy => {
-        //   if (Date.now() % 15 == 0) {
         enemy.update(this);
-        // }
       })
 
       // Collision check
@@ -444,7 +442,7 @@ export class Game {
         this.player.gotoPosition = position;
         break;
       case Actions.Fire:
-        this.player.action("fire", position);
+        this.player.action("fire");
         break;
     }
   }

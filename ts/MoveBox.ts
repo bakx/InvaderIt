@@ -11,7 +11,7 @@ export class MoveBox {
     private _maxX: number;
     private _minY: number;
     private _maxY: number;
-    
+
     get minX(): number {
         return this._minX;
     }
