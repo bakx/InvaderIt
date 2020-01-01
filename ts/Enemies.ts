@@ -147,11 +147,11 @@ export class Enemy extends InteractiveEntities {
         // Handle vertical movement
         if (moveDirections.up || moveDirections.down) {
 
-            if (moveDirections.up) {
+            if (moveDirections.up && this.position.y > this.gotoPosition.y) {
                 this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed * -1);
-            } else if (moveDirections.down) {
-                    this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed);
-                }
+            } else if (moveDirections.down && this.position.y < this.gotoPosition.y) {
+                this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed);
+            }
         }
         else {
             console.warn(`Unable to move vertically for enemy ${this.id}`);
