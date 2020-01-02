@@ -1,5 +1,6 @@
-import { MoveBox } from "../MoveBox";
+import { Point } from "pixi.js";
 import { Enemy } from "../Enemies";
+import { MoveBox } from "../MoveBox";
 
 export class PathFinding {
 
@@ -7,7 +8,7 @@ export class PathFinding {
     constructor() {
     }
 
-    static entityPaths(moveBox: MoveBox, source: Enemy, entities: Map<string, Enemy>, moveSpeed: number): MoveDirections {
+    static entityPaths(moveBox: MoveBox, source: Enemy, entities: Map<string, Enemy>, moveSpeed: Point): MoveDirections {
 
         let moveDirections: MoveDirections = new MoveDirections();
 
@@ -64,14 +65,14 @@ export class PathFinding {
                     if (source.position.x <= entity.position.x) {
 
                         // If the other entity is located 
-                        if (source.position.x + source.character.animation.width + moveSpeed > entity.position.x) {
+                        if (source.position.x + source.character.animation.width + moveSpeed.y > entity.position.x) {
                             moveDirections.right = false;
                         }
 
                     } else {
 
                         // 
-                        if (source.position.x + moveSpeed < entity.position.x + entity.character.animation.width) {
+                        if (source.position.x + moveSpeed.y < entity.position.x + entity.character.animation.width) {
                             moveDirections.left = false;
                         }
                     }
@@ -101,19 +102,19 @@ export class PathFinding {
             };
         })
 
-        if (source.position.y - moveSpeed < moveBox.minY) {
+        if (source.position.y - moveSpeed.y < moveBox.minY) {
             moveDirections.up = false;
         }
 
-        if (source.position.y + source.character.animation.height + moveSpeed > moveBox.maxY) {
+        if (source.position.y + source.character.animation.height + moveSpeed.y > moveBox.maxY) {
             moveDirections.down = false;
         }
 
-        if (source.position.x - moveSpeed < moveBox.minX) {
+        if (source.position.x - moveSpeed.x < moveBox.minX) {
             moveDirections.left = false;
         }
 
-        if (source.position.x + source.character.animation.width + moveSpeed > moveBox.maxX) {
+        if (source.position.x + source.character.animation.width + moveSpeed.x > moveBox.maxX) {
             moveDirections.right = false;
         }
 

@@ -347,6 +347,8 @@ export function loadLevels(app: PIXI.Application, game: Game): Promise<LevelData
               character.animationSpeed = levelCharacterConfig.animationSpeed;
               character.position.x = levelCharacterConfig.position.x;
               character.position.y = levelCharacterConfig.position.y;
+              character.scale.x = levelCharacterConfig.scale ? levelCharacterConfig.scale.x : 1;
+              character.scale.y = levelCharacterConfig.scale ? levelCharacterConfig.scale.y : 1;
               character.life = levelCharacterConfig.life;
               character.shield = levelCharacterConfig.shield.strength;
               character.shieldRechargeRate = levelCharacterConfig.shield.rechargeRate;

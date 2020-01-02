@@ -9,18 +9,20 @@ export class Character {
         this._id = id;
         this._actions = new Map<string, CharacterAction>();
         this._position = new Point();
+        this._scale = new Point();
     }
 
     // Character configuration
 
     private _id: string;
     private _isPlayer: boolean;
-    private _movementSpeed: number;
+    private _movementSpeed: Point;
     private _defaultAnimationKey: string;
     private _defaultAnimationSpeed: number;
     private _animationDetails: Map<string, AnimationDetails>;
     private _animationStates: Map<string, string>;
     private _actions: Map<string, CharacterAction>;
+    private _scale: Point;
 
     // Stage settings
 
@@ -41,6 +43,7 @@ export class Character {
     private _animationKey: string;
 
     // Restore animation settings
+
     private _restoreAnimationKey: string;
     private _isPlayingSingleAnimation: boolean;
     private _restoreAutoPlay: boolean = true;
@@ -53,6 +56,8 @@ export class Character {
     private _loop: boolean = true;
     private _interactive: boolean = true;
 
+    // Character configuration
+
     /** Get the id of object */
     get id(): string { return this._id; }
 
@@ -63,10 +68,10 @@ export class Character {
     set isPlayer(isPlayer: boolean) { this._isPlayer = isPlayer; }
 
     /** Get the movement speed of character? */
-    get movementSpeed(): number { return this._movementSpeed; }
+    get movementSpeed(): Point { return this._movementSpeed; }
 
     /** Set the movement speed of character? */
-    set movementSpeed(movementSpeed: number) { this._movementSpeed = movementSpeed; }
+    set movementSpeed(movementSpeed: Point) { this._movementSpeed = movementSpeed; }
 
     /** Get the default animation key of character */
     get defaultAnimationKey(): string { return this._defaultAnimationKey; }
@@ -98,6 +103,16 @@ export class Character {
     /** Set the actions of character */
     set actions(actions: Map<string, CharacterAction>) { this._actions = actions; }
 
+    /** Get the scale of character */
+    get scale(): Point { return this._scale; }
+
+    /** Set the scale of character */
+    set scale(scale: Point) {
+        this._scale = scale;
+    }
+
+    // Stage settings
+
     /** Get the stage of character */
     get stage(): PIXI.Container { return this._stage; }
 
@@ -113,6 +128,8 @@ export class Character {
 
         this._position = position;
     }
+
+    // Health settings
 
     /** Get the life of character */
     get life(): number { return this._life; }
@@ -138,6 +155,8 @@ export class Character {
     /** Set the shield recharge rate of character */
     set shieldRechargeRate(shieldRechargeRate: number) { this._shieldRechargeRate = shieldRechargeRate; }
 
+    // Animation settings
+
     /** Get the animation source of character */
     get animationSource(): AnimationSprite { return this._animationSource; }
 
@@ -149,6 +168,8 @@ export class Character {
 
     /** Set the animation key of character */
     set animationKey(animationKey: string) { this._animationKey = animationKey; }
+
+    // Restore animation settings
 
     /** If a single animation was playing, this key is used to 'restore' to the previous state */
     get restoreAnimationKey(): string { return this._restoreAnimationKey; }
@@ -173,6 +194,8 @@ export class Character {
 
     /** Restore the character interactive value of the animation that was playing before a single animation was played (e.g., when a character gets hit and needs to be restored to their default animation settings) */
     set restoreInteractive(restoreInteractive: boolean) { this._restoreInteractive = restoreInteractive; }
+
+    // Play settings
 
     /** Is a single animation effect playing? */
     get isPlayingSingleAnimation(): boolean { return this._isPlayingSingleAnimation; }
@@ -321,6 +344,9 @@ export class Character {
 
         // Update animation properties
         this.animation.animationSpeed = this._animationSpeed;
+
+        // Set scaling
+        this.animation.scale = this.scale;
 
         // Set existing position (if any)
         if (currentPosition) {

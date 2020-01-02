@@ -82,10 +82,10 @@ export class Player extends InteractiveEntities {
         if (this.canMove && this.gotoPosition) {
 
             // Determine if position X needs to be updated
-            this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, this.character.movementSpeed, true);
+            this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, this.character.movementSpeed.x, true);
 
             // Determine if position Y needs to be updated
-            this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed, true);
+            this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed.y, true);
 
             // Set the position of the character
             this.character.position.x = this.position.x;

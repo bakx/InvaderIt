@@ -27,7 +27,7 @@ export class DrawText {
     }
 
     /** Retrieve the height of the draw text object */
-    get height() : number {
+    get height(): number {
         return this.pixiText.height;
     }
 

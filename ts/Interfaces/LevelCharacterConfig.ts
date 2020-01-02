@@ -4,10 +4,11 @@ export interface LevelCharacterConfig {
     id: string;
     sprite: string;
     isPlayer: boolean;
-    movementSpeed: number;
+    movementSpeed: Point;
     animationKey: string;
     animationSpeed: number;
     position: Point;
+    scale: Point;
     life: number;
     shield: LevelCharacterShieldConfig;
 }

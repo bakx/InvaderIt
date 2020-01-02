@@ -135,7 +135,7 @@ export class Enemy extends InteractiveEntities {
         if (moveDirections.left || moveDirections.right) {
 
             // Set speed
-            let speed = this.character.movementSpeed * (this.reverseX ? -1 : 1);
+            let speed = this.character.movementSpeed.x * (this.reverseX ? -1 : 1);
 
             // Move character
             this.position.x = calculateMovement(this.position.x, this.gotoPosition.x, speed);
@@ -148,9 +148,9 @@ export class Enemy extends InteractiveEntities {
         if (moveDirections.up || moveDirections.down) {
 
             if (moveDirections.up && this.position.y > this.gotoPosition.y) {
-                this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed * -1);
+                this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed.y * -1);
             } else if (moveDirections.down && this.position.y < this.gotoPosition.y) {
-                this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed);
+                this.position.y = calculateMovement(this.position.y, this.gotoPosition.y, this.character.movementSpeed.y);
             }
         }
         else {
