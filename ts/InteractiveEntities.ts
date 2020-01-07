@@ -4,7 +4,7 @@ import { ActiveActionSprite } from "./ActiveActionSprite";
 import { Game } from "./Game";
 import { Character } from "./Models/Character";
 import { DrawText } from "./Models/DrawText";
-import { MoveBox } from "./MoveBox";
+import { MoveBox } from "./Models/MoveBox";
 import { Calculate } from "./Utilities/Calculate";
 
 export class InteractiveEntities {
@@ -269,7 +269,9 @@ export class InteractiveEntities {
         this.debugContainer = new PIXI.Container();
         this.debugId = new DrawText(this.debugContainer, this.id, this.characterContainer.x, this.character.animation.height);
         this.debugPosition = new DrawText(this.debugContainer, "", this.characterContainer.x, this.character.animation.height + this.debugId.height);
-
+        this.debugId.fontSize = 15;
+        this.debugPosition.fontSize = 15;
+        
         this.container.addChild(this.debugContainer);
 
         // Add container to stage

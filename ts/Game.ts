@@ -9,7 +9,7 @@ import { Character } from "./Models/Character";
 import { DrawText } from "./Models/DrawText";
 import { Entity, EntitySound } from "./Models/Entities";
 import { LevelData } from "./Models/Level";
-import { MoveBox } from "./MoveBox";
+import { MoveBox } from "./Models/MoveBox";
 import { Player } from "./Player";
 import { Collision2D } from "./Utilities/Collision2D";
 

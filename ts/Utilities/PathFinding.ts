@@ -1,6 +1,6 @@
 import { Point } from "pixi.js";
 import { Enemy } from "../Enemies";
-import { MoveBox } from "../MoveBox";
+import { MoveBox } from "../Models/MoveBox";
 
 export class PathFinding {
 
@@ -15,7 +15,7 @@ export class PathFinding {
         // Determine what directions the entity can move to
         entities.forEach(entity => {
 
-            if (source.id != entity.id) {
+            if (source.id != entity.id && !entity.finalState) {
 
                 let horizontalAlign: boolean = false;
                 let verticalAlign: boolean = false;
